@@ -452,11 +452,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Order**: A record of a request for food, linked to exactly one Customer
-* **Customer**: A person who placed an order
-* **Dietary Restrictions**: Constraints on ingredients and preparation for an order
-* **Shortcut**: An alternative, faster way to execute a command using fewer characters
+* **Mainstream OS**: Windows, Linux, Unix, MacOS.
+* **Order**: A record of a request for food, linked to exactly one Customer.
+* **Customer**: A person who placed an order.
+* **Dietary Restrictions**: Constraints on ingredients and preparation for an order.
+* **Shortcut**: An alternative, faster way to execute a command using fewer characters.
 * **Payment Status**: Whether an order has been paid for.
 * **Completion Status**: Whether an order has been finished and delivered.
 
