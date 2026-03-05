@@ -445,8 +445,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 customers without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+4.  All data should be stored locally and persisted automatically, so that customer and order information remains available after restarting the application.
+5.  The application should not require an internet connection for normal operation.
+6.  The system should respond to any user command within 2 seconds under normal operating conditions.
+7.  The total size of the application (JAR file) should not exceed 100MB to ensure easy distribution and download.
+8.  The data file format should be human-readable (e.g. JSON) so that data can be manually inspected or recovered if necessary. 
+9.  The application should be usable by a new user with no prior training, allowing them to complete core tasks within 10 minutes of first launch using only the built-in help command.
 
 *{More to be added}*
 
