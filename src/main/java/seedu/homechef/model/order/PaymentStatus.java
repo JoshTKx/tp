@@ -11,8 +11,8 @@ public class PaymentStatus {
     /**
      * Constructs a {@code PaymentStatus}.
      */
-    public PaymentStatus() {
-        status = false;
+    public PaymentStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
