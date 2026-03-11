@@ -32,14 +32,13 @@ public class AddCommand extends Command {
             + PREFIX_DATE + "DATE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_DISH + "Birthday Cake"
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
+            + PREFIX_DISH + "Birthday Cake "
+            + PREFIX_NAME + "John "
+            + PREFIX_PHONE + "1234 "
             + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_DATE + "20-10-2026"
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_ADDRESS + "NUS "
+            + PREFIX_DATE + "20-10-2026 "
+            + PREFIX_TAG + "dairyfree ";
 
     public static final String MESSAGE_SUCCESS = "New order added: %1$s";
     public static final String MESSAGE_DUPLICATE_ORDER = "This order already exists in the HomeChef";
