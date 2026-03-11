@@ -24,7 +24,6 @@ public class DietTagTest {
     public void isValidTagName() {
         // null tag name
         assertThrows(NullPointerException.class, () -> DietTag.isValidTagName(null));
-        
         // valid tag names
         assertTrue(DietTag.isValidTagName("spicy"));
         assertTrue(DietTag.isValidTagName("dairy-free"));
