@@ -3,6 +3,7 @@ package seedu.homechef.storage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,8 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Name;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 
@@ -33,15 +36,40 @@ class JsonAdaptedOrder {
     private final String address;
     private final String date;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    @JsonProperty("paymentType")
+    private final String paymentType;
+    @JsonProperty("paymentHandle")
+    private final String paymentHandle;
+    @JsonProperty("paymentBankName")
+    private final String paymentBankName;
+    @JsonProperty("paymentRefNumber")
+    private final String paymentReferenceNumber;
+    @JsonProperty("paymentLastFour")
+    private final String paymentLastFourDigits;
+    @JsonProperty("paymentWalletProv")
+    private final String paymentWalletProvider;
+    @JsonProperty("paymentWalletAcct")
+    private final String paymentWalletAccountId;
 
     /**
      * Constructs a {@code JsonAdaptedOrder} with the given order details.
      */
     @JsonCreator
-    public JsonAdaptedOrder(@JsonProperty("dish") String dish, @JsonProperty("name") String name,
-                            @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-                            @JsonProperty("address") String address, @JsonProperty("date") String date,
-                            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+    public JsonAdaptedOrder(
+            @JsonProperty("dish") String dish,
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("address") String address,
+            @JsonProperty("date") String date,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("paymentType") String paymentType,
+            @JsonProperty("paymentHandle") String paymentHandle,
+            @JsonProperty("paymentBankName") String paymentBankName,
+            @JsonProperty("paymentRefNumber") String paymentReferenceNumber,
+            @JsonProperty("paymentLastFour") String paymentLastFourDigits,
+            @JsonProperty("paymentWalletProv") String paymentWalletProvider,
+            @JsonProperty("paymentWalletAcct") String paymentWalletAccountId) {
         this.dish = dish;
         this.name = name;
         this.phone = phone;
@@ -51,6 +79,13 @@ class JsonAdaptedOrder {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.paymentType = paymentType;
+        this.paymentHandle = paymentHandle;
+        this.paymentBankName = paymentBankName;
+        this.paymentReferenceNumber = paymentReferenceNumber;
+        this.paymentLastFourDigits = paymentLastFourDigits;
+        this.paymentWalletProvider = paymentWalletProvider;
+        this.paymentWalletAccountId = paymentWalletAccountId;
     }
 
     /**
@@ -66,6 +101,25 @@ class JsonAdaptedOrder {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+
+        if (source.getPaymentInfo().isPresent()) {
+            PaymentInfo info = source.getPaymentInfo().get();
+            paymentType = info.getType().name();
+            paymentHandle = info.getHandle();
+            paymentBankName = info.getBankName();
+            paymentReferenceNumber = info.getReferenceNumber();
+            paymentLastFourDigits = info.getLastFourDigits();
+            paymentWalletProvider = info.getWalletProvider();
+            paymentWalletAccountId = info.getWalletAccountId();
+        } else {
+            paymentType = null;
+            paymentHandle = null;
+            paymentBankName = null;
+            paymentReferenceNumber = null;
+            paymentLastFourDigits = null;
+            paymentWalletProvider = null;
+            paymentWalletAccountId = null;
+        }
     }
 
     /**
@@ -128,7 +182,25 @@ class JsonAdaptedOrder {
         final Date modelDate = new Date(date);
 
         final Set<DietTag> modelDietTags = new HashSet<>(orderDietTags);
-        return new Order(modelFood, modelName, modelPhone, modelEmail, modelAddress, modelDate, modelDietTags);
+
+        Optional<PaymentInfo> modelPaymentInfo;
+        if (paymentType == null) {
+            modelPaymentInfo = Optional.empty();
+        } else {
+            PaymentType type;
+            try {
+                type = PaymentType.valueOf(paymentType);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException(
+                        "Invalid stored payment type: " + paymentType, e);
+            }
+            modelPaymentInfo = Optional.of(new PaymentInfo(
+                    type, paymentHandle, paymentBankName, paymentReferenceNumber,
+                    paymentLastFourDigits, paymentWalletProvider, paymentWalletAccountId));
+        }
+
+        return new Order(modelFood, modelName, modelPhone, modelEmail,
+                modelAddress, modelDate, modelDietTags, modelPaymentInfo);
     }
 
 }
