@@ -23,12 +23,12 @@ public class PaymentInfo {
     public static final String VALIDATION_REGEX_LAST_FOUR = "[0-9]{4}";
 
     private final PaymentType type;
-    private final String handle;           // PAYNOW only
-    private final String bankName;         // BANK only
-    private final String referenceNumber;  // BANK only
-    private final String lastFourDigits;   // CARD only
-    private final String walletProvider;   // EWALLET only
-    private final String walletAccountId;  // EWALLET only
+    private final String handle; // PAYNOW only
+    private final String bankName; // BANK only
+    private final String referenceNumber; // BANK only
+    private final String lastFourDigits; // CARD only
+    private final String walletProvider; // EWALLET only
+    private final String walletAccountId; // EWALLET only
 
     /**
      * Constructs a {@code PaymentInfo}.

@@ -19,7 +19,7 @@ public class PaymentInfoTest {
     }
 
     @Test
-    public void constructor_cash_withExtraHandle_throwsException() {
+    public void constructor_cashWithExtraHandle_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.CASH, "+6591234567", null, null, null, null, null));
     }
@@ -35,19 +35,19 @@ public class PaymentInfoTest {
     }
 
     @Test
-    public void constructor_payNow_nullHandle_throwsException() {
+    public void constructor_payNowNullHandle_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.PAYNOW, null, null, null, null, null, null));
     }
 
     @Test
-    public void constructor_payNow_blankHandle_throwsException() {
+    public void constructor_payNowBlankHandle_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.PAYNOW, "   ", null, null, null, null, null));
     }
 
     @Test
-    public void constructor_payNow_withExtraBankName_throwsException() {
+    public void constructor_payNowWithExtraBankName_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.PAYNOW, "+6591234567", "DBS", null, null, null, null));
     }
@@ -64,13 +64,13 @@ public class PaymentInfoTest {
     }
 
     @Test
-    public void constructor_bank_nullBankName_throwsException() {
+    public void constructor_bankNullBankName_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.BANK, null, null, "REF123", null, null, null));
     }
 
     @Test
-    public void constructor_bank_nullReferenceNumber_throwsException() {
+    public void constructor_bankNullReferenceNumber_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.BANK, null, "DBS", null, null, null, null));
     }
@@ -86,19 +86,19 @@ public class PaymentInfoTest {
     }
 
     @Test
-    public void constructor_card_nullLastFour_throwsException() {
+    public void constructor_cardNullLastFour_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.CARD, null, null, null, null, null, null));
     }
 
     @Test
-    public void constructor_card_nonNumericLastFour_throwsException() {
+    public void constructor_cardNonNumericLastFour_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.CARD, null, null, null, "abcd", null, null));
     }
 
     @Test
-    public void constructor_card_tooShortLastFour_throwsException() {
+    public void constructor_cardTooShortLastFour_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.CARD, null, null, null, "123", null, null));
     }
@@ -115,13 +115,13 @@ public class PaymentInfoTest {
     }
 
     @Test
-    public void constructor_eWallet_nullProvider_throwsException() {
+    public void constructor_eWalletNullProvider_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.EWALLET, null, null, null, null, null, "user@grab.com"));
     }
 
     @Test
-    public void constructor_eWallet_nullAccountId_throwsException() {
+    public void constructor_eWalletNullAccountId_throwsIae() {
         assertThrows(IllegalArgumentException.class, () ->
                 new PaymentInfo(PaymentType.EWALLET, null, null, null, null, "GrabPay", null));
     }

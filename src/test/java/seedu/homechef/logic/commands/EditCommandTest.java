@@ -232,7 +232,7 @@ public class EditCommandTest {
     }
 
     @Test
-    public void editOrderDescriptor_isAnyFieldEdited_paymentInfoOnly_returnsTrue() {
+    public void editDescriptor_paymentInfoOnly_isAnyFieldEdited() {
         PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(cash).build();

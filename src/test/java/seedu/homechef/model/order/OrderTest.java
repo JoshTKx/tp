@@ -18,8 +18,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.testutil.OrderBuilder;
 
 public class OrderTest {

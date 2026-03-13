@@ -8,7 +8,6 @@ import static seedu.homechef.testutil.TypicalOrders.BENSON;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
