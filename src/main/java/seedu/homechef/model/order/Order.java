@@ -41,7 +41,7 @@ public class Order {
      */
     public Order(Food food, Name name, Phone phone, Email email, Address address, Date date,
                  Set<DietTag> dietTags, Optional<PaymentInfo> paymentInfo) {
-        requireAllNonNull(food, name, phone, email, address, dietTags, paymentInfo);
+        requireAllNonNull(food, name, phone, email, address, date, dietTags, paymentInfo);
         this.food = food;
         this.name = name;
         this.phone = phone;
