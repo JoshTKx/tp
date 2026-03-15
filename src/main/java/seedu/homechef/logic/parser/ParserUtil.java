@@ -2,10 +2,12 @@ package seedu.homechef.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
@@ -187,9 +189,11 @@ public class ParserUtil {
         try {
             type = PaymentType.valueOf(method.get().trim().toUpperCase());
         } catch (IllegalArgumentException e) {
+            String validTypes = Arrays.stream(PaymentType.values())
+                    .map(Enum::name)
+                    .collect(Collectors.joining(", "));
             throw new ParseException(
-                    "Invalid payment method: " + method.get()
-                            + ". Valid types: CASH, PAYNOW, BANK, CARD, EWALLET.");
+                    "Invalid payment method: " + method.get() + ". Valid types: " + validTypes + ".");
         }
 
         PaymentInfo paymentInfo;

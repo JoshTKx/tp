@@ -1,6 +1,7 @@
 package seedu.homechef.model.order;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
 
@@ -60,47 +61,31 @@ public class PaymentInfo {
 
         switch (type) {
         case CASH:
-            if (hasHandle || hasBankName || hasRef || hasLastFour || hasWalletProvider || hasWalletAccountId) {
-                throw new IllegalArgumentException(
-                        String.format(MESSAGE_UNEXPECTED_FIELD, "CASH"));
-            }
+            checkArgument(!hasHandle && !hasBankName && !hasRef && !hasLastFour
+                    && !hasWalletProvider && !hasWalletAccountId,
+                    String.format(MESSAGE_UNEXPECTED_FIELD, "CASH"));
             break;
         case PAYNOW:
-            if (handle == null || handle.isBlank()) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_PAYNOW);
-            }
-            if (hasBankName || hasRef || hasLastFour || hasWalletProvider || hasWalletAccountId) {
-                throw new IllegalArgumentException(
-                        String.format(MESSAGE_UNEXPECTED_FIELD, "PAYNOW"));
-            }
+            checkArgument(handle != null && !handle.isBlank(), MESSAGE_INVALID_PAYNOW);
+            checkArgument(!hasBankName && !hasRef && !hasLastFour && !hasWalletProvider && !hasWalletAccountId,
+                    String.format(MESSAGE_UNEXPECTED_FIELD, "PAYNOW"));
             break;
         case BANK:
-            if (bankName == null || bankName.isBlank() || referenceNumber == null || referenceNumber.isBlank()) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_BANK);
-            }
-            if (hasHandle || hasLastFour || hasWalletProvider || hasWalletAccountId) {
-                throw new IllegalArgumentException(
-                        String.format(MESSAGE_UNEXPECTED_FIELD, "BANK"));
-            }
+            checkArgument(bankName != null && !bankName.isBlank()
+                    && referenceNumber != null && !referenceNumber.isBlank(), MESSAGE_INVALID_BANK);
+            checkArgument(!hasHandle && !hasLastFour && !hasWalletProvider && !hasWalletAccountId,
+                    String.format(MESSAGE_UNEXPECTED_FIELD, "BANK"));
             break;
         case CARD:
-            if (!isValidLastFourDigits(lastFourDigits)) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_CARD);
-            }
-            if (hasHandle || hasBankName || hasRef || hasWalletProvider || hasWalletAccountId) {
-                throw new IllegalArgumentException(
-                        String.format(MESSAGE_UNEXPECTED_FIELD, "CARD"));
-            }
+            checkArgument(isValidLastFourDigits(lastFourDigits), MESSAGE_INVALID_CARD);
+            checkArgument(!hasHandle && !hasBankName && !hasRef && !hasWalletProvider && !hasWalletAccountId,
+                    String.format(MESSAGE_UNEXPECTED_FIELD, "CARD"));
             break;
         case EWALLET:
-            if (walletProvider == null || walletProvider.isBlank()
-                    || walletAccountId == null || walletAccountId.isBlank()) {
-                throw new IllegalArgumentException(MESSAGE_INVALID_EWALLET);
-            }
-            if (hasHandle || hasBankName || hasRef || hasLastFour) {
-                throw new IllegalArgumentException(
-                        String.format(MESSAGE_UNEXPECTED_FIELD, "EWALLET"));
-            }
+            checkArgument(walletProvider != null && !walletProvider.isBlank()
+                    && walletAccountId != null && !walletAccountId.isBlank(), MESSAGE_INVALID_EWALLET);
+            checkArgument(!hasHandle && !hasBankName && !hasRef && !hasLastFour,
+                    String.format(MESSAGE_UNEXPECTED_FIELD, "EWALLET"));
             break;
         default:
             break;

@@ -59,10 +59,10 @@ class JsonAdaptedOrder {
             @JsonProperty("paymentType") String paymentType,
             @JsonProperty("paymentHandle") String paymentHandle,
             @JsonProperty("paymentBankName") String paymentBankName,
-            @JsonProperty("paymentRefNumber") String paymentReferenceNumber,
-            @JsonProperty("paymentLastFour") String paymentLastFourDigits,
-            @JsonProperty("paymentWalletProv") String paymentWalletProvider,
-            @JsonProperty("paymentWalletAcct") String paymentWalletAccountId) {
+            @JsonProperty("paymentReferenceNumber") String paymentReferenceNumber,
+            @JsonProperty("paymentLastFourDigits") String paymentLastFourDigits,
+            @JsonProperty("paymentWalletProvider") String paymentWalletProvider,
+            @JsonProperty("paymentWalletAccountId") String paymentWalletAccountId) {
         this.dish = dish;
         this.name = name;
         this.phone = phone;
@@ -95,8 +95,9 @@ class JsonAdaptedOrder {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
 
-        if (source.getPaymentInfo().isPresent()) {
-            PaymentInfo info = source.getPaymentInfo().get();
+        Optional<PaymentInfo> optPaymentInfo = source.getPaymentInfo();
+        if (optPaymentInfo.isPresent()) {
+            PaymentInfo info = optPaymentInfo.get();
             paymentType = info.getType().name();
             paymentHandle = info.getHandle();
             paymentBankName = info.getBankName();
@@ -187,9 +188,13 @@ class JsonAdaptedOrder {
                 throw new IllegalValueException(
                         "Invalid stored payment type: " + paymentType, e);
             }
-            modelPaymentInfo = Optional.of(new PaymentInfo(
-                    type, paymentHandle, paymentBankName, paymentReferenceNumber,
-                    paymentLastFourDigits, paymentWalletProvider, paymentWalletAccountId));
+            try {
+                modelPaymentInfo = Optional.of(new PaymentInfo(
+                        type, paymentHandle, paymentBankName, paymentReferenceNumber,
+                        paymentLastFourDigits, paymentWalletProvider, paymentWalletAccountId));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException(e.getMessage(), e);
+            }
         }
 
         return new Order(modelFood, modelName, modelPhone, modelEmail,
