@@ -25,12 +25,14 @@ public class Order {
     // Data fields
     private final Address address;
     private final Date date;
+    private final PaymentStatus paymentStatus;
     private final Set<DietTag> dietTags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Order(Food food, Name name, Phone phone, Email email, Address address, Date date, Set<DietTag> dietTags) {
+    public Order(Food food, Name name, Phone phone, Email email,
+                 Address address, Date date, PaymentStatus paymentStatus, Set<DietTag> dietTags) {
         requireAllNonNull(food, name, phone, email, address, dietTags);
         this.food = food;
         this.name = name;
@@ -38,6 +40,7 @@ public class Order {
         this.email = email;
         this.address = address;
         this.date = date;
+        this.paymentStatus = paymentStatus;
         this.dietTags.addAll(dietTags);
     }
 
@@ -63,6 +66,10 @@ public class Order {
 
     public Date getDate() {
         return date;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
     /**
@@ -110,13 +117,14 @@ public class Order {
                 && email.equals(otherOrder.email)
                 && address.equals(otherOrder.address)
                 && date.equals(otherOrder.date)
+                && paymentStatus.equals(otherOrder.paymentStatus)
                 && dietTags.equals(otherOrder.dietTags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(food, name, phone, email, address, date, dietTags);
+        return Objects.hash(food, name, phone, email, address, date, paymentStatus, dietTags);
     }
 
     @Override
@@ -128,6 +136,7 @@ public class Order {
                 .add("email", email)
                 .add("address", address)
                 .add("date", date)
+                .add("paymentStatus", paymentStatus)
                 .add("dietTags", dietTags)
                 .toString();
     }
