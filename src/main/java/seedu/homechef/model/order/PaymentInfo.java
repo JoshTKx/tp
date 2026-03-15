@@ -24,7 +24,7 @@ public class PaymentInfo {
     public static final String MESSAGE_UNEXPECTED_FIELD =
             "Unexpected payment detail fields provided for payment type: %s";
     public static final String VALIDATION_REGEX_LAST_FOUR = "[0-9]{4}";
-    private static final String PAYNOW_PHONE_REGEX = "\\+\\d{1,3} \\d{3,}";
+    public static final String PAYNOW_PHONE_REGEX = "\\+\\d{1,3} \\d{3,}";
 
     private final PaymentType type;
     private final String handle; // PAYNOW only

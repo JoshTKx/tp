@@ -215,6 +215,9 @@ public class ParserUtil {
             if (hasWalletProvider) {
                 throw new ParseException("w/ only valid for EWALLET payment type.");
             }
+            if (ref.get().startsWith("+") && !ref.get().matches(PaymentInfo.PAYNOW_PHONE_REGEX)) {
+                throw new ParseException(PaymentInfo.MESSAGE_INVALID_PAYNOW_PHONE);
+            }
             paymentInfo = new PaymentInfo(PaymentType.PAYNOW, ref.get(), null, null, null, null, null);
             break;
         case BANK:

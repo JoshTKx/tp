@@ -274,6 +274,14 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parsePaymentInfo_payNowInvalidPhoneFormat_throwsParseException() throws Exception {
+        ParseException thrown = org.junit.jupiter.api.Assertions.assertThrows(ParseException.class, () ->
+                ParserUtil.parsePaymentInfo(
+                        Optional.of("PAYNOW"), Optional.of("+6591234567"), Optional.empty(), Optional.empty()));
+        assertEquals(PaymentInfo.MESSAGE_INVALID_PAYNOW_PHONE, thrown.getMessage());
+    }
+
+    @Test
     public void parsePaymentInfo_cashWithRef_throwsParseException() {
         assertThrows(ParseException.class, () ->
                 ParserUtil.parsePaymentInfo(
