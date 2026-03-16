@@ -3,6 +3,8 @@ package seedu.homechef.model.order;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.homechef.model.order.PaymentStatus.STATUS_PAID;
+import static seedu.homechef.model.order.PaymentStatus.STATUS_UNPAID;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +24,8 @@ public class PaymentStatusTest {
         PaymentStatus paidStatus = new PaymentStatus(true);
         PaymentStatus unpaidStatus = new PaymentStatus(false);
 
-        assertEquals("PAID", paidStatus.toString());
-        assertEquals("UNPAID", unpaidStatus.toString());
+        assertEquals(STATUS_PAID, paidStatus.toString());
+        assertEquals(STATUS_UNPAID, unpaidStatus.toString());
     }
 
     @Test
@@ -45,7 +47,7 @@ public class PaymentStatusTest {
         assertFalse(paid1.equals(null));
 
         // different type
-        assertFalse(paid1.equals("PAID"));
+        assertFalse(paid1.equals(STATUS_PAID));
     }
 
 }
