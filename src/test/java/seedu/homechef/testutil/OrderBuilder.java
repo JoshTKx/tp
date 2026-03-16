@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
@@ -24,6 +25,7 @@ public class OrderBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DATE = "10-03-2026";
+    public static final int DEFAULT_COMPLETION_STATUS = 0;
 
     private Food food;
     private Name name;
@@ -31,6 +33,7 @@ public class OrderBuilder {
     private Email email;
     private Address address;
     private Date date;
+    private CompletionStatus completionStatus;
     private Set<DietTag> dietTags;
 
     /**
@@ -43,6 +46,7 @@ public class OrderBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         date = new Date(DEFAULT_DATE);
+        completionStatus = new CompletionStatus(DEFAULT_COMPLETION_STATUS);
         dietTags = new HashSet<>();
     }
 
@@ -56,6 +60,7 @@ public class OrderBuilder {
         email = orderToCopy.getEmail();
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
+        completionStatus = orderToCopy.getCompletionStatus();
         dietTags = new HashSet<>(orderToCopy.getTags());
     }
 
@@ -115,8 +120,16 @@ public class OrderBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code CompletionStatus} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withCompletionStatus(int completionStatus) {
+        this.completionStatus = new CompletionStatus(completionStatus);
+        return this;
+    }
+
     public Order build() {
-        return new Order(food, name, phone, email, address, date, dietTags);
+        return new Order(food, name, phone, email, address, date, completionStatus, dietTags);
     }
 
 }
