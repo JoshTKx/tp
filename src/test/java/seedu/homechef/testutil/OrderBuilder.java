@@ -9,6 +9,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Name;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 import seedu.homechef.model.util.SampleDataUtil;
@@ -31,6 +32,7 @@ public class OrderBuilder {
     private Email email;
     private Address address;
     private Date date;
+    private PaymentStatus paymentStatus;
     private Set<DietTag> dietTags;
 
     /**
@@ -43,6 +45,7 @@ public class OrderBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         date = new Date(DEFAULT_DATE);
+        paymentStatus = new PaymentStatus(false);
         dietTags = new HashSet<>();
     }
 
@@ -56,6 +59,7 @@ public class OrderBuilder {
         email = orderToCopy.getEmail();
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
+        paymentStatus = orderToCopy.getPaymentStatus();
         dietTags = new HashSet<>(orderToCopy.getTags());
     }
 
@@ -115,8 +119,13 @@ public class OrderBuilder {
         return this;
     }
 
+    public OrderBuilder withPaymentStatus(boolean isPaid) {
+        this.paymentStatus = new PaymentStatus(isPaid);
+        return this;
+    }
+
     public Order build() {
-        return new Order(food, name, phone, email, address, date, dietTags);
+        return new Order(food, name, phone, email, address, date, paymentStatus, dietTags);
     }
 
 }
