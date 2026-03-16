@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.homechef.commons.exceptions.IllegalValueException;
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
@@ -127,8 +128,11 @@ class JsonAdaptedOrder {
         }
         final Date modelDate = new Date(date);
 
+        final CompletionStatus modelCompletionStatus = new CompletionStatus(0);
+
         final Set<DietTag> modelDietTags = new HashSet<>(orderDietTags);
-        return new Order(modelFood, modelName, modelPhone, modelEmail, modelAddress, modelDate, modelDietTags);
+        return new Order(modelFood, modelName, modelPhone, modelEmail, modelAddress, modelDate, modelCompletionStatus,
+                modelDietTags);
     }
 
 }
