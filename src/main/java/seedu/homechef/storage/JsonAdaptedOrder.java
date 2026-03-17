@@ -175,9 +175,7 @@ class JsonAdaptedOrder {
             throw new IllegalValueException(Date.MESSAGE_CONSTRAINTS);
         }
         final Date modelDate = new Date(date);
-
         final CompletionStatus modelCompletionStatus = new CompletionStatus(0);
-        
         final Set<DietTag> modelDietTags = new HashSet<>(orderDietTags);
         Optional<PaymentInfo> modelPaymentInfo;
         if (paymentType == null) {
