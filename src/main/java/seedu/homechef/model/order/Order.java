@@ -5,6 +5,7 @@ import static seedu.homechef.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.homechef.commons.util.ToStringBuilder;
@@ -27,13 +28,22 @@ public class Order {
     private final Date date;
     private final PaymentStatus paymentStatus;
     private final Set<DietTag> dietTags = new HashSet<>();
+    private final Optional<PaymentInfo> paymentInfo;
 
     /**
      * Every field must be present and not null.
      */
-    public Order(Food food, Name name, Phone phone, Email email,
-                 Address address, Date date, PaymentStatus paymentStatus, Set<DietTag> dietTags) {
-        requireAllNonNull(food, name, phone, email, address, dietTags);
+    public Order(Food food, Name name, Phone phone, Email email, Address address,
+                 Date date, PaymentStatus paymentStatus, Set<DietTag> dietTags) {
+        this(food, name, phone, email, address, date, paymentStatus, dietTags, Optional.empty());
+    }
+
+    /**
+     * Every field must be present and not null. {@code paymentInfo} may be empty.
+     */
+    public Order(Food food, Name name, Phone phone, Email email, Address address, Date date,
+                 PaymentStatus paymentStatus, Set<DietTag> dietTags, Optional<PaymentInfo> paymentInfo) {
+        requireAllNonNull(food, name, phone, email, address, date, paymentStatus, dietTags, paymentInfo);
         this.food = food;
         this.name = name;
         this.phone = phone;
@@ -42,6 +52,7 @@ public class Order {
         this.date = date;
         this.paymentStatus = paymentStatus;
         this.dietTags.addAll(dietTags);
+        this.paymentInfo = paymentInfo;
     }
 
     public Food getFood() {
@@ -70,6 +81,13 @@ public class Order {
 
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
+    }
+
+    /**
+     * Returns the payment info for this order, or empty if not set.
+     */
+    public Optional<PaymentInfo> getPaymentInfo() {
+        return paymentInfo;
     }
 
     /**
@@ -118,13 +136,14 @@ public class Order {
                 && address.equals(otherOrder.address)
                 && date.equals(otherOrder.date)
                 && paymentStatus.equals(otherOrder.paymentStatus)
-                && dietTags.equals(otherOrder.dietTags);
+                && dietTags.equals(otherOrder.dietTags)
+                && paymentInfo.equals(otherOrder.paymentInfo);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(food, name, phone, email, address, date, paymentStatus, dietTags);
+        return Objects.hash(food, name, phone, email, address, date, paymentStatus, dietTags, paymentInfo);
     }
 
     @Override
@@ -138,6 +157,7 @@ public class Order {
                 .add("date", date)
                 .add("paymentStatus", paymentStatus)
                 .add("dietTags", dietTags)
+                .add("paymentInfo", paymentInfo)
                 .toString();
     }
 
