@@ -123,7 +123,6 @@ public class ModelManagerTest {
 
         HomeChef homeChef = new HomeChefBuilder().withOrder(b).withOrder(a1).withOrder(a2).build();
         modelManager = new ModelManager(homeChef, new UserPrefs());
-        
         assertEquals(a2, modelManager.getFilteredOrderList().get(0));
         assertEquals(a1, modelManager.getFilteredOrderList().get(1));
         assertEquals(b, modelManager.getFilteredOrderList().get(2));
