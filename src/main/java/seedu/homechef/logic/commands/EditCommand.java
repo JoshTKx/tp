@@ -123,7 +123,7 @@ public class EditCommand extends Command {
                 ? editOrderDescriptor.getPaymentInfo()
                 : orderToEdit.getPaymentInfo();
 
-        return new Order(updatedFood, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDate, 
+        return new Order(updatedFood, updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDate,
                 updatedCompletionStatus, updatedDietTags, updatedPaymentInfo);
     }
 
