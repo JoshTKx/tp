@@ -35,7 +35,6 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="completionStatus" styleClass="cell_small_label" text="\$completionStatus" />
       <Label fx:id="paymentInfo" styleClass="cell_small_label" />
->>>>>>> master
     </VBox>
   </GridPane>
 </HBox>
