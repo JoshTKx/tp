@@ -28,10 +28,17 @@ public class ListCommand extends Command {
 
     private final Optional<Date> targetDate;
 
+    /**
+     * Creates a ListCommand that lists all orders without filtering.
+     */
     public ListCommand() {
         this.targetDate = Optional.empty();
     }
-
+    /**
+     * Creates a ListCommand that filters orders by the given date.
+     *
+     * @param targetDate the date to filter orders by
+     */
     public ListCommand(Date targetDate) {
         requireNonNull(targetDate);
         this.targetDate = Optional.of(targetDate);

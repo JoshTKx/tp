@@ -26,7 +26,7 @@ public class ModelManager implements Model {
         LocalDate da = a.getDate().value;
         LocalDate db = b.getDate().value;
 
-        int dateCmp = da.compareTo(db) ;
+        int dateCmp = da.compareTo(db);
         if (dateCmp != 0) {
             return dateCmp;
         }
