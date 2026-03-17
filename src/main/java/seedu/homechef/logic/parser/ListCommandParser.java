@@ -27,7 +27,7 @@ public class ListCommandParser implements Parser<ListCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_DATE);
-        
+
         Optional<String> dateArg = argMultimap.getValue(PREFIX_DATE);
         if (dateArg.isPresent()) {
             Date date = ParserUtil.parseDate(dateArg.get());
