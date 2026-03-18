@@ -27,13 +27,15 @@
         </Label>
         <Label fx:id="food" text="\$first" styleClass="cell_big_label" />
       </HBox>
+      <VBox alignment="CENTER_LEFT" minHeight="30" GridPane.columnIndex="0">
+        <Label fx:id="completionStatus" styleClass="cell_completion_status_label" text="\$completionStatus" />
+      </VBox>
       <FlowPane fx:id="dietTags" />
       <Label fx:id="name" styleClass="cell_small_label" text="\$name" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <Label fx:id="completionStatus" styleClass="cell_small_label" text="\$completionStatus" />
       <Label fx:id="paymentInfo" styleClass="cell_small_label" />
     </VBox>
   </GridPane>
