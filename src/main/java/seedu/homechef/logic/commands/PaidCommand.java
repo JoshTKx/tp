@@ -46,7 +46,7 @@ public class PaidCommand extends Command {
         Order editedOrder = new Order(
                 orderToEdit.getFood(), orderToEdit.getName(), orderToEdit.getPhone(),
                 orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),
-                paidStatus, orderToEdit.getTags());
+                orderToEdit.getCompletionStatus(), paidStatus, orderToEdit.getTags());
 
         model.setOrder(orderToEdit, editedOrder);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
