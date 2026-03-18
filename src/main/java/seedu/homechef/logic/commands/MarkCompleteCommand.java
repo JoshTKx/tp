@@ -14,10 +14,10 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
+import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
-import seedu.homechef.model.order.Name;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.Phone;
@@ -68,7 +68,7 @@ public class MarkCompleteCommand extends Command {
         assert orderToMarkComplete != null;
 
         Food food = orderToMarkComplete.getFood();
-        Name name = orderToMarkComplete.getName();
+        Customer customer = orderToMarkComplete.getCustomer();
         Phone phone = orderToMarkComplete.getPhone();
         Email email = orderToMarkComplete.getEmail();
         Address address = orderToMarkComplete.getAddress();
@@ -77,7 +77,7 @@ public class MarkCompleteCommand extends Command {
         Set<DietTag> dietTags = orderToMarkComplete.getTags();
         Optional<PaymentInfo> paymentInfo = orderToMarkComplete.getPaymentInfo();
 
-        return new Order(food, name, phone,
+        return new Order(food, customer, phone,
                 email, address, date, updatedCompletionStatus, dietTags, paymentInfo);
     }
 

@@ -15,8 +15,10 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.homechef.commons.core.GuiSettings;
-import seedu.homechef.model.order.NameContainsKeywordsPredicate;
+import seedu.homechef.model.order.CustomerContainsKeywordsPredicate;
+import seedu.homechef.model.order.Order;
 import seedu.homechef.testutil.HomeChefBuilder;
+import seedu.homechef.testutil.OrderBuilder;
 
 public class ModelManagerTest {
 
@@ -94,6 +96,39 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getFilteredOrderList_sortedByDateAscending() {
+        Order later = new OrderBuilder().withCustomer("Zed").withFood("Cake").withPhone("99999999")
+                .withEmail("z@example.com").withAddress("addr").withDate("20-04-2026").build();
+        Order earlier = new OrderBuilder().withCustomer("Amy").withFood("Bread").withPhone("11111111")
+                .withEmail("a@example.com").withAddress("addr").withDate("01-04-2026").build();
+        Order middle = new OrderBuilder().withCustomer("Bob").withFood("Pie").withPhone("22222222")
+                .withEmail("b@example.com").withAddress("addr").withDate("10-04-2026").build();
+
+        HomeChef homeChef = new HomeChefBuilder().withOrder(later).withOrder(earlier).withOrder(middle).build();
+        modelManager = new ModelManager(homeChef, new UserPrefs());
+
+        assertEquals(earlier, modelManager.getFilteredOrderList().get(0));
+        assertEquals(middle, modelManager.getFilteredOrderList().get(1));
+        assertEquals(later, modelManager.getFilteredOrderList().get(2));
+    }
+
+    @Test
+    public void getFilteredOrderList_sameDate_tieBreakByCustomerThenFood() {
+        Order a1 = new OrderBuilder().withCustomer("Alice").withFood("Brownie").withPhone("11111111")
+                .withEmail("a1@example.com").withAddress("addr").withDate("10-04-2026").build();
+        Order a2 = new OrderBuilder().withCustomer("Alice").withFood("Apple Pie").withPhone("22222222")
+                .withEmail("a2@example.com").withAddress("addr").withDate("10-04-2026").build();
+        Order b = new OrderBuilder().withCustomer("Bob").withFood("Cake").withPhone("33333333")
+                .withEmail("b@example.com").withAddress("addr").withDate("10-04-2026").build();
+
+        HomeChef homeChef = new HomeChefBuilder().withOrder(b).withOrder(a1).withOrder(a2).build();
+        modelManager = new ModelManager(homeChef, new UserPrefs());
+        assertEquals(a2, modelManager.getFilteredOrderList().get(0));
+        assertEquals(a1, modelManager.getFilteredOrderList().get(1));
+        assertEquals(b, modelManager.getFilteredOrderList().get(2));
+    }
+
+    @Test
     public void equals() {
         HomeChef homeChef = new HomeChefBuilder().withOrder(ALICE).withOrder(BENSON).build();
         HomeChef differentHomeChef = new HomeChef();
@@ -117,8 +152,8 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentHomeChef, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredOrderList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        String[] keywords = ALICE.getCustomer().fullName.split("\\s+");
+        modelManager.updateFilteredOrderList(new CustomerContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(homeChef, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests

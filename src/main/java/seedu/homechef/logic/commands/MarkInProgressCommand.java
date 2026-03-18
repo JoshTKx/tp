@@ -14,10 +14,10 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
+import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
-import seedu.homechef.model.order.Name;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.Phone;
@@ -69,7 +69,7 @@ public class MarkInProgressCommand extends Command {
         assert orderToMarkIncomplete != null;
 
         Food food = orderToMarkIncomplete.getFood();
-        Name name = orderToMarkIncomplete.getName();
+        Customer customer = orderToMarkIncomplete.getCustomer();
         Phone phone = orderToMarkIncomplete.getPhone();
         Email email = orderToMarkIncomplete.getEmail();
         Address address = orderToMarkIncomplete.getAddress();
@@ -78,7 +78,7 @@ public class MarkInProgressCommand extends Command {
         Set<DietTag> dietTags = orderToMarkIncomplete.getTags();
         Optional<PaymentInfo> paymentInfo = orderToMarkIncomplete.getPaymentInfo();
 
-        return new Order(food, name, phone,
+        return new Order(food, customer, phone,
                 email, address, date, updatedCompletionStatus, dietTags, paymentInfo);
     }
 

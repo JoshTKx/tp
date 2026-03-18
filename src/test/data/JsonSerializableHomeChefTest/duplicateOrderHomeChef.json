@@ -1,7 +1,7 @@
 {
   "orders": [ {
-    "dish": "Birthday Cake",
-    "name": "Alice Pauline",
+    "food": "Birthday Cake",
+    "customer": "Alice Pauline",
     "phone": "94351253",
     "email": "alice@example.com",
     "date": "26-10-2026",
@@ -9,8 +9,8 @@
     "completionStatus": "In progress",
     "tags": [ "friends" ]
   }, {
-    "dish": "Birthday Cake",
-    "name": "Alice Pauline",
+    "food": "Birthday Cake",
+    "customer": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "date": "26-10-2026",
