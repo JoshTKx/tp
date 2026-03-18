@@ -75,4 +75,18 @@ public class ListCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
     }
 
+    @Test
+    public void parse_validPhone_success() {
+        ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
+        d.setPhoneQuery("9435");
+        assertParseSuccess(parser, " p/9435", new ListCommand(d));
+    }
+
+    @Test
+    public void parse_emptyPhone_failure() {
+        assertParseFailure(parser, " p/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+    }
+
+
 }

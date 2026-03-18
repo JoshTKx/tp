@@ -91,6 +91,18 @@ public class ListCommandTest {
     }
 
     @Test
+    public void execute_withPhoneFilter_filtersList() {
+        ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
+        d.setPhoneQuery("9435");
+
+        expectedModel.updateFilteredOrderList(order ->
+                order.getPhone().toString().toLowerCase().contains("9435"));
+
+        assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+
+    @Test
     public void equals() {
         Date d1 = new Date("16-04-2003");
 
