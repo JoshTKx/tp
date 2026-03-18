@@ -45,6 +45,8 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label paymentInfo;
     @FXML
+    private Label paymentStatus;
+    @FXML
     private FlowPane dietTags;
     @FXML
     private Label completionStatus;
@@ -62,6 +64,8 @@ public class OrderCard extends UiPart<Region> {
         address.setText(order.getAddress().value);
         date.setText(order.getDate().toString());
         email.setText(order.getEmail().value);
+        paymentStatus.setText(order.getPaymentStatus().toString());
+        paymentStatus.setStyle(order.getPaymentStatus().getStyle());
         order.getPaymentInfo().ifPresentOrElse(
                 info -> paymentInfo.setText("Payment: " + info.toString()), () -> {
                     paymentInfo.setVisible(false);

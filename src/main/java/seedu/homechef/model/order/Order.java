@@ -27,6 +27,7 @@ public class Order {
     // Data fields
     private final Address address;
     private final Date date;
+    private final PaymentStatus paymentStatus;
     private final Set<DietTag> dietTags = new HashSet<>();
     private final Optional<PaymentInfo> paymentInfo;
 
@@ -34,16 +35,18 @@ public class Order {
      * Every field must be present and not null.
      */
     public Order(Food food, Customer customer, Phone phone, Email email, Address address, Date date,
-                 CompletionStatus completionStatus, Set<DietTag> dietTags) {
-        this(food, customer, phone, email, address, date, completionStatus, dietTags, Optional.empty());
+                 CompletionStatus completionStatus, PaymentStatus paymentStatus, Set<DietTag> dietTags) {
+        this(food, customer, phone, email, address, date, completionStatus, paymentStatus, dietTags, Optional.empty());
     }
 
     /**
      * Every field must be present and not null. {@code paymentInfo} may be empty.
      */
     public Order(Food food, Customer customer, Phone phone, Email email, Address address, Date date,
-                 CompletionStatus completionStatus, Set<DietTag> dietTags, Optional<PaymentInfo> paymentInfo) {
-        requireAllNonNull(food, customer, phone, email, address, date, completionStatus, dietTags, paymentInfo);
+                 CompletionStatus completionStatus, PaymentStatus paymentStatus, Set<DietTag> dietTags,
+                 Optional<PaymentInfo> paymentInfo) {
+        requireAllNonNull(food, customer, phone, email, address, date,
+                completionStatus, paymentStatus, dietTags, paymentInfo);
         this.food = food;
         this.customer = customer;
         this.phone = phone;
@@ -51,6 +54,7 @@ public class Order {
         this.address = address;
         this.date = date;
         this.completionStatus = completionStatus;
+        this.paymentStatus = paymentStatus;
         this.dietTags.addAll(dietTags);
         this.paymentInfo = paymentInfo;
     }
@@ -81,6 +85,10 @@ public class Order {
 
     public CompletionStatus getCompletionStatus() {
         return completionStatus;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
     }
 
     /**
@@ -136,6 +144,7 @@ public class Order {
                 && address.equals(otherOrder.address)
                 && date.equals(otherOrder.date)
                 && completionStatus.equals(otherOrder.completionStatus)
+                && paymentStatus.equals(otherOrder.paymentStatus)
                 && dietTags.equals(otherOrder.dietTags)
                 && paymentInfo.equals(otherOrder.paymentInfo);
     }
@@ -143,7 +152,8 @@ public class Order {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(food, customer, phone, email, address, date, completionStatus, dietTags, paymentInfo);
+        return Objects.hash(food, customer, phone, email, address, date, completionStatus,
+                paymentStatus, dietTags, paymentInfo);
     }
 
     @Override
@@ -156,6 +166,7 @@ public class Order {
                 .add("address", address)
                 .add("date", date)
                 .add("completionStatus", completionStatus)
+                .add("paymentStatus", paymentStatus)
                 .add("dietTags", dietTags)
                 .add("paymentInfo", paymentInfo)
                 .toString();

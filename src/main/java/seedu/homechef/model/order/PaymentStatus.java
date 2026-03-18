@@ -6,6 +6,15 @@ package seedu.homechef.model.order;
  */
 public class PaymentStatus {
 
+    public static final String STATUS_PAID = "$ PAID";
+    public static final String STATUS_UNPAID = "$ UNPAID";
+
+    public static final boolean IS_PAID = true;
+    public static final boolean IS_UNPAID = false;
+
+    public static final String MESSAGE_CONSTRAINTS =
+            "Payment status should either be $ PAID or $ UNPAID";
+
     public final boolean status;
 
     /**
@@ -24,7 +33,7 @@ public class PaymentStatus {
 
     @Override
     public String toString() {
-        return status ? "PAID" : "UNPAID";
+        return status ? STATUS_PAID : STATUS_UNPAID;
     }
 
     @Override
@@ -39,6 +48,23 @@ public class PaymentStatus {
 
         PaymentStatus otherStatus = (PaymentStatus) other;
         return status == otherStatus.status;
+    }
+
+    /**
+     * Returns if a given string is a valid payment status.
+     */
+    public static boolean isValidStatus(String test) {
+        return STATUS_PAID.equals(test) || STATUS_UNPAID.equals(test);
+    }
+
+    /**
+     * Returns the CSS style string representing the color of the payment status.
+     * Paid statuses are styled in green, while unpaid statuses are styled in red.
+     *
+     * @return a CSS style string for the JavaFX Label
+     */
+    public String getStyle() {
+        return status ? "-fx-text-fill: limegreen;" : "-fx-text-fill: orange;";
     }
 
     @Override

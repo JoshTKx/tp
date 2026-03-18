@@ -116,7 +116,7 @@ public class OrderTest {
                 + ", customer=" + ALICE.getCustomer()
                 + ", phone=" + ALICE.getPhone() + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", date=" + ALICE.getDate() + ", completionStatus=" + ALICE.getCompletionStatus()
-                + ", dietTags=" + ALICE.getTags()
+                + ", paymentStatus=" + ALICE.getPaymentStatus() + ", dietTags=" + ALICE.getTags()
                 + ", paymentInfo=" + ALICE.getPaymentInfo() + "}";
         assertEquals(expected, ALICE.toString());
     }
