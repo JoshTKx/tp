@@ -22,6 +22,7 @@ public class Order {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final CompletionStatus completionStatus;
 
     // Data fields
     private final Address address;
@@ -32,22 +33,24 @@ public class Order {
     /**
      * Every field must be present and not null.
      */
-    public Order(Food food, Name name, Phone phone, Email email, Address address, Date date, Set<DietTag> dietTags) {
-        this(food, name, phone, email, address, date, dietTags, Optional.empty());
+    public Order(Food food, Name name, Phone phone, Email email, Address address, Date date,
+                 CompletionStatus completionStatus, Set<DietTag> dietTags) {
+        this(food, name, phone, email, address, date, completionStatus, dietTags, Optional.empty());
     }
 
     /**
      * Every field must be present and not null. {@code paymentInfo} may be empty.
      */
     public Order(Food food, Name name, Phone phone, Email email, Address address, Date date,
-                 Set<DietTag> dietTags, Optional<PaymentInfo> paymentInfo) {
-        requireAllNonNull(food, name, phone, email, address, date, dietTags, paymentInfo);
+                 CompletionStatus completionStatus, Set<DietTag> dietTags, Optional<PaymentInfo> paymentInfo) {
+        requireAllNonNull(food, name, phone, email, address, date, completionStatus, dietTags, paymentInfo);
         this.food = food;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.date = date;
+        this.completionStatus = completionStatus;
         this.dietTags.addAll(dietTags);
         this.paymentInfo = paymentInfo;
     }
@@ -74,6 +77,10 @@ public class Order {
 
     public Date getDate() {
         return date;
+    }
+
+    public CompletionStatus getCompletionStatus() {
+        return completionStatus;
     }
 
     /**
@@ -128,6 +135,7 @@ public class Order {
                 && email.equals(otherOrder.email)
                 && address.equals(otherOrder.address)
                 && date.equals(otherOrder.date)
+                && completionStatus.equals(otherOrder.completionStatus)
                 && dietTags.equals(otherOrder.dietTags)
                 && paymentInfo.equals(otherOrder.paymentInfo);
     }
@@ -135,7 +143,7 @@ public class Order {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(food, name, phone, email, address, date, dietTags, paymentInfo);
+        return Objects.hash(food, name, phone, email, address, date, completionStatus, dietTags, paymentInfo);
     }
 
     @Override
@@ -147,6 +155,7 @@ public class Order {
                 .add("email", email)
                 .add("address", address)
                 .add("date", date)
+                .add("completionStatus", completionStatus)
                 .add("dietTags", dietTags)
                 .add("paymentInfo", paymentInfo)
                 .toString();

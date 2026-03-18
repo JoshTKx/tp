@@ -46,6 +46,8 @@ public class OrderCard extends UiPart<Region> {
     private Label paymentInfo;
     @FXML
     private FlowPane dietTags;
+    @FXML
+    private Label completionStatus;
 
     /**
      * Creates a {@code OrderCode} with the given {@code Order} and index to display.

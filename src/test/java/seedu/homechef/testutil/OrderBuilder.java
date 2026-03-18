@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.CompletionStatus;
+import seedu.homechef.model.order.CompletionStatusEnum;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
@@ -26,6 +28,7 @@ public class OrderBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DATE = "10-03-2026";
+    public static final CompletionStatusEnum DEFAULT_COMPLETION_STATUS = CompletionStatusEnum.IN_PROGRESS;
 
     private Food food;
     private Name name;
@@ -33,6 +36,7 @@ public class OrderBuilder {
     private Email email;
     private Address address;
     private Date date;
+    private CompletionStatus completionStatus;
     private Set<DietTag> dietTags;
     private Optional<PaymentInfo> paymentInfo = Optional.empty();
 
@@ -46,6 +50,7 @@ public class OrderBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         date = new Date(DEFAULT_DATE);
+        completionStatus = new CompletionStatus(DEFAULT_COMPLETION_STATUS);
         dietTags = new HashSet<>();
     }
 
@@ -59,6 +64,7 @@ public class OrderBuilder {
         email = orderToCopy.getEmail();
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
+        completionStatus = orderToCopy.getCompletionStatus();
         dietTags = new HashSet<>(orderToCopy.getTags());
         paymentInfo = orderToCopy.getPaymentInfo();
     }
@@ -120,6 +126,14 @@ public class OrderBuilder {
     }
 
     /**
+     * Sets the {@code CompletionStatus} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withCompletionStatus(CompletionStatusEnum completionStatus) {
+        this.completionStatus = new CompletionStatus(completionStatus);
+        return this;
+    }
+
+    /**
      * Sets the {@code PaymentInfo} of the {@code Order} that we are building.
      */
     public OrderBuilder withPaymentInfo(PaymentInfo paymentInfo) {
@@ -131,7 +145,7 @@ public class OrderBuilder {
      * Builds and returns the {@code Order}.
      */
     public Order build() {
-        return new Order(food, name, phone, email, address, date, dietTags, paymentInfo);
+        return new Order(food, name, phone, email, address, date, completionStatus, dietTags, paymentInfo);
     }
 
 }
