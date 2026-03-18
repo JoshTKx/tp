@@ -123,6 +123,9 @@ public class OrderBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code PaymentStatus} of the {@code Order} that we are building.
+     */
     public OrderBuilder withPaymentStatus(boolean isPaid) {
         this.paymentStatus = new PaymentStatus(isPaid);
         return this;

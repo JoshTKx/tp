@@ -33,8 +33,8 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Name;
 import seedu.homechef.model.order.Order;
-import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 

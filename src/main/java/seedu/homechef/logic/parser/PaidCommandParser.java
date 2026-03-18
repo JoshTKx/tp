@@ -6,6 +6,9 @@ import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.commands.PaidCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new PaidCommand object
+ */
 public class PaidCommandParser implements Parser<PaidCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the PaidCommand

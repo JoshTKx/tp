@@ -6,8 +6,6 @@ package seedu.homechef.model.order;
  */
 public class PaymentStatus {
 
-    public final boolean status;
-
     public static final String STATUS_PAID = "$ PAID";
     public static final String STATUS_UNPAID = "$ UNPAID";
 
@@ -16,6 +14,8 @@ public class PaymentStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Payment status should either be $ PAID or $ UNPAID";
+
+    public final boolean status;
 
     /**
      * Constructs a {@code PaymentStatus}.
