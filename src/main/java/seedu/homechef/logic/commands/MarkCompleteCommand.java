@@ -20,6 +20,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 
@@ -74,11 +75,12 @@ public class MarkCompleteCommand extends Command {
         Address address = orderToMarkComplete.getAddress();
         Date date = orderToMarkComplete.getDate();
         CompletionStatus updatedCompletionStatus = new CompletionStatus("Completed");
+        PaymentStatus paymentStatus = orderToMarkComplete.getPaymentStatus();
         Set<DietTag> dietTags = orderToMarkComplete.getTags();
         Optional<PaymentInfo> paymentInfo = orderToMarkComplete.getPaymentInfo();
 
         return new Order(food, customer, phone,
-                email, address, date, updatedCompletionStatus, dietTags, paymentInfo);
+                email, address, date, updatedCompletionStatus, paymentStatus, dietTags, paymentInfo);
     }
 
     @Override

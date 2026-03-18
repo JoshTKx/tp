@@ -12,6 +12,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 import seedu.homechef.model.util.SampleDataUtil;
@@ -36,6 +37,7 @@ public class OrderBuilder {
     private Address address;
     private Date date;
     private CompletionStatus completionStatus;
+    private PaymentStatus paymentStatus;
     private Set<DietTag> dietTags;
     private Optional<PaymentInfo> paymentInfo = Optional.empty();
 
@@ -50,6 +52,7 @@ public class OrderBuilder {
         address = new Address(DEFAULT_ADDRESS);
         date = new Date(DEFAULT_DATE);
         completionStatus = new CompletionStatus(DEFAULT_COMPLETION_STATUS);
+        paymentStatus = new PaymentStatus(false);
         dietTags = new HashSet<>();
     }
 
@@ -64,6 +67,7 @@ public class OrderBuilder {
         address = orderToCopy.getAddress();
         date = orderToCopy.getDate();
         completionStatus = orderToCopy.getCompletionStatus();
+        paymentStatus = orderToCopy.getPaymentStatus();
         dietTags = new HashSet<>(orderToCopy.getTags());
         paymentInfo = orderToCopy.getPaymentInfo();
     }
@@ -133,6 +137,14 @@ public class OrderBuilder {
     }
 
     /**
+     * Sets the {@code PaymentStatus} of the {@code Order} that we are building.
+     */
+    public OrderBuilder withPaymentStatus(boolean isPaid) {
+        this.paymentStatus = new PaymentStatus(isPaid);
+        return this;
+    }
+
+    /**
      * Sets the {@code PaymentInfo} of the {@code Order} that we are building.
      */
     public OrderBuilder withPaymentInfo(PaymentInfo paymentInfo) {
@@ -144,7 +156,8 @@ public class OrderBuilder {
      * Builds and returns the {@code Order}.
      */
     public Order build() {
-        return new Order(food, customer, phone, email, address, date, completionStatus, dietTags, paymentInfo);
+        return new Order(food, customer, phone, email, address, date,
+                completionStatus, paymentStatus, dietTags, paymentInfo);
     }
 
 }

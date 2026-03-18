@@ -20,6 +20,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 
@@ -75,11 +76,12 @@ public class MarkInProgressCommand extends Command {
         Address address = orderToMarkInProgress.getAddress();
         Date date = orderToMarkInProgress.getDate();
         CompletionStatus updatedCompletionStatus = new CompletionStatus("In progress");
+        PaymentStatus paymentStatus = orderToMarkInProgress.getPaymentStatus();
         Set<DietTag> dietTags = orderToMarkInProgress.getTags();
         Optional<PaymentInfo> paymentInfo = orderToMarkInProgress.getPaymentInfo();
 
         return new Order(food, customer, phone,
-                email, address, date, updatedCompletionStatus, dietTags, paymentInfo);
+                email, address, date, updatedCompletionStatus, paymentStatus, dietTags, paymentInfo);
     }
 
     @Override

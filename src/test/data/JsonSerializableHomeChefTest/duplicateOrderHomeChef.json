@@ -7,6 +7,7 @@
     "date": "26-10-2026",
     "address": "123, Jurong West Ave 6, #08-111",
     "completionStatus": "In progress",
+    "paymentStatus": "$ UNPAID",
     "tags": [ "friends" ]
   }, {
     "food": "Birthday Cake",
@@ -15,6 +16,7 @@
     "email": "pauline@example.com",
     "date": "26-10-2026",
     "address": "4th street",
-    "completionStatus": "In progress"
+    "completionStatus": "In progress",
+    "paymentStatus": "$ UNPAID"
   } ]
 }

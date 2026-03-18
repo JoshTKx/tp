@@ -27,6 +27,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
 
@@ -63,14 +64,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         // Initialise every Order as "In progress"
         CompletionStatus completionStatus = new CompletionStatus("In progress");
+        // Initialise every Order as unpaid
+        PaymentStatus paymentStatus = new PaymentStatus(PaymentStatus.IS_UNPAID);
         Set<DietTag> dietTagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Optional<PaymentInfo> paymentInfo = ParserUtil.parsePaymentInfo(
                 argMultimap.getValue(PREFIX_PAYMENT_METHOD),
                 argMultimap.getValue(PREFIX_PAYMENT_REF),
                 argMultimap.getValue(PREFIX_BANK_NAME),
                 argMultimap.getValue(PREFIX_WALLET_PROVIDER));
-        Order order = new Order(food, customer, phone, email, address, date, completionStatus, dietTagList,
-                paymentInfo);
+        Order order = new Order(food, customer, phone, email, address, date,
+                completionStatus, paymentStatus, dietTagList, paymentInfo);
 
         return new AddCommand(order);
     }

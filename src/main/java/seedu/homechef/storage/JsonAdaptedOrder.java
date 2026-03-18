@@ -18,6 +18,7 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
@@ -36,6 +37,7 @@ class JsonAdaptedOrder {
     private final String address;
     private final String date;
     private final String completionStatus;
+    private final String paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String paymentType;
     private final String paymentHandle;
@@ -57,6 +59,7 @@ class JsonAdaptedOrder {
             @JsonProperty("address") String address,
             @JsonProperty("date") String date,
             @JsonProperty("completionStatus") String completionStatus,
+            @JsonProperty("paymentStatus") String paymentStatus,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("paymentType") String paymentType,
             @JsonProperty("paymentHandle") String paymentHandle,
@@ -72,6 +75,7 @@ class JsonAdaptedOrder {
         this.address = address;
         this.date = date;
         this.completionStatus = completionStatus;
+        this.paymentStatus = paymentStatus;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -95,6 +99,7 @@ class JsonAdaptedOrder {
         address = source.getAddress().value;
         date = source.getDate().toString();
         completionStatus = source.getCompletionStatus().toString();
+        paymentStatus = source.getPaymentStatus().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .toList());
@@ -189,6 +194,16 @@ class JsonAdaptedOrder {
         }
         final CompletionStatus modelCompletionStatus = new CompletionStatus(completionStatus);
 
+        if (paymentStatus == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PaymentStatus.class.getSimpleName()));
+        }
+        if (!PaymentStatus.isValidStatus(paymentStatus)) {
+            throw new IllegalValueException(PaymentStatus.MESSAGE_CONSTRAINTS);
+        }
+        boolean isPaid = paymentStatus.equals(PaymentStatus.STATUS_PAID);
+        final PaymentStatus modelPaymentStatus = new PaymentStatus(isPaid);
+
         Optional<PaymentInfo> modelPaymentInfo;
         if (paymentType == null) {
             modelPaymentInfo = Optional.empty();
@@ -209,8 +224,8 @@ class JsonAdaptedOrder {
             }
         }
 
-        return new Order(modelFood, modelCustomer, modelPhone, modelEmail,
-                modelAddress, modelDate, modelCompletionStatus, modelDietTags, modelPaymentInfo);
+        return new Order(modelFood, modelCustomer, modelPhone, modelEmail, modelAddress,
+                modelDate, modelCompletionStatus, modelPaymentStatus, modelDietTags, modelPaymentInfo);
     }
 
 }
