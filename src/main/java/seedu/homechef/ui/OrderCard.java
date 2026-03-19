@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Order;
 
 /**
@@ -64,6 +65,7 @@ public class OrderCard extends UiPart<Region> {
         address.setText(order.getAddress().value);
         date.setText(order.getDate().toString());
         email.setText(order.getEmail().value);
+        setCompletionStatusLabel(order.getCompletionStatus());
         paymentStatus.setText(order.getPaymentStatus().toString());
         paymentStatus.setStyle(order.getPaymentStatus().getStyle());
         order.getPaymentInfo().ifPresentOrElse(
@@ -74,5 +76,21 @@ public class OrderCard extends UiPart<Region> {
         order.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> dietTags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void setCompletionStatusLabel(CompletionStatus completionStatus) {
+        this.completionStatus.setText(order.getCompletionStatus().toString());
+        this.completionStatus.getStyleClass().add("cell_completion_status_label");
+        switch (completionStatus.value) {
+        case IN_PROGRESS:
+            this.completionStatus.getStyleClass().add("completion_status_label_in_progress");
+            break;
+        case COMPLETED:
+            this.completionStatus.getStyleClass().add("completion_status_label_complete");
+            break;
+        default:
+            // Do nothing
+        }
+        return;
     }
 }

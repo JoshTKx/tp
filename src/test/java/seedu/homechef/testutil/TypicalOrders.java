@@ -2,6 +2,8 @@ package seedu.homechef.testutil;
 
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_COMPLETION_STATUS_COMPLETE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_COMPLETION_STATUS_IN_PROGRESS;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_DATE_AMY;
@@ -34,12 +36,14 @@ public class TypicalOrders {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withDate("26-03-2026")
             .withPhone("94351253")
+            .withCompletionStatus(VALID_COMPLETION_STATUS_IN_PROGRESS)
             .withPaymentStatus(IS_UNPAID)
             .withTags("friends").build();
     public static final Order BENSON = new OrderBuilder().withFood("Sourdough Bread").withCustomer("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withDate("26-03-2026")
             .withEmail("johnd@example.com").withPhone("98765432")
+            .withCompletionStatus(VALID_COMPLETION_STATUS_COMPLETE)
             .withPaymentStatus(IS_UNPAID)
             .withTags("owesMoney", "friends").build();
     public static final Order CARL = new OrderBuilder().withFood("Cupcakes (24pcs)").withCustomer("Carl Kurz")

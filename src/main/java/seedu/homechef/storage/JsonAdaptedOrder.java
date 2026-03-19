@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.homechef.commons.exceptions.IllegalValueException;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
-import seedu.homechef.model.order.CompletionStatusEnum;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
@@ -37,6 +36,7 @@ class JsonAdaptedOrder {
     private final String email;
     private final String address;
     private final String date;
+    private final String completionStatus;
     private final String paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String paymentType;
@@ -58,6 +58,7 @@ class JsonAdaptedOrder {
             @JsonProperty("email") String email,
             @JsonProperty("address") String address,
             @JsonProperty("date") String date,
+            @JsonProperty("completionStatus") String completionStatus,
             @JsonProperty("paymentStatus") String paymentStatus,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("paymentType") String paymentType,
@@ -73,6 +74,7 @@ class JsonAdaptedOrder {
         this.email = email;
         this.address = address;
         this.date = date;
+        this.completionStatus = completionStatus;
         this.paymentStatus = paymentStatus;
         if (tags != null) {
             this.tags.addAll(tags);
@@ -96,6 +98,7 @@ class JsonAdaptedOrder {
         email = source.getEmail().value;
         address = source.getAddress().value;
         date = source.getDate().toString();
+        completionStatus = source.getCompletionStatus().toString();
         paymentStatus = source.getPaymentStatus().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -182,7 +185,14 @@ class JsonAdaptedOrder {
         }
         final Date modelDate = new Date(date);
 
-        final CompletionStatus modelCompletionStatus = new CompletionStatus(CompletionStatusEnum.IN_PROGRESS);
+        if (completionStatus == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, CompletionStatus.class.getSimpleName()));
+        }
+        if (!CompletionStatus.isValidCompletionStatus(completionStatus)) {
+            throw new IllegalValueException(CompletionStatus.MESSAGE_CONSTRAINTS);
+        }
+        final CompletionStatus modelCompletionStatus = new CompletionStatus(completionStatus);
 
         if (paymentStatus == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,

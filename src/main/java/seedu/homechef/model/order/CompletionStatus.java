@@ -7,29 +7,40 @@ import static seedu.homechef.commons.util.AppUtil.checkArgument;
  */
 public class CompletionStatus {
     public static final String MESSAGE_CONSTRAINTS = String.format(
-            "Completion status must be represented as a valid enum");
+            "Completion status must be represented as a valid string, 'In progress' or 'Completed'");
 
     public final CompletionStatusEnum value;
 
     /**
      * Constructs a {@code CompletionStatus}.
      *
-     * @param value A valid enum to represent status.
+     * @param value A valid string to represent status.
      */
-    public CompletionStatus(CompletionStatusEnum value) {
+    public CompletionStatus(String value) {
         checkArgument(isValidCompletionStatus(value), MESSAGE_CONSTRAINTS);
-        this.value = value;
+        this.value = convertStringToEnum(value);
     }
 
     /**
      * Returns true if a given string is a valid completion status.
      */
-    public static boolean isValidCompletionStatus(CompletionStatusEnum test) {
+    public static boolean isValidCompletionStatus(String test) {
         switch (test) {
-        case IN_PROGRESS, COMPLETED:
+        case "In progress", "Completed":
             return true;
         default:
             return false;
+        }
+    }
+
+    private CompletionStatusEnum convertStringToEnum(String value) {
+        switch (value) {
+        case "In progress":
+            return CompletionStatusEnum.IN_PROGRESS;
+        case "Completed":
+            return CompletionStatusEnum.COMPLETED;
+        default:
+            return CompletionStatusEnum.INVALID_STATUS;
         }
     }
 
