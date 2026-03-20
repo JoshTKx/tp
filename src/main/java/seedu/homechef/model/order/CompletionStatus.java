@@ -13,7 +13,7 @@ public enum CompletionStatus {
     IN_PROGRESS("In Progress"),
     COMPLETED("Completed");
 
-    public static final String MESSAGE_CONSTRAINTS = "Completion status must be 'Pending', 'In progress' or 'Completed'";
+    public static final String MESSAGE_CONSTRAINTS = "Completion status must be 'Pending', 'In progress', 'Completed'";
 
     private final String displayValue;
 
