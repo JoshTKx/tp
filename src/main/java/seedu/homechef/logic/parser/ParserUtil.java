@@ -13,11 +13,13 @@ import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.PaymentInfo;
+import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.tag.DietTag;
@@ -267,5 +269,44 @@ public class ParserUtil {
         }
 
         return Optional.of(paymentInfo);
+    }
+
+    public static CompletionStatus parseCompletionStatus(String raw) throws ParseException {
+        requireNonNull(raw);
+        String normalized = raw.trim().toLowerCase().replace('-', '_');
+
+        switch (normalized) {
+        case "in_progress":
+        case "inprogress":
+            return new CompletionStatus("In progress");
+        case "complete":
+        case "completed":
+            return new CompletionStatus("Completed");
+        default:
+            String exact = raw.trim();
+            if (CompletionStatus.isValidCompletionStatus(exact)) {
+                return new CompletionStatus(exact);
+            }
+            throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);
+        }
+    }
+
+    public static PaymentStatus parsePaymentStatus(String raw) throws ParseException {
+        requireNonNull(raw);
+        String normalized = raw.trim().toLowerCase();
+
+        switch (normalized) {
+        case "paid":
+            return new PaymentStatus(true);
+        case "unpaid":
+            return new PaymentStatus(false);
+        default:
+            // allow "$ PAID" / "$ UNPAID" too
+            String exactUpper = raw.trim().toUpperCase();
+            if (PaymentStatus.isValidStatus(exactUpper)) {
+                return new PaymentStatus(PaymentStatus.STATUS_PAID.equals(exactUpper));
+            }
+            throw new ParseException(PaymentStatus.MESSAGE_CONSTRAINTS);
+        }
     }
 }
