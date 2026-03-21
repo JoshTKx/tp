@@ -1,5 +1,6 @@
 package seedu.homechef.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
 
@@ -72,5 +73,17 @@ public class EditCommandIntegrationTest {
         descriptor.setPhone(new Phone("91234567"));
         new EditCommand(indexAlice, descriptor).execute(model);
         // succeeds — validation not triggered
+    }
+
+    @Test
+    public void execute_foodNameCaseInsensitive_normalizesToCanonicalName() throws Exception {
+        Index indexAlice = Index.fromOneBased(1);
+        EditCommand.EditOrderDescriptor descriptor = new EditCommand.EditOrderDescriptor();
+        descriptor.setFood(new Food("chicken RICE"));
+        new EditCommand(indexAlice, descriptor).execute(model);
+
+        String storedFoodName = model.getFilteredOrderList().get(0).getFood().foodName;
+        assertEquals("Chicken Rice", storedFoodName,
+                "Food name should be normalized to canonical menu casing");
     }
 }

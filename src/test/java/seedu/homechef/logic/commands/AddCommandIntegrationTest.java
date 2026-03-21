@@ -1,5 +1,6 @@
 package seedu.homechef.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -99,5 +100,20 @@ public class AddCommandIntegrationTest {
                 "Error message should suggest 'add-menu'");
         assertTrue(!thrown.getMessage().contains("Did you mean"),
                 "Error message should not contain a suggestion for an unknown food");
+    }
+
+    @Test
+    public void execute_foodNameCaseInsensitive_normalizesToCanonicalName() throws Exception {
+        Order orderWithLowercaseFood = new OrderBuilder().withFood("chicken rice").build();
+        new AddCommand(orderWithLowercaseFood).execute(model);
+
+        Order storedOrder = model.getFilteredOrderList().stream()
+                .filter(o -> o.getCustomer().equals(orderWithLowercaseFood.getCustomer())
+                        && o.getDate().equals(orderWithLowercaseFood.getDate()))
+                .findFirst()
+                .orElseThrow(() -> new AssertionError("Order not found in model"));
+
+        assertEquals("Chicken Rice", storedOrder.getFood().foodName,
+                "Food name should be normalized to canonical menu casing");
     }
 }

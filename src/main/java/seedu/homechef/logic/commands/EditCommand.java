@@ -115,6 +115,14 @@ public class EditCommand extends Command {
                             "'%s' is currently unavailable. Check the menu panel on the right for available items.",
                             newFoodName));
                 }
+                String canonicalName = matchingItem.get().getName().fullName;
+                if (!canonicalName.equals(newFoodName)) {
+                    editedOrder = new Order(new Food(canonicalName), editedOrder.getCustomer(),
+                            editedOrder.getPhone(), editedOrder.getEmail(), editedOrder.getAddress(),
+                            editedOrder.getDate(), editedOrder.getCompletionStatus(),
+                            editedOrder.getPaymentStatus(), editedOrder.getTags(),
+                            editedOrder.getPaymentInfo());
+                }
             } else {
                 List<String> menuNames = model.getMenuBook().getMenuItemList().stream()
                         .map(item -> item.getName().fullName)

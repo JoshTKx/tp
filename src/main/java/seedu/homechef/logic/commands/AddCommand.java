@@ -23,6 +23,7 @@ import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.menu.MenuItem;
+import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 
 /**
@@ -104,8 +105,16 @@ public class AddCommand extends Command {
             }
         }
 
-        model.addOrder(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        String canonicalName = matchingItem.get().getName().fullName;
+        Order orderToAdd = canonicalName.equals(foodName)
+                ? toAdd
+                : new Order(new Food(canonicalName), toAdd.getCustomer(), toAdd.getPhone(),
+                        toAdd.getEmail(), toAdd.getAddress(), toAdd.getDate(),
+                        toAdd.getCompletionStatus(), toAdd.getPaymentStatus(),
+                        toAdd.getTags(), toAdd.getPaymentInfo());
+
+        model.addOrder(orderToAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(orderToAdd)));
     }
 
     @Override
