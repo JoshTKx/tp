@@ -1,9 +1,9 @@
 package seedu.homechef.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.homechef.testutil.Assert.assertThrows;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -77,30 +77,27 @@ public class AddCommandIntegrationTest {
         model = new ModelManager(TypicalOrders.getTypicalHomeChef(), mb, new UserPrefs());
 
         Order unavailableOrder = new OrderBuilder().withFood("Chicken Rice").build();
-        assertThrows(CommandException.class, () -> new AddCommand(unavailableOrder).execute(model));
+        assertThrows(CommandException.class, () -> new AddCommand(unavailableOrder).execute(model),
+                "Expected unavailable menu item to be rejected");
     }
 
     @Test
-    public void execute_foodIsTypo_throwsCommandExceptionWithSuggestion() throws Exception {
+    public void execute_foodIsTypo_throwsCommandExceptionWithSuggestion() {
         Order typoOrder = new OrderBuilder().withFood("Chiken Rice").build();
-        try {
-            new AddCommand(typoOrder).execute(model);
-            org.junit.jupiter.api.Assertions.fail("Expected CommandException");
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().contains("Chicken Rice"),
-                    "Error message should contain the suggestion 'Chicken Rice'");
-        }
+        CommandException thrown = assertThrows(CommandException.class, ()
+                -> new AddCommand(typoOrder).execute(model));
+        assertTrue(thrown.getMessage().contains("Chicken Rice"),
+                "Error message should contain the suggestion 'Chicken Rice'");
     }
 
     @Test
     public void execute_foodUnknown_throwsCommandExceptionWithAddMenuSuggestion() {
         Order unknownOrder = new OrderBuilder().withFood("Pizza Margherita").build();
-        try {
-            new AddCommand(unknownOrder).execute(model);
-            org.junit.jupiter.api.Assertions.fail("Expected CommandException");
-        } catch (CommandException e) {
-            assertTrue(e.getMessage().contains("add-menu"),
-                    "Error message should suggest 'add-menu'");
-        }
+        CommandException thrown = assertThrows(CommandException.class, ()
+                -> new AddCommand(unknownOrder).execute(model));
+        assertTrue(thrown.getMessage().contains("add-menu"),
+                "Error message should suggest 'add-menu'");
+        assertTrue(!thrown.getMessage().contains("Did you mean"),
+                "Error message should not contain a suggestion for an unknown food");
     }
 }
