@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.homechef.commons.core.GuiSettings;
 import seedu.homechef.commons.core.index.Index;
+import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.EditMenuCommand.EditMenuDescriptor;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
@@ -76,7 +77,7 @@ public class EditMenuCommandTest {
         EditMenuDescriptor descriptor = new EditMenuDescriptor();
         descriptor.setPrice(new Price("8.00"));
 
-        assertThrows(CommandException.class, ()
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_MENU_ITEM_DISPLAYED_INDEX, ()
                 -> new EditMenuCommand(Index.fromOneBased(1), descriptor).execute(modelStub));
     }
 
