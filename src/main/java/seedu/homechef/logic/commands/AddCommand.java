@@ -13,10 +13,16 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
+import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Order;
 
 /**
@@ -68,6 +74,34 @@ public class AddCommand extends Command {
 
         if (model.hasOrder(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
+
+        String foodName = toAdd.getFood().foodName;
+        Optional<MenuItem> matchingItem = model.getFilteredMenuItemList().stream()
+                .filter(item -> item.getName().fullName.equalsIgnoreCase(foodName))
+                .findFirst();
+
+        if (matchingItem.isPresent()) {
+            if (!matchingItem.get().isAvailable()) {
+                throw new CommandException(String.format(
+                        "'%s' is currently unavailable. Check the menu panel on the right for available items.",
+                        foodName));
+            }
+        } else {
+            List<String> menuNames = model.getFilteredMenuItemList().stream()
+                    .map(item -> item.getName().fullName)
+                    .collect(Collectors.toList());
+            Optional<String> suggestion = StringUtil.findClosestMatch(foodName, menuNames, 2);
+            if (suggestion.isPresent()) {
+                throw new CommandException(String.format(
+                        "No menu item '%s'. Did you mean '%s'? "
+                        + "Check the menu panel on the right for all items.",
+                        foodName, suggestion.get()));
+            } else {
+                throw new CommandException(String.format(
+                        "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
+                        foodName));
+            }
         }
 
         model.addOrder(toAdd);

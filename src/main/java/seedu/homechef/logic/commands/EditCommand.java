@@ -20,13 +20,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.CollectionUtil;
+import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
+import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
@@ -98,6 +101,36 @@ public class EditCommand extends Command {
 
         if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
+        }
+
+        if (editOrderDescriptor.getFood().isPresent()) {
+            String newFoodName = editedOrder.getFood().foodName;
+            Optional<MenuItem> matchingItem = model.getFilteredMenuItemList().stream()
+                    .filter(item -> item.getName().fullName.equalsIgnoreCase(newFoodName))
+                    .findFirst();
+
+            if (matchingItem.isPresent()) {
+                if (!matchingItem.get().isAvailable()) {
+                    throw new CommandException(String.format(
+                            "'%s' is currently unavailable. Check the menu panel on the right for available items.",
+                            newFoodName));
+                }
+            } else {
+                List<String> menuNames = model.getFilteredMenuItemList().stream()
+                        .map(item -> item.getName().fullName)
+                        .collect(Collectors.toList());
+                Optional<String> suggestion = StringUtil.findClosestMatch(newFoodName, menuNames, 2);
+                if (suggestion.isPresent()) {
+                    throw new CommandException(String.format(
+                            "No menu item '%s'. Did you mean '%s'? "
+                            + "Check the menu panel on the right for all items.",
+                            newFoodName, suggestion.get()));
+                } else {
+                    throw new CommandException(String.format(
+                            "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
+                            newFoodName));
+                }
+            }
         }
 
         model.setOrder(orderToEdit, editedOrder);

@@ -251,6 +251,16 @@ public class AddCommandTest {
         public ReadOnlyHomeChef getHomeChef() {
             return new HomeChef();
         }
+
+        @Override
+        public javafx.collections.ObservableList<seedu.homechef.model.menu.MenuItem> getFilteredMenuItemList() {
+            javafx.collections.ObservableList<seedu.homechef.model.menu.MenuItem> list =
+                    javafx.collections.FXCollections.observableArrayList();
+            list.add(new seedu.homechef.model.menu.MenuItem(
+                    new seedu.homechef.model.menu.MenuItemName("Birthday Cake"),
+                    new seedu.homechef.model.menu.Price("25.00"), true));
+            return list;
+        }
     }
 
 }

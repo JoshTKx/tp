@@ -30,6 +30,9 @@ import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.ReadOnlyHomeChef;
 import seedu.homechef.model.UserPrefs;
 import seedu.homechef.model.menu.MenuBook;
+import seedu.homechef.model.menu.MenuItem;
+import seedu.homechef.model.menu.MenuItemName;
+import seedu.homechef.model.menu.Price;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.storage.JsonHomeChefStorage;
 import seedu.homechef.storage.JsonMenuBookStorage;
@@ -177,11 +180,15 @@ public class LogicManagerTest {
 
         logic = new LogicManager(model, storage);
 
+        // Add "Birthday Cake" to the menu so that AddCommand passes menu validation
+        model.addMenuItem(new MenuItem(new MenuItemName("Birthday Cake"), new Price("25.00"), true));
+
         // Triggers the saveHomeChef method by executing an add command
         String addCommand = AddCommand.COMMAND_WORD + FOOD_DESC_AMY + CUSTOMER_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY;
         Order expectedOrder = new OrderBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
+        expectedModel.addMenuItem(new MenuItem(new MenuItemName("Birthday Cake"), new Price("25.00"), true));
         expectedModel.addOrder(expectedOrder);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
