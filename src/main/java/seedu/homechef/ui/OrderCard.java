@@ -25,6 +25,10 @@ public class OrderCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/homechef-level4/issues/336">The issue on HomeChef level 4</a>
      */
+    private static final String PENDING_SYMBOL = "◯";
+    private static final String IN_PROGRESS_SYMBOL = "◎";
+    private static final String COMPLETED_SYMBOL = "⬤";
+    private static final String PAYMENT_SYMBOL = "$";
 
     public final Order order;
 
@@ -83,15 +87,15 @@ public class OrderCard extends UiPart<Region> {
 
         switch (status) {
         case PENDING:
-            completionStatus.setText("◯ " + status);
+            completionStatus.setText(PENDING_SYMBOL + " " + status);
             completionStatus.getStyleClass().add("completion_status_label_pending");
             break;
         case IN_PROGRESS:
-            completionStatus.setText("◎ " + status);
+            completionStatus.setText(IN_PROGRESS_SYMBOL + " " + status);
             completionStatus.getStyleClass().add("completion_status_label_in_progress");
             break;
         case COMPLETED:
-            completionStatus.setText("⬤ " + status);
+            completionStatus.setText(COMPLETED_SYMBOL + " " + status);
             completionStatus.getStyleClass().add("completion_status_label_complete");
             break;
         default:
@@ -101,7 +105,7 @@ public class OrderCard extends UiPart<Region> {
 
     private void setPaymentStatusLabel(PaymentStatus status) {
         assert status != null;
-        paymentStatus.setText("$ " + status);
+        paymentStatus.setText(PAYMENT_SYMBOL + " " + status);
         switch (status) {
         case PAID:
             paymentStatus.getStyleClass().add("payment_status_label_paid");

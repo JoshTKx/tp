@@ -76,7 +76,7 @@ Format: `help`
 ### Adding an order: `add`
 
 Adds an order to the order list.
-All orders are initially set as 'Pending' and '$ UNPAID'.
+All orders are initially set as 'Pending' and 'Unpaid'.
 
 Format: `edit INDEX f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [t/TAG]…​ 
 [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`
@@ -120,7 +120,7 @@ Sets the completion status of an order to 'Completed'.
 
 Format: `complete INDEX`
 
-### Marking an order as in progress: `pending`
+### Marking an order as pending: `pending`
 
 Sets the completion status of an order to 'Pending'.
 
