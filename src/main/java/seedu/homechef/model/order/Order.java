@@ -60,42 +60,34 @@ public class Order {
     }
 
     public Food getFood() {
-        assert food != null;
         return food;
     }
 
     public Customer getCustomer() {
-        assert customer != null;
         return customer;
     }
 
     public Phone getPhone() {
-        assert phone != null;
         return phone;
     }
 
     public Email getEmail() {
-        assert email != null;
         return email;
     }
 
     public Address getAddress() {
-        assert address != null;
         return address;
     }
 
     public Date getDate() {
-        assert date != null;
         return date;
     }
 
     public CompletionStatus getCompletionStatus() {
-        assert completionStatus != null;
         return completionStatus;
     }
 
     public PaymentStatus getPaymentStatus() {
-        assert paymentStatus != null;
         return paymentStatus;
     }
 
