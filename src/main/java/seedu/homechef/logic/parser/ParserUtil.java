@@ -279,23 +279,22 @@ public class ParserUtil {
      */
     public static CompletionStatus parseCompletionStatus(String raw) throws ParseException {
         requireNonNull(raw);
-        String normalized = raw.trim().toLowerCase().replace('-', '_');
+        String normalized = raw.trim()
+                .replace('_', ' ')
+                .replace('-', ' ')
+                .replaceAll("\\s+", " ");
 
-        switch (normalized) {
-        case "pending":
-            return CompletionStatus.PENDING;
-        case "in_progress":
-        case "inprogress":
-            return CompletionStatus.IN_PROGRESS;
-        case "complete":
-        case "completed":
-            return CompletionStatus.COMPLETED;
-        default:
-            try {
-                return CompletionStatus.fromString(raw.trim());
-            } catch (IllegalArgumentException e) {
-                throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);
-            }
+        if (normalized.equalsIgnoreCase("inprogress")) {
+            normalized = "In Progress";
+        }
+        if (normalized.equalsIgnoreCase("complete")) {
+            normalized = "Completed";
+        }
+
+        try {
+            return CompletionStatus.fromString(normalized);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);
         }
     }
 
@@ -307,21 +306,15 @@ public class ParserUtil {
      */
     public static PaymentStatus parsePaymentStatus(String raw) throws ParseException {
         requireNonNull(raw);
-        String normalized = raw.trim().toLowerCase();
+        String normalized = raw.trim()
+                .replace('_', ' ')
+                .replace('-', ' ')
+                .replaceAll("\\s+", " ");
 
-        switch (normalized) {
-        case "paid":
-            return PaymentStatus.PAID;
-        case "partial":
-            return PaymentStatus.PARTIAL;
-        case "unpaid":
-            return PaymentStatus.UNPAID;
-        default:
-            try {
-                return PaymentStatus.fromString(raw.trim());
-            } catch (IllegalArgumentException e) {
-                throw new ParseException(PaymentStatus.MESSAGE_CONSTRAINTS);
-            }
+        try {
+            return PaymentStatus.fromString(normalized);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(PaymentStatus.MESSAGE_CONSTRAINTS);
         }
     }
 }
