@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
  * Represents an Order's fulfillment date in HomeChef.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class Date {
+public class Date implements Comparable<Date> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Dates should be in the format dd-MM-yyyy and must be a valid calendar date";
@@ -43,8 +43,9 @@ public class Date {
         }
     }
 
-    public LocalDate getValue() {
-        return value;
+    @Override
+    public int compareTo(Date other) {
+        return this.value.compareTo(other.value);
     }
 
     @Override

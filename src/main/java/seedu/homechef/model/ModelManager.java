@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.homechef.commons.core.GuiSettings;
 import seedu.homechef.commons.core.LogsCenter;
+import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Order;
 
 /**
@@ -23,8 +24,8 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private static final Comparator<Order> DEFAULT_ORDER_COMPARATOR = (a, b) -> {
-        LocalDate da = a.getDate().getValue();
-        LocalDate db = b.getDate().getValue();
+        Date da = a.getDate();
+        Date db = b.getDate();
 
         int dateCmp = da.compareTo(db);
         if (dateCmp != 0) {
