@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PaymentStatus;
 
 /**
  * An UI component that displays information of a {@code Order}.
@@ -24,6 +25,10 @@ public class OrderCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/homechef-level4/issues/336">The issue on HomeChef level 4</a>
      */
+    private static final String PENDING_SYMBOL = "◯";
+    private static final String IN_PROGRESS_SYMBOL = "◎";
+    private static final String COMPLETED_SYMBOL = "⬤";
+    private static final String PAYMENT_SYMBOL = "$";
 
     public final Order order;
 
@@ -46,11 +51,11 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label paymentInfo;
     @FXML
+    private Label completionStatus;
+    @FXML
     private Label paymentStatus;
     @FXML
     private FlowPane dietTags;
-    @FXML
-    private Label completionStatus;
 
     /**
      * Creates a {@code OrderCode} with the given {@code Order} and index to display.
@@ -66,8 +71,7 @@ public class OrderCard extends UiPart<Region> {
         date.setText(order.getDate().toString());
         email.setText(order.getEmail().value);
         setCompletionStatusLabel(order.getCompletionStatus());
-        paymentStatus.setText(order.getPaymentStatus().toString());
-        paymentStatus.setStyle(order.getPaymentStatus().getStyle());
+        setPaymentStatusLabel(order.getPaymentStatus());
         order.getPaymentInfo().ifPresentOrElse(
                 info -> paymentInfo.setText("Payment: " + info.toString()), () -> {
                     paymentInfo.setVisible(false);
@@ -78,19 +82,42 @@ public class OrderCard extends UiPart<Region> {
                 .forEach(tag -> dietTags.getChildren().add(new Label(tag.tagName)));
     }
 
-    private void setCompletionStatusLabel(CompletionStatus completionStatus) {
-        this.completionStatus.setText(order.getCompletionStatus().toString());
-        this.completionStatus.getStyleClass().add("cell_completion_status_label");
-        switch (completionStatus.value) {
+    private void setCompletionStatusLabel(CompletionStatus status) {
+        assert status != null;
+
+        switch (status) {
+        case PENDING:
+            completionStatus.setText(PENDING_SYMBOL + " " + status);
+            completionStatus.getStyleClass().add("completion_status_label_pending");
+            break;
         case IN_PROGRESS:
-            this.completionStatus.getStyleClass().add("completion_status_label_in_progress");
+            completionStatus.setText(IN_PROGRESS_SYMBOL + " " + status);
+            completionStatus.getStyleClass().add("completion_status_label_in_progress");
             break;
         case COMPLETED:
-            this.completionStatus.getStyleClass().add("completion_status_label_complete");
+            completionStatus.setText(COMPLETED_SYMBOL + " " + status);
+            completionStatus.getStyleClass().add("completion_status_label_complete");
             break;
         default:
             // Do nothing
         }
-        return;
+    }
+
+    private void setPaymentStatusLabel(PaymentStatus status) {
+        assert status != null;
+        paymentStatus.setText(PAYMENT_SYMBOL + " " + status);
+        switch (status) {
+        case PAID:
+            paymentStatus.getStyleClass().add("payment_status_label_paid");
+            break;
+        case UNPAID:
+            paymentStatus.getStyleClass().add("payment_status_label_unpaid");
+            break;
+        case PARTIAL:
+            paymentStatus.getStyleClass().add("payment_status_label_partial");
+            break;
+        default:
+            // Do nothing
+        }
     }
 }

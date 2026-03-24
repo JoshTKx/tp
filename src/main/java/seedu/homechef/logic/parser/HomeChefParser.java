@@ -22,7 +22,9 @@ import seedu.homechef.logic.commands.HelpCommand;
 import seedu.homechef.logic.commands.ListCommand;
 import seedu.homechef.logic.commands.MarkCompleteCommand;
 import seedu.homechef.logic.commands.MarkInProgressCommand;
+import seedu.homechef.logic.commands.MarkPendingCommand;
 import seedu.homechef.logic.commands.PaidCommand;
+import seedu.homechef.logic.commands.PartialCommand;
 import seedu.homechef.logic.commands.UnpaidCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 
@@ -90,11 +92,17 @@ public class HomeChefParser {
         case MarkInProgressCommand.COMMAND_WORD:
             return new MarkInProgressCommandParser().parse(arguments);
 
+        case MarkPendingCommand.COMMAND_WORD:
+            return new MarkPendingCommandParser().parse(arguments);
+
         case PaidCommand.COMMAND_WORD:
             return new PaidCommandParser().parse(arguments);
 
         case UnpaidCommand.COMMAND_WORD:
             return new UnpaidCommandParser().parse(arguments);
+
+        case PartialCommand.COMMAND_WORD:
+            return new PartialCommandParser().parse(arguments);
 
         case AddMenuCommand.COMMAND_WORD:
             return new AddMenuCommandParser().parse(arguments);

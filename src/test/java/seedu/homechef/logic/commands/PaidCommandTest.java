@@ -34,7 +34,7 @@ public class PaidCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         PaidCommand paidCommand = new PaidCommand(INDEX_FIRST_ORDER);
 
-        PaymentStatus paidStatus = new PaymentStatus(PaymentStatus.IS_PAID);
+        PaymentStatus paidStatus = PaymentStatus.PAID;
         Order editedOrder = new Order(
                 orderToEdit.getFood(), orderToEdit.getCustomer(), orderToEdit.getPhone(),
                 orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),
@@ -64,7 +64,7 @@ public class PaidCommandTest {
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
         PaidCommand paidCommand = new PaidCommand(INDEX_FIRST_ORDER);
 
-        PaymentStatus paidStatus = new PaymentStatus(PaymentStatus.IS_PAID);
+        PaymentStatus paidStatus = PaymentStatus.PAID;
         Order editedOrder = new Order(
                 orderToEdit.getFood(), orderToEdit.getCustomer(), orderToEdit.getPhone(),
                 orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),

@@ -13,22 +13,21 @@ import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentStatus;
 
 /**
- * Marks an order as unpaid in HomeChef.
+ * Marks an order as partially paid in HomeChef.
  */
-public class UnpaidCommand extends Command {
+public class PartialCommand extends Command {
+    public static final String COMMAND_WORD = "partial";
 
-    public static final String COMMAND_WORD = "unpaid";
-
-    public static final String MESSAGE_MARK_UNPAID_SUCCESS = "Marked order as unpaid: %1$s";
+    public static final String MESSAGE_MARK_PARTIAL_SUCCESS = "Marked order as partially paid: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks as unpaid the order identified by the index number used in the displayed order list.\n"
+            + ": Marks as partially paid the order identified by the index number used in the displayed order list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 ";
+            + "Example: " + COMMAND_WORD + " 1";
 
     private final Index targetIndex;
 
-    public UnpaidCommand(Index targetIndex) {
+    public PartialCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -42,12 +41,19 @@ public class UnpaidCommand extends Command {
         }
 
         Order orderToEdit = lastShownList.get(targetIndex.getZeroBased());
-        PaymentStatus unpaidStatus = PaymentStatus.UNPAID;
+        PaymentStatus partialStatus = PaymentStatus.PARTIAL;
 
         Order editedOrder = new Order(
-                orderToEdit.getFood(), orderToEdit.getCustomer(), orderToEdit.getPhone(),
-                orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),
-                orderToEdit.getCompletionStatus(), unpaidStatus, orderToEdit.getTags());
+                orderToEdit.getFood(),
+                orderToEdit.getCustomer(),
+                orderToEdit.getPhone(),
+                orderToEdit.getEmail(),
+                orderToEdit.getAddress(),
+                orderToEdit.getDate(),
+                orderToEdit.getCompletionStatus(),
+                partialStatus,
+                orderToEdit.getTags()
+        );
 
         model.setOrder(orderToEdit, editedOrder);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
@@ -55,11 +61,8 @@ public class UnpaidCommand extends Command {
         return new CommandResult(generateSuccessMessage(editedOrder));
     }
 
-    /**
-     * Generates a command execution success message when an order is marked as unpaid.
-     */
     private String generateSuccessMessage(Order order) {
-        return String.format(MESSAGE_MARK_UNPAID_SUCCESS, Messages.format(order));
+        return String.format(MESSAGE_MARK_PARTIAL_SUCCESS, Messages.format(order));
     }
 
     @Override
@@ -67,10 +70,10 @@ public class UnpaidCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof UnpaidCommand)) {
+        if (!(other instanceof PartialCommand)) {
             return false;
         }
-        UnpaidCommand otherCommand = (UnpaidCommand) other;
+        PartialCommand otherCommand = (PartialCommand) other;
         return targetIndex.equals(otherCommand.targetIndex);
     }
 
