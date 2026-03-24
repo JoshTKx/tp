@@ -20,11 +20,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.CollectionUtil;
-import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
@@ -120,20 +118,9 @@ public class EditCommand extends Command {
                             editedOrder.getPaymentInfo());
                 }
             } else {
-                List<String> menuNames = model.getMenuBook().getMenuItemList().stream()
-                        .map(item -> item.getName().fullName)
-                        .collect(Collectors.toList());
-                Optional<String> suggestion = StringUtil.findClosestMatch(newFoodName, menuNames, 2);
-                if (suggestion.isPresent()) {
-                    throw new CommandException(String.format(
-                            "No menu item '%s'. Did you mean '%s'? "
-                            + "Check the menu panel on the right for all items.",
-                            newFoodName, suggestion.get()));
-                } else {
-                    throw new CommandException(String.format(
-                            "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
-                            newFoodName));
-                }
+                throw new CommandException(String.format(
+                        "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
+                        newFoodName));
             }
         }
 

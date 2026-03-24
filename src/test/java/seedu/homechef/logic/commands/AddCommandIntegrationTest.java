@@ -83,23 +83,12 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_foodIsTypo_throwsCommandExceptionWithSuggestion() {
-        Order typoOrder = new OrderBuilder().withFood("Chiken Rice").build();
-        CommandException thrown = assertThrows(CommandException.class, ()
-                -> new AddCommand(typoOrder).execute(model));
-        assertTrue(thrown.getMessage().contains("Chicken Rice"),
-                "Error message should contain the suggestion 'Chicken Rice'");
-    }
-
-    @Test
-    public void execute_foodUnknown_throwsCommandExceptionWithAddMenuSuggestion() {
+    public void execute_foodNotInMenu_throwsCommandExceptionWithAddMenuSuggestion() {
         Order unknownOrder = new OrderBuilder().withFood("Pizza Margherita").build();
         CommandException thrown = assertThrows(CommandException.class, ()
                 -> new AddCommand(unknownOrder).execute(model));
         assertTrue(thrown.getMessage().contains("add-menu"),
                 "Error message should suggest 'add-menu'");
-        assertTrue(!thrown.getMessage().contains("Did you mean"),
-                "Error message should not contain a suggestion for an unknown food");
     }
 
     @Test

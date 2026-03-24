@@ -13,11 +13,8 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
@@ -85,20 +82,9 @@ public class AddCommand extends Command {
                         foodName));
             }
         } else {
-            List<String> menuNames = model.getMenuBook().getMenuItemList().stream()
-                    .map(item -> item.getName().fullName)
-                    .collect(Collectors.toList());
-            Optional<String> suggestion = StringUtil.findClosestMatch(foodName, menuNames, 2);
-            if (suggestion.isPresent()) {
-                throw new CommandException(String.format(
-                        "No menu item '%s'. Did you mean '%s'? "
-                        + "Check the menu panel on the right for all items.",
-                        foodName, suggestion.get()));
-            } else {
-                throw new CommandException(String.format(
-                        "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
-                        foodName));
-            }
+            throw new CommandException(String.format(
+                    "No menu item '%s'. Use 'add-menu' to add it to the menu first.",
+                    foodName));
         }
 
         String canonicalName = matchingItem.get().getName().fullName;
