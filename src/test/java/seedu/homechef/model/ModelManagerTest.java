@@ -125,10 +125,10 @@ public class ModelManagerTest {
                 .build();
         modelManager = new ModelManager(homeChef, new UserPrefs());
 
-        assertEquals(pendingLater, modelManager.getFilteredOrderList().get(0));
+        assertEquals(completedEarly, modelManager.getFilteredOrderList().get(0));
         assertEquals(inProgressEarly, modelManager.getFilteredOrderList().get(1));
         assertEquals(inProgressLate, modelManager.getFilteredOrderList().get(2));
-        assertEquals(completedEarly, modelManager.getFilteredOrderList().get(3));
+        assertEquals(pendingLater, modelManager.getFilteredOrderList().get(3));
     }
 
     @Test

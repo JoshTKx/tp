@@ -29,7 +29,7 @@ public class ListCommand extends Command {
             + "ps/STATUS: paid|unpaid\n"
             + "Example: " + COMMAND_WORD + "\n"
             + "Example: " + COMMAND_WORD + " d/18-10-2026\n"
-            + "Example: " + COMMAND_WORD + " cs/in_progress\n"
+            + "Example: " + COMMAND_WORD + " cs/inprogress\n"
             + "Example: " + COMMAND_WORD + " ps/unpaid\n"
             + "Example: " + COMMAND_WORD + " d/16-04-2003 c/alice f/cake p/1234 cs/completed ps/paid";
 

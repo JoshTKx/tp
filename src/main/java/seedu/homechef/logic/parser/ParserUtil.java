@@ -13,13 +13,11 @@ import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 import seedu.homechef.model.order.Address;
-import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Price;
@@ -285,52 +283,5 @@ public class ParserUtil {
         }
 
         return Optional.of(paymentInfo);
-    }
-
-    /**
-     * Parses a {@code String raw} into a {@code CompletionStatus}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code raw} is invalid.
-     */
-    public static CompletionStatus parseCompletionStatus(String raw) throws ParseException {
-        requireNonNull(raw);
-        String normalized = raw.trim()
-                .replace('_', ' ')
-                .replace('-', ' ')
-                .replaceAll("\\s+", " ");
-
-        if (normalized.equalsIgnoreCase("inprogress")) {
-            normalized = "In Progress";
-        }
-        if (normalized.equalsIgnoreCase("complete")) {
-            normalized = "Completed";
-        }
-
-        try {
-            return CompletionStatus.fromString(normalized);
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS);
-        }
-    }
-
-    /**
-     * Parses a {@code String raw} into a {@code PaymentStatus}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code raw} is invalid.
-     */
-    public static PaymentStatus parsePaymentStatus(String raw) throws ParseException {
-        requireNonNull(raw);
-        String normalized = raw.trim()
-                .replace('_', ' ')
-                .replace('-', ' ')
-                .replaceAll("\\s+", " ");
-
-        try {
-            return PaymentStatus.fromString(normalized);
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(PaymentStatus.MESSAGE_CONSTRAINTS);
-        }
     }
 }

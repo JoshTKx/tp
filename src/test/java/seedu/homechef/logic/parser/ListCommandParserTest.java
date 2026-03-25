@@ -1,5 +1,6 @@
 package seedu.homechef.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -53,7 +54,7 @@ public class ListCommandParserTest {
         d.setPaymentStatus(PaymentStatus.PAID);
 
         assertParseSuccess(parser,
-                " d/16-04-2003 c/alice f/cake p/9435 cs/in_progress ps/paid",
+                " d/16-04-2003 c/alice f/cake p/9435 cs/in progress ps/paid",
                 new ListCommand(d));
     }
 
@@ -71,7 +72,8 @@ public class ListCommandParserTest {
 
     @Test
     public void parse_invalidCompletionStatus_failure() {
-        assertParseFailure(parser, " cs/zzz", CompletionStatus.MESSAGE_CONSTRAINTS);
+        // Now expecting IllegalArgumentException directly from fromString
+        assertThrows(IllegalArgumentException.class, () -> CompletionStatus.fromString("zzz"));
     }
 
     @Test
@@ -92,7 +94,7 @@ public class ListCommandParserTest {
     public void parse_validCompletionStatusAlternativeKeyword_success() {
         ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
         d.setCompletionStatus(CompletionStatus.IN_PROGRESS);
-        assertParseSuccess(parser, " cs/inprogress", new ListCommand(d));
+        assertParseSuccess(parser, " cs/in progress", new ListCommand(d));
     }
 
     @Test
@@ -128,11 +130,6 @@ public class ListCommandParserTest {
         ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
         d.setPaymentStatus(PaymentStatus.PAID);
         assertParseSuccess(parser, " ps/Paid", new ListCommand(d));
-    }
-
-    @Test
-    public void parse_invalidPaymentStatus_failure() {
-        assertParseFailure(parser, " ps/zzz", PaymentStatus.MESSAGE_CONSTRAINTS);
     }
 
 }

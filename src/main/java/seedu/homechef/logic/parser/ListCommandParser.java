@@ -12,7 +12,9 @@ import java.util.Optional;
 
 import seedu.homechef.logic.commands.ListCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;
+import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Date;
+import seedu.homechef.model.order.PaymentStatus;
 
 /**
  * Parses input arguments and creates a new ListCommand object
@@ -84,11 +86,11 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
 
         if (completionArg.isPresent()) {
-            descriptor.setCompletionStatus(ParserUtil.parseCompletionStatus(completionArg.get()));
+            descriptor.setCompletionStatus(CompletionStatus.fromString(completionArg.get()));
         }
 
         if (paymentArg.isPresent()) {
-            descriptor.setPaymentStatus(ParserUtil.parsePaymentStatus(paymentArg.get()));
+            descriptor.setPaymentStatus(PaymentStatus.fromString(paymentArg.get()));
         }
 
         return new ListCommand(descriptor);
