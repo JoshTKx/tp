@@ -1,6 +1,8 @@
 package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_NOT_FOUND;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_UNAVAILABLE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
@@ -28,6 +30,7 @@ import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
+import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
@@ -98,6 +101,29 @@ public class EditCommand extends Command {
 
         Order orderToEdit = lastShownList.get(index.getZeroBased());
         Order editedOrder = createEditedOrder(orderToEdit, descriptor);
+
+        if (descriptor.getFood().isPresent()) {
+            String newFoodName = editedOrder.getFood().toString();
+            Optional<MenuItem> matchingItem = model.getMenuBook().getMenuItemList().stream()
+                    .filter(item -> item.getName().fullName.equalsIgnoreCase(newFoodName))
+                    .findFirst();
+
+            if (matchingItem.isPresent()) {
+                if (!matchingItem.get().isAvailable()) {
+                    throw new CommandException(String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, newFoodName));
+                }
+                String canonicalName = matchingItem.get().getName().fullName;
+                if (!canonicalName.equals(newFoodName)) {
+                    editedOrder = new Order(new Food(canonicalName), editedOrder.getCustomer(),
+                            editedOrder.getPhone(), editedOrder.getEmail(), editedOrder.getAddress(),
+                            editedOrder.getDate(), editedOrder.getCompletionStatus(),
+                            editedOrder.getPaymentStatus(), editedOrder.getTags(),
+                            editedOrder.getPrice(), editedOrder.getPaymentInfo());
+                }
+            } else {
+                throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, newFoodName));
+            }
+        }
 
         if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);

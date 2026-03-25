@@ -15,9 +15,14 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid";
+    public static final String MESSAGE_INVALID_MENU_ITEM_DISPLAYED_INDEX = "The menu item index provided is invalid";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_MENU_ITEM_NOT_FOUND =
+            "No menu item '%s'. Use 'add-menu' to add it to the menu first.";
+    public static final String MESSAGE_MENU_ITEM_UNAVAILABLE =
+            "'%s' is currently unavailable. Check the menu panel on the right for available items.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

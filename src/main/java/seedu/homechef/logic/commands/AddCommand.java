@@ -1,6 +1,8 @@
 package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_NOT_FOUND;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_UNAVAILABLE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
@@ -14,10 +16,14 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
+import java.util.Optional;
+
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
+import seedu.homechef.model.menu.MenuItem;
+import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 
 /**
@@ -69,12 +75,33 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasOrder(toAdd)) {
+        String foodName = toAdd.getFood().toString();
+        Optional<MenuItem> matchingItem = model.getMenuBook().getMenuItemList().stream()
+                .filter(item -> item.getName().fullName.equalsIgnoreCase(foodName))
+                .findFirst();
+
+        if (matchingItem.isPresent()) {
+            if (!matchingItem.get().isAvailable()) {
+                throw new CommandException(String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, foodName));
+            }
+        } else {
+            throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, foodName));
+        }
+
+        String canonicalName = matchingItem.get().getName().fullName;
+        Order orderToAdd = canonicalName.equals(foodName)
+                ? toAdd
+                : new Order(new Food(canonicalName), toAdd.getCustomer(), toAdd.getPhone(),
+                        toAdd.getEmail(), toAdd.getAddress(), toAdd.getDate(),
+                        toAdd.getCompletionStatus(), toAdd.getPaymentStatus(),
+                        toAdd.getTags(), toAdd.getPrice(), toAdd.getPaymentInfo());
+
+        if (model.hasOrder(orderToAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_ORDER);
         }
 
-        model.addOrder(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        model.addOrder(orderToAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(orderToAdd)));
     }
 
     @Override

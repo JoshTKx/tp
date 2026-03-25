@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 
 import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.ReadOnlyHomeChef;
+import seedu.homechef.model.menu.MenuBook;
+import seedu.homechef.model.menu.MenuItem;
+import seedu.homechef.model.menu.MenuItemName;
+import seedu.homechef.model.menu.ReadOnlyMenuBook;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
@@ -69,6 +73,27 @@ public class SampleDataUtil {
                 getTagSet("colleagues"),
                 new Price("11.8"));
         return new Order[]{alex, bernice, charlotte, david, irfan, roy};
+    }
+
+    /**
+     * Returns a {@code ReadOnlyMenuBook} containing menu items for each unique food in the sample orders.
+     * Each item is available and priced at 10.00.
+     */
+    public static ReadOnlyMenuBook getSampleMenuBook() {
+        MenuBook menuBook = new MenuBook();
+        String[] sampleFoodNames = {
+            "Birthday Cake",
+            "Cupcakes (24pcs)",
+            "Chocolate Chip Cookies (3pcs)",
+            "Cookies Assortment (50pcs",
+            "Blueberry Pie",
+            "Sourdough Bread (3pcs)"
+        };
+        for (String foodName : sampleFoodNames) {
+            seedu.homechef.model.menu.Price menuPrice = new seedu.homechef.model.menu.Price("10.00");
+            menuBook.addMenuItem(new MenuItem(new MenuItemName(foodName), menuPrice, true));
+        }
+        return menuBook;
     }
 
     public static ReadOnlyHomeChef getSampleHomeChef() {

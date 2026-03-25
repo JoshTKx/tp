@@ -20,9 +20,11 @@ import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.UserPrefs;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.testutil.OrderBuilder;
+import seedu.homechef.testutil.TypicalMenuItems;
 
 public class MarkPendingCommandTest {
-    private Model model = new ModelManager(getTypicalHomeChef(), new UserPrefs());
+    private Model model = new ModelManager(
+            getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -33,7 +35,8 @@ public class MarkPendingCommandTest {
         String expectedMessage = String.format(MarkPendingCommand.MESSAGE_PENDING_ORDER_SUCCESS,
                 Messages.format(pendingOrder));
 
-        Model expectedModel = new ModelManager(new HomeChef(model.getHomeChef()), new UserPrefs());
+        Model expectedModel = new ModelManager(
+                new HomeChef(model.getHomeChef()), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         expectedModel.setOrder(orderToMark, pendingOrder);
 
         assertCommandSuccess(markPendingCommand, model, expectedMessage, expectedModel);
@@ -58,7 +61,8 @@ public class MarkPendingCommandTest {
         String expectedMessage = String.format(MarkPendingCommand.MESSAGE_PENDING_ORDER_SUCCESS,
                 Messages.format(pendingOrder));
 
-        Model expectedModel = new ModelManager(new HomeChef(model.getHomeChef()), new UserPrefs());
+        Model expectedModel = new ModelManager(
+                new HomeChef(model.getHomeChef()), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         expectedModel.setOrder(model.getFilteredOrderList().get(0), pendingOrder);
 
         assertCommandSuccess(markPendingCommand, model, expectedMessage, expectedModel);

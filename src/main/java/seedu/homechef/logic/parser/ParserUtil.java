@@ -29,6 +29,7 @@ import seedu.homechef.model.tag.DietTag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_AVAILABILITY = "Availability must be 'true' or 'false'.";
 
     private static final String VALID_PAYMENT_TYPE_NAMES = Arrays.stream(PaymentType.values())
             .map(Enum::name)
@@ -283,5 +284,19 @@ public class ParserUtil {
         }
 
         return Optional.of(paymentInfo);
+    }
+
+    /**
+     * Parses a {@code String availability} and returns the boolean value.
+     *
+     * @throws ParseException if the value is not "true" or "false" (case-insensitive)
+     */
+    public static boolean parseAvailability(String availability) throws ParseException {
+        requireNonNull(availability);
+        String trimmed = availability.trim().toLowerCase();
+        if (!trimmed.equals("true") && !trimmed.equals("false")) {
+            throw new ParseException(MESSAGE_INVALID_AVAILABILITY);
+        }
+        return trimmed.equals("true");
     }
 }
