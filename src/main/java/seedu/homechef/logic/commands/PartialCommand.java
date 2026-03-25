@@ -3,14 +3,26 @@ package seedu.homechef.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
+import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.CompletionStatus;
+import seedu.homechef.model.order.Customer;
+import seedu.homechef.model.order.Date;
+import seedu.homechef.model.order.Email;
+import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
+import seedu.homechef.model.order.Phone;
+import seedu.homechef.model.order.Price;
+import seedu.homechef.model.tag.DietTag;
 
 /**
  * Marks an order as partially paid in HomeChef.
@@ -40,25 +52,36 @@ public class PartialCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
         }
 
-        Order orderToEdit = lastShownList.get(targetIndex.getZeroBased());
-        PaymentStatus partialStatus = PaymentStatus.PARTIAL;
+        Order orderToMarkPartial = lastShownList.get(targetIndex.getZeroBased());
+        Order partialOrder = createPartialOrder(orderToMarkPartial);
 
-        Order editedOrder = new Order(
-                orderToEdit.getFood(),
-                orderToEdit.getCustomer(),
-                orderToEdit.getPhone(),
-                orderToEdit.getEmail(),
-                orderToEdit.getAddress(),
-                orderToEdit.getDate(),
-                orderToEdit.getCompletionStatus(),
-                partialStatus,
-                orderToEdit.getTags()
-        );
-
-        model.setOrder(orderToEdit, editedOrder);
+        model.setOrder(orderToMarkPartial, partialOrder);
         model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
 
-        return new CommandResult(generateSuccessMessage(editedOrder));
+        return new CommandResult(generateSuccessMessage(partialOrder));
+    }
+
+    /**
+     * Creates and returns an {@code Order} with the details of {@code orderToMarkPartial}
+     * marking {@code PaymentStatus} as partial.
+     */
+    private static Order createPartialOrder(Order orderToMarkPartial) {
+        assert orderToMarkPartial != null;
+
+        Food food = orderToMarkPartial.getFood();
+        Customer customer = orderToMarkPartial.getCustomer();
+        Phone phone = orderToMarkPartial.getPhone();
+        Email email = orderToMarkPartial.getEmail();
+        Address address = orderToMarkPartial.getAddress();
+        Date date = orderToMarkPartial.getDate();
+        CompletionStatus completionStatus = orderToMarkPartial.getCompletionStatus();
+        PaymentStatus updatedPaymentStatus = PaymentStatus.PARTIAL;
+        Set<DietTag> dietTags = orderToMarkPartial.getTags();
+        Price price = orderToMarkPartial.getPrice();
+        Optional<PaymentInfo> paymentInfo = orderToMarkPartial.getPaymentInfo();
+
+        return new Order(food, customer, phone, email, address, date,
+                completionStatus, updatedPaymentStatus, dietTags, price, paymentInfo);
     }
 
     private String generateSuccessMessage(Order order) {

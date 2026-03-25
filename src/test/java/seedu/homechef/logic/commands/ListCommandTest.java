@@ -60,7 +60,7 @@ public class ListCommandTest {
         d.setCustomerQuery("Alice");
 
         expectedModel.updateFilteredOrderList(order ->
-                order.getCustomer().fullName.toLowerCase().contains("alice"));
+                order.getCustomer().toString().toLowerCase().contains("alice"));
 
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -71,7 +71,7 @@ public class ListCommandTest {
         d.setFoodQuery("Cake");
 
         expectedModel.updateFilteredOrderList(order ->
-                order.getFood().foodName.toLowerCase().contains("cake"));
+                order.getFood().toString().toLowerCase().contains("cake"));
 
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -86,7 +86,7 @@ public class ListCommandTest {
 
         expectedModel.updateFilteredOrderList(order ->
                 order.getDate().equals(target)
-                        && order.getFood().foodName.toLowerCase().contains("cake"));
+                        && order.getFood().toString().toLowerCase().contains("cake"));
 
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }

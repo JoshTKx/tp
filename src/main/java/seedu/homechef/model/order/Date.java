@@ -11,14 +11,22 @@ import java.time.format.DateTimeParseException;
  * Represents an Order's fulfillment date in HomeChef.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class Date {
+public class Date implements Comparable<Date> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Dates should be in the format dd-MM-yyyy and must be a valid calendar date";
+    public static final String URGENCY_CONSTRAINTS =
+            "Urgency should be Normal, Urgent, or Overdue.";
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public final LocalDate value;
+    public static final String NORMAL = "Normal";
+    public static final String URGENT = "Urgent";
+    public static final String OVERDUE = "Overdue";
+
+    public static final int URGENT_PERIOD_DAYS = 3;
+
+    private final LocalDate value;
 
     /**
      * Constructs a {@code Date}.
@@ -43,6 +51,35 @@ public class Date {
         }
     }
 
+    @Override
+    public int compareTo(Date other) {
+        return this.value.compareTo(other.value);
+    }
+    /**
+     * Returns a string representation of the urgency status of a Date.
+     * A Date is considered urgent if it is within the specified URGENT_PERIOD_DAYS.
+     */
+    public String getUrgency() {
+        if (value.isBefore(LocalDate.now())) {
+            return OVERDUE;
+        }
+        if (value.isBefore(LocalDate.now().plusDays(URGENT_PERIOD_DAYS))) {
+            return URGENT;
+        }
+        return NORMAL;
+    }
+
+    /**
+     * Returns true if a given urgency is a valid urgency status.
+     */
+    public static boolean isValidUrgency(String test) {
+        switch (test) {
+        case NORMAL, URGENT, OVERDUE:
+            return true;
+        default:
+            return false;
+        }
+    }
 
     @Override
     public String toString() {
@@ -54,7 +91,6 @@ public class Date {
         if (other == this) {
             return true;
         }
-
         // instanceof handles nulls
         if (!(other instanceof Date)) {
             return false;
@@ -68,5 +104,4 @@ public class Date {
     public int hashCode() {
         return value.hashCode();
     }
-
 }
