@@ -62,7 +62,8 @@ public class ReceiptCommandTest {
         Model model = new ModelManager(getTypicalHomeChef(), new MenuBook(), new UserPrefs());
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredOrderList().size() + 1);
 
-        assertCommandFailure(new ReceiptCommand(outOfBoundIndex), model, Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
+        assertCommandFailure(new ReceiptCommand(outOfBoundIndex), model,
+                Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
     }
 
     @Test

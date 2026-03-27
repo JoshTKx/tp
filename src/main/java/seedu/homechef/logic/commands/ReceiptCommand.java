@@ -23,7 +23,8 @@ public class ReceiptCommand extends Command {
     public static final String COMMAND_ALIAS = "rec";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Generates a receipt file for the order identified by the index number used in the displayed order list.\n"
+            + ": Generates a receipt file for the order identified by the "
+            + "index number used in the displayed order list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
