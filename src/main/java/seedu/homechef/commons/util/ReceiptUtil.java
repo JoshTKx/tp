@@ -64,20 +64,42 @@ public class ReceiptUtil {
                 .map(Object::toString)
                 .orElse("N/A");
 
-        return String.join(System.lineSeparator(),
-                "HomeChef Receipt",
-                "================",
-                "Food: " + order.getFood(),
-                "Customer: " + order.getCustomer(),
-                "Phone: " + order.getPhone(),
-                "Email: " + order.getEmail(),
-                "Address: " + order.getAddress(),
-                "Fulfillment Date: " + order.getDate(),
-                "Price: $" + order.getPrice(),
-                "Completion Status: " + order.getCompletionStatus(),
-                "Payment Status: " + order.getPaymentStatus(),
-                "Diet Tags: " + (tags.isBlank() ? "None" : tags),
-                "Payment Info: " + paymentInfo,
-                "");
+        String nl = System.lineSeparator();
+
+        return String.join(nl,
+                "==================================================",
+                "                     HOMECHEF",
+                "                  ORDER RECEIPT",
+                "==================================================",
+                "",
+                "Order Details",
+                "--------------------------------------------------",
+                String.format("%-20s : %s", "Food Item", order.getFood()),
+                String.format("%-20s : $%s", "Price", order.getPrice()),
+                String.format("%-20s : %s", "Dietary Tags", tags.isBlank() ? "None" : tags),
+                "",
+                "Customer Details",
+                "--------------------------------------------------",
+                String.format("%-20s : %s", "Name", order.getCustomer()),
+                String.format("%-20s : %s", "Phone", order.getPhone()),
+                String.format("%-20s : %s", "Email", order.getEmail()),
+                String.format("%-20s : %s", "Address", order.getAddress()),
+                "",
+                "Order Information",
+                "--------------------------------------------------",
+                String.format("%-20s : %s", "Fulfillment Date", order.getDate()),
+                String.format("%-20s : %s", "Order Status", order.getCompletionStatus()),
+                String.format("%-20s : %s", "Payment Status", order.getPaymentStatus()),
+                "",
+                "Payment",
+                "--------------------------------------------------",
+                String.format("%-20s : $%s", "Amount Due", order.getPrice()),
+                String.format("%-20s : %s", "Payment Info", paymentInfo),
+                "",
+                "==================================================",
+                "        Thank you for ordering with HomeChef!",
+                "==================================================",
+                ""
+        );
     }
 }
