@@ -18,8 +18,15 @@ package "HomeChef Storage" #F4F6F6{
 Class "<<interface>>\nHomeChefStorage" as HomeChefStorage
 Class JsonHomeChefStorage
 Class JsonSerializableHomeChef
-Class JsonAdaptedPerson
+Class JsonAdaptedOrder
 Class JsonAdaptedTag
+}
+
+package "MenuBook Storage" #F4F6F6{
+Class "<<interface>>\nMenuBookStorage" as MenuBookStorage
+Class JsonMenuBookStorage
+Class JsonSerializableMenuBook
+Class JsonAdaptedMenuItem
 }
 
 }
@@ -28,16 +35,22 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
-StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" HomeChefStorage
+Storage ..|> UserPrefsStorage
+Storage ..|> HomeChefStorage
+Storage ..|> MenuBookStorage
 
-Storage -left-|> UserPrefsStorage
-Storage -right-|> HomeChefStorage
+StorageManager .left.> "1" HomeChefStorage
+StorageManager .down.> "1" UserPrefsStorage
+StorageManager .right.> "1" MenuBookStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonHomeChefStorage .up.|> HomeChefStorage
+JsonMenuBookStorage .up.|> MenuBookStorage
 JsonHomeChefStorage ..> JsonSerializableHomeChef
-JsonSerializableHomeChef --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonMenuBookStorage ..> JsonSerializableMenuBook
+JsonSerializableHomeChef --> "*" JsonAdaptedOrder
+JsonSerializableMenuBook --> "*" JsonAdaptedMenuItem
+JsonAdaptedOrder --> "*" JsonAdaptedTag
+
 
 @enduml
