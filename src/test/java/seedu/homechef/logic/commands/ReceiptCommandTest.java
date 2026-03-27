@@ -49,11 +49,12 @@ public class ReceiptCommandTest {
                 result.getFeedbackToUser());
         assertTrue(Files.exists(expectedReceiptPath));
         assertReceiptContains(expectedReceiptPath,
-                "HomeChef Receipt",
-                "Food: " + orderToReceipt.getFood(),
-                "Customer: " + orderToReceipt.getCustomer(),
-                "Price: $" + orderToReceipt.getPrice(),
-                "Payment Status: " + orderToReceipt.getPaymentStatus());
+                "HOMECHEF",
+                "ORDER RECEIPT",
+                String.format("%-20s : %s", "Food Item", orderToReceipt.getFood()),
+                String.format("%-20s : $%s", "Price", orderToReceipt.getPrice()),
+                String.format("%-20s : %s", "Name", orderToReceipt.getCustomer()),
+                String.format("%-20s : %s", "Payment Status", orderToReceipt.getPaymentStatus()));
     }
 
     @Test
