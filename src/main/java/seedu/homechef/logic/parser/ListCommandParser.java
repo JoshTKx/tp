@@ -86,11 +86,19 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
 
         if (completionArg.isPresent()) {
-            descriptor.setCompletionStatus(CompletionStatus.fromString(completionArg.get()));
+            try {
+                descriptor.setCompletionStatus(CompletionStatus.fromString(completionArg.get()));
+            } catch (IllegalArgumentException e) {
+                throw new ParseException(CompletionStatus.MESSAGE_CONSTRAINTS, e);
+            }
         }
 
         if (paymentArg.isPresent()) {
-            descriptor.setPaymentStatus(PaymentStatus.fromString(paymentArg.get()));
+            try {
+                descriptor.setPaymentStatus(PaymentStatus.fromString(paymentArg.get()));
+            } catch (IllegalArgumentException e) {
+                throw new ParseException(PaymentStatus.MESSAGE_CONSTRAINTS, e);
+            }
         }
 
         return new ListCommand(descriptor);

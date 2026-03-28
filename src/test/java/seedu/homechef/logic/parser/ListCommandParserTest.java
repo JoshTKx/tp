@@ -1,6 +1,5 @@
 package seedu.homechef.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -72,8 +71,12 @@ public class ListCommandParserTest {
 
     @Test
     public void parse_invalidCompletionStatus_failure() {
-        // Now expecting IllegalArgumentException directly from fromString
-        assertThrows(IllegalArgumentException.class, () -> CompletionStatus.fromString("zzz"));
+        assertParseFailure(parser, " cs/complete", CompletionStatus.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidPaymentStatus_failure() {
+        assertParseFailure(parser, " ps/paidd", PaymentStatus.MESSAGE_CONSTRAINTS);
     }
 
     @Test
