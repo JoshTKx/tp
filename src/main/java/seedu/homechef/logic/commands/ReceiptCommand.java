@@ -25,7 +25,7 @@ public class ReceiptCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Generates a receipt file for the order identified by the "
             + "index number used in the displayed order list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a non-zero positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Receipt generated at: %1$s";

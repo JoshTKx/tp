@@ -20,7 +20,7 @@ public class DeleteMenuCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the menu item identified by the index number used in the displayed menu list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a non-zero positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_MENU_ITEM_SUCCESS = "Deleted menu item: %1$s";
