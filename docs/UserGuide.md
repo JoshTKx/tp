@@ -40,7 +40,7 @@ With a simple typing interface and a clear order list and food menu, this app is
    * `list f/cake` : Lists all orders with "cake" in the food's name. Good for finding orders of a similar type, or sharing the same customer.
 
    * `add f/Birthday Cake c/John Doe p/1234 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` :<br>
-   Adds an order named `Red Bean Bun` with customer name `John Doe` to HomeChef. Price is taken from the menu automatically.<br>
+   Adds an order named `Birthday Cake` with customer name `John Doe` to HomeChef. Price is taken from the menu automatically.<br>
    The newly added order should look like this:<br>
    ![sample order](images/sampleOrder.png)<br>
    Note that the ID number may defer if there are other orders in the list.<br>
