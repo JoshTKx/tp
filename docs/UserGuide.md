@@ -39,7 +39,7 @@ With a simple typing interface and a clear order list and food menu, this app is
    
    * `list f/cake` : Lists all orders with "cake" in the food's name. Good for finding orders of a similar type, or sharing the same customer.
 
-   * `add f/Red Bean Bun c/John Doe p/1234 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` :<br>
+   * `add f/Birthday Cake c/John Doe p/1234 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` :<br>
    Adds an order named `Red Bean Bun` with customer name `John Doe` to HomeChef. Price is taken from the menu automatically.<br>
    The newly added order should look like this:<br>
    ![sample order](images/sampleOrder.png)<br>
@@ -126,7 +126,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 
 <div markdown="span" class="alert alert-primary">:bulb:
 **Notes about the add command:**
-* `FOOD` must match an existing food's name in the current menu exactly.
+* `FOOD` must match an **existing food's name** in the current menu exactly.
   * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
 * `QUANTITY` specifies how many units of the food item are ordered.
@@ -166,7 +166,8 @@ Examples:
 * `list d/18-10-2026` Displays an order list with all orders which have the date `18-10-2026`.
 * `list p/1234` Displays an order list with all orders with phone numbers that have `1234` in them.
 * `list d/16-04-2003 c/alice f/cake p/1234` Displays an order list with all orders that have the date `16-04-2003`, have `alice` in the customer's name, have `cake` in the food's name and have `1234` in the phone number.
-* `list cs/Completed ps/Paid` Displays an order list with all orders that are `Completed` and `Paid`.
+* `list cs/Completed ps/Paid` Displays an order list with all orders that are `Completed` and `Paid`.<br>
+  ![result for 'list cs/Completed ps/Paid'](images/listCompletedPaidResult.png)
 
 ### Marking an order as in progress: `inprogress`
 
@@ -289,8 +290,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 </div>
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `find John` returns orders with customer name `john` and `John Doe`
+* `find alex david` returns orders with customer name `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting an order : `delete`
