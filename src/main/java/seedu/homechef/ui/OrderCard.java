@@ -116,7 +116,7 @@ public class OrderCard extends UiPart<Region> {
         setDietTagsDisplay(order.getTags());
         if (order.getTags().isEmpty()) {
             dietTags.setVisible(false);
-            dietTags.setManaged(false);   // removes it from layout entirely
+            dietTags.setManaged(false); // remove from layout
         }
     }
 
@@ -226,8 +226,8 @@ public class OrderCard extends UiPart<Region> {
         dietTags.setMaxWidth(Region.USE_PREF_SIZE);
         dietTags.setPrefWidth(Region.USE_PREF_SIZE);
         tags.stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> dietTags.getChildren().add(new Label(tag.tagName)));
+                .sorted(Comparator.comparing(DietTag::toString))
+                .forEach(tag -> dietTags.getChildren().add(new Label(tag.toString())));
     }
 
     private void setPriceDisplay() {
