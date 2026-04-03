@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import seedu.homechef.model.ReadOnlyHomeChef;
+import seedu.homechef.model.menu.MenuItem;
+import seedu.homechef.model.menu.ReadOnlyMenuBook;
 import seedu.homechef.model.order.Order;
 
 public class SampleDataUtilTest {
@@ -29,6 +31,20 @@ public class SampleDataUtilTest {
         Order[] sampleOrders = SampleDataUtil.getSampleOrders();
         ReadOnlyHomeChef homeChef = SampleDataUtil.getSampleHomeChef();
         assertEquals(sampleOrders.length, homeChef.getOrderList().size());
+    }
+
+    @Test
+    public void getSampleMenuBook_returnsNonEmptyArray() {
+        ReadOnlyMenuBook menuBook = SampleDataUtil.getSampleMenuBook();
+        assertTrue(!menuBook.getMenuItemList().isEmpty());
+    }
+
+    @Test
+    public void getSampleMenuBook_allItemsNonNull() {
+        ReadOnlyMenuBook menuBook = SampleDataUtil.getSampleMenuBook();
+        for (MenuItem item : menuBook.getMenuItemList()) {
+            assertNotNull(item);
+        }
     }
 
     @Test
