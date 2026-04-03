@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.logic.parser.exceptions.ParseException;
+import seedu.homechef.model.menu.MenuItemName;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
@@ -63,6 +64,21 @@ public class ParserUtil {
             throw new ParseException(Food.MESSAGE_CONSTRAINTS);
         }
         return new Food(trimmedName);
+    }
+
+    /**
+     * Parses a {@code String menuItemName} into a {@code MenuItemName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code menuItemName} is invalid.
+     */
+    public static MenuItemName parseMenuItemName(String menuItemName) throws ParseException {
+        requireNonNull(menuItemName);
+        String trimmedName = menuItemName.trim();
+        if (!MenuItemName.isValidMenuItemName(trimmedName)) {
+            throw new ParseException(MenuItemName.MESSAGE_CONSTRAINTS);
+        }
+        return new MenuItemName(trimmedName);
     }
 
     /**
@@ -180,6 +196,21 @@ public class ParserUtil {
             throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
         return new Price(trimmedPrice);
+    }
+
+    /**
+     * Parses a {@code String price} into a menu {@code Price}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code price} is invalid.
+     */
+    public static seedu.homechef.model.menu.Price parseMenuPrice(String price) throws ParseException {
+        requireNonNull(price);
+        String trimmedPrice = price.trim();
+        if (!seedu.homechef.model.menu.Price.isValidPrice(trimmedPrice)) {
+            throw new ParseException(seedu.homechef.model.menu.Price.MESSAGE_CONSTRAINTS);
+        }
+        return new seedu.homechef.model.menu.Price(trimmedPrice);
     }
 
     /**

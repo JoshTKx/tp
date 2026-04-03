@@ -9,9 +9,6 @@ import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.commands.EditMenuCommand;
 import seedu.homechef.logic.commands.EditMenuCommand.EditMenuDescriptor;
 import seedu.homechef.logic.parser.exceptions.ParseException;
-import seedu.homechef.model.menu.MenuItemName;
-import seedu.homechef.model.menu.Price;
-
 /**
  * Parses input arguments and creates a new EditMenuCommand object.
  */
@@ -39,10 +36,10 @@ public class EditMenuCommandParser implements Parser<EditMenuCommand> {
         EditMenuDescriptor editMenuDescriptor = new EditMenuDescriptor();
 
         if (argMultimap.getValue(PREFIX_MENU_NAME).isPresent()) {
-            editMenuDescriptor.setName(new MenuItemName(argMultimap.getValue(PREFIX_MENU_NAME).get().trim()));
+            editMenuDescriptor.setName(ParserUtil.parseMenuItemName(argMultimap.getValue(PREFIX_MENU_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
-            editMenuDescriptor.setPrice(new Price(argMultimap.getValue(PREFIX_PRICE).get().trim()));
+            editMenuDescriptor.setPrice(ParserUtil.parseMenuPrice(argMultimap.getValue(PREFIX_PRICE).get()));
         }
         if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
             editMenuDescriptor.setAvailable(
