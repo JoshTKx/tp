@@ -17,7 +17,6 @@ import seedu.homechef.logic.commands.DeleteMenuCommand;
 import seedu.homechef.logic.commands.EditCommand;
 import seedu.homechef.logic.commands.EditMenuCommand;
 import seedu.homechef.logic.commands.ExitCommand;
-import seedu.homechef.logic.commands.FindCommand;
 import seedu.homechef.logic.commands.HelpCommand;
 import seedu.homechef.logic.commands.ListCommand;
 import seedu.homechef.logic.commands.MarkCompleteCommand;
@@ -74,9 +73,6 @@ public class HomeChefParser {
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
-
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);

@@ -7,10 +7,6 @@ import static seedu.homechef.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.homechef.testutil.Assert.assertThrows;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.homechef.logic.commands.AddCommand;
@@ -19,7 +15,6 @@ import seedu.homechef.logic.commands.DeleteCommand;
 import seedu.homechef.logic.commands.EditCommand;
 import seedu.homechef.logic.commands.EditCommand.EditOrderDescriptor;
 import seedu.homechef.logic.commands.ExitCommand;
-import seedu.homechef.logic.commands.FindCommand;
 import seedu.homechef.logic.commands.HelpCommand;
 import seedu.homechef.logic.commands.ListCommand;
 import seedu.homechef.logic.commands.MarkCompleteCommand;
@@ -30,7 +25,6 @@ import seedu.homechef.logic.commands.PartialCommand;
 import seedu.homechef.logic.commands.ReceiptCommand;
 import seedu.homechef.logic.commands.UnpaidCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;
-import seedu.homechef.model.order.CustomerContainsKeywordsPredicate;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
 import seedu.homechef.testutil.OrderBuilder;
@@ -74,14 +68,6 @@ public class HomeChefParserTest {
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
-    }
-
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new CustomerContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

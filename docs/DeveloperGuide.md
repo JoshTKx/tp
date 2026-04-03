@@ -292,7 +292,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user               | mark order completion status                         | know the state of my current orders                                           |
 | `* *`    | user               | edit contact information after the order is complete | modify and update information if records were incorrect                       |
 | `* *`    | expert user        | use shortcuts for commands                           | efficiently type out commands                                                 |
-| `* *`    | user               | search for a customer by name or phone number        | quickly find their information without scrolling through the entire list      |
+| `* *`    | user               | filter orders by customer name or phone number       | quickly find their information without scrolling through the entire list      |
 | `* *`    | user               | view schedule of orders ordered by time              | quickly see the total schedule of work                                        |
 | `* *`    | professional user  | generate a simple order summary                      | send customers a confirmation of the order details                            |
 | `* *`    | new user           | view a user guide                                    | learn how to use the program properly                                         |
@@ -397,7 +397,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to search for a customer by name.
+1. User requests to filter orders by customer name.
 2. System shows a list of customers matching the search term.
 
    Use case ends.

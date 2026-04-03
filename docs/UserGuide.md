@@ -274,26 +274,6 @@ Examples:
 *  `edit 2 c/Betsy Crower t/` Edits the name of the 2nd order's customer to be `Betsy Crower` and clears all existing dietTags.
 *  `edit 1` Shows an error message saying `At least one field to edit must be provided.`
 
-### Locating orders by customer name: `find`
-
-Finds orders whose customer names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Orders matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-</div>
-
-Examples:
-* `find John` returns orders with customer name `john` and `John Doe`
-* `find alex david` returns orders with customer name `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
 ### Deleting an order : `delete`
 
 Deletes the specified order.
@@ -306,7 +286,7 @@ Format: `delete INDEX`
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd order in the current list.
-* `find Betsy` followed by `delete 1` deletes the 1st order in the results of the `find` command.
+* `list c/Betsy` followed by `delete 1` deletes the 1st order in the filtered results.
 
 ### Clearing all entries : `clear`
 
@@ -447,7 +427,6 @@ Action | Format, Examples
 **Mark Partial** | `partial INDEX` <br> e.g., `partial 1`
 **Mark Unpaid** | `unpaid INDEX` <br> e.g., `unpaid 1`
 **Edit** | `edit INDEX [f/FOOD] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​ [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Clear** | `clear`
 **Add Menu** | `add-menu n/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu n/Bee Hoon $/5.00 v/true`

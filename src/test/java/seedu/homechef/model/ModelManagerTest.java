@@ -10,13 +10,11 @@ import static seedu.homechef.testutil.TypicalOrders.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.homechef.commons.core.GuiSettings;
 import seedu.homechef.model.menu.MenuBook;
-import seedu.homechef.model.order.CustomerContainsKeywordsPredicate;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.testutil.HomeChefBuilder;
 import seedu.homechef.testutil.OrderBuilder;
@@ -172,8 +170,9 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentHomeChef, new MenuBook(), userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getCustomer().toString().split("\\s+");
-        modelManager.updateFilteredOrderList(new CustomerContainsKeywordsPredicate(Arrays.asList(keywords)));
+        String customerName = ALICE.getCustomer().toString().toLowerCase();
+        modelManager.updateFilteredOrderList(order ->
+                order.getCustomer().toString().toLowerCase().contains(customerName));
         assertFalse(modelManager.equals(new ModelManager(homeChef, new MenuBook(), userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
