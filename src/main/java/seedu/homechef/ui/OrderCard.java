@@ -233,6 +233,6 @@ public class OrderCard extends UiPart<Region> {
 
     private void setPriceDisplay(Price price) {
         String priceLabel = "Total: " + PAYMENT_SYMBOL + price;
-        price.setText(priceLabel);
+        this.price.setText(priceLabel);
     }
 }
