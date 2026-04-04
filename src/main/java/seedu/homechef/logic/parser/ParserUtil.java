@@ -292,6 +292,10 @@ public class ParserUtil {
      * The {@code ref} parameter maps to different semantic fields depending on the type:
      * PayNow handle, bank reference number, card last-4 digits, or wallet account ID.
      *
+     * @param method the payment method type (m/ prefix value), or empty if not provided
+     * @param ref the payment reference (r/ prefix value), or empty if not provided
+     * @param bankName the bank name (b/ prefix value), or empty if not provided
+     * @param walletProvider the wallet provider (w/ prefix value), or empty if not provided
      * @throws ParseException if the combination of provided values is invalid for any payment type.
      */
     public static Optional<PaymentInfo> parsePaymentInfo(
@@ -313,7 +317,7 @@ public class ParserUtil {
 
         PaymentType type = parsePaymentType(method.get());
 
-        PaymentInfo paymentInfo;
+        PaymentInfo paymentInfo = null;
         switch (type) {
         case CASH:
             paymentInfo = parseCashPayment(hasRef, hasBankName, hasWalletProvider);
@@ -330,8 +334,6 @@ public class ParserUtil {
         case EWALLET:
             paymentInfo = parseEWalletPayment(ref, walletProvider, hasBankName);
             break;
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_PAYMENT_METHOD, method.get().trim()));
         }
 
         return Optional.of(paymentInfo);
