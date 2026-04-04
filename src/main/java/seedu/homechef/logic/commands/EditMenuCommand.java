@@ -72,8 +72,8 @@ public class EditMenuCommand extends Command {
 
         model.setMenuItem(menuItemToEdit, editedMenuItem);
         return new CommandResult(String.format(MESSAGE_EDIT_MENU_ITEM_SUCCESS,
-                editedMenuItem.getName().fullName,
-                editedMenuItem.getPrice().value,
+                editedMenuItem.getName().getFullName(),
+                editedMenuItem.getPrice().getValue(),
                 editedMenuItem.isAvailable()));
     }
 

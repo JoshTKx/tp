@@ -78,7 +78,7 @@ public class AddCommand extends Command {
 
         String foodName = toAdd.getFood().toString();
         Optional<MenuItem> matchingItem = model.getMenuBook().getMenuItemList().stream()
-                .filter(item -> item.getName().fullName.equalsIgnoreCase(foodName))
+                .filter(item -> item.getName().getFullName().equalsIgnoreCase(foodName))
                 .findFirst();
 
         if (matchingItem.isPresent()) {
@@ -89,8 +89,8 @@ public class AddCommand extends Command {
             throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, foodName));
         }
 
-        String canonicalName = matchingItem.get().getName().fullName;
-        Price unitPrice = new Price(matchingItem.get().getPrice().value);
+        String canonicalName = matchingItem.get().getName().getFullName();
+        Price unitPrice = new Price(matchingItem.get().getPrice().getValue());
         Quantity quantity = toAdd.getQuantity();
         Price totalPrice = Price.multiply(unitPrice, quantity);
         Order orderToAdd = new Order(new Food(canonicalName), toAdd.getCustomer(), toAdd.getPhone(),

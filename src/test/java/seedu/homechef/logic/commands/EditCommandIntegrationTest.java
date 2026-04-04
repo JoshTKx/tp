@@ -46,7 +46,7 @@ public class EditCommandIntegrationTest {
                 new MenuItemName("Sourdough Bread"), new Price("8.00"), false);
         model.setMenuItem(
                 model.getFilteredMenuItemList().stream()
-                        .filter(i -> i.getName().fullName.equals("Sourdough Bread"))
+                        .filter(i -> i.getName().getFullName().equals("Sourdough Bread"))
                         .findFirst().get(),
                 unavailable);
 

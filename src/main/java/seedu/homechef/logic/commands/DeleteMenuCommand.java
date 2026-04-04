@@ -49,7 +49,7 @@ public class DeleteMenuCommand extends Command {
         MenuItem menuItemToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deleteMenuItem(menuItemToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_MENU_ITEM_SUCCESS,
-                menuItemToDelete.getName().fullName));
+                menuItemToDelete.getName().getFullName()));
     }
 
     @Override

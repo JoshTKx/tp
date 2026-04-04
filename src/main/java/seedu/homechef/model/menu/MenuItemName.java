@@ -17,7 +17,7 @@ public class MenuItemName {
     // Note: the spec quotes a simpler regex — this extended form is the actual Food regex in the codebase.
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ()\\[\\]-]*";
 
-    public final String fullName;
+    private final String fullName;
 
     /**
      * Constructs a {@code MenuItemName}.
@@ -28,6 +28,13 @@ public class MenuItemName {
         requireNonNull(name);
         checkArgument(isValidMenuItemName(name), MESSAGE_CONSTRAINTS);
         fullName = name;
+    }
+
+    /**
+     * Returns the full name string.
+     */
+    public String getFullName() {
+        return fullName;
     }
 
     /**

@@ -103,15 +103,15 @@ public class EditCommand extends Command {
         if (descriptor.getFood().isPresent()) {
             String newFoodName = editedOrder.getFood().toString();
             Optional<MenuItem> matchingItem = model.getMenuBook().getMenuItemList().stream()
-                    .filter(item -> item.getName().fullName.equalsIgnoreCase(newFoodName))
+                    .filter(item -> item.getName().getFullName().equalsIgnoreCase(newFoodName))
                     .findFirst();
 
             if (matchingItem.isPresent()) {
                 if (!matchingItem.get().isAvailable()) {
                     throw new CommandException(String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, newFoodName));
                 }
-                String canonicalName = matchingItem.get().getName().fullName;
-                Price menuPrice = new Price(matchingItem.get().getPrice().value);
+                String canonicalName = matchingItem.get().getName().getFullName();
+                Price menuPrice = new Price(matchingItem.get().getPrice().getValue());
                 editedOrder = new Order(new Food(canonicalName), editedOrder.getCustomer(),
                         editedOrder.getPhone(), editedOrder.getEmail(), editedOrder.getAddress(),
                         editedOrder.getDate(), editedOrder.getCompletionStatus(),

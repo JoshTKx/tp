@@ -47,7 +47,7 @@ public class MenuItem {
             return true;
         }
         return other != null
-                && other.getName().fullName.equalsIgnoreCase(name.fullName);
+                && other.getName().getFullName().equalsIgnoreCase(name.getFullName());
     }
 
     /**

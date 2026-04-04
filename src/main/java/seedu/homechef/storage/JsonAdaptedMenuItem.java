@@ -35,8 +35,8 @@ class JsonAdaptedMenuItem {
      * Converts a given {@code MenuItem} into this class for Jackson use.
      */
     public JsonAdaptedMenuItem(MenuItem source) {
-        name = source.getName().fullName;
-        price = source.getPrice().value;
+        name = source.getName().getFullName();
+        price = source.getPrice().getValue();
         available = source.isAvailable();
     }
 

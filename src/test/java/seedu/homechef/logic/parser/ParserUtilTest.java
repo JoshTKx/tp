@@ -252,13 +252,13 @@ public class ParserUtilTest {
     @Test
     public void parseMenuPrice_validValueWithOneDecimal_normalizesToTwoDecimalPlaces() throws Exception {
         // EP: valid one-decimal menu price should be normalized for display consistency.
-        assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").value);
+        assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").getValue());
     }
 
     @Test
     public void parseMenuPrice_validIntegerValue_normalizesToTwoDecimalPlaces() throws Exception {
         // EP: valid integer menu price should be normalized for display consistency.
-        assertEquals("12.00", ParserUtil.parseMenuPrice("12").value);
+        assertEquals("12.00", ParserUtil.parseMenuPrice("12").getValue());
     }
 
     @Test

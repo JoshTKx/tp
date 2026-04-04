@@ -17,7 +17,7 @@ public class Price {
     public static final String VALIDATION_REGEX =
             "^([1-9][0-9]*(\\.[0-9]{1,2})?|0\\.(0[1-9]|[1-9][0-9]?))$";
 
-    public final String value;
+    private final String value;
 
     /**
      * Constructs a {@code Price}.
@@ -28,6 +28,13 @@ public class Price {
         requireNonNull(price);
         checkArgument(isValidPrice(price), MESSAGE_CONSTRAINTS);
         value = formatToTwoDecimalPlaces(price);
+    }
+
+    /**
+     * Returns the price value string.
+     */
+    public String getValue() {
+        return value;
     }
 
     /**
