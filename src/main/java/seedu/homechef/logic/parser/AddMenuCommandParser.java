@@ -10,9 +10,6 @@ import java.util.stream.Stream;
 import seedu.homechef.logic.commands.AddMenuCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 import seedu.homechef.model.menu.MenuItem;
-import seedu.homechef.model.menu.MenuItemName;
-import seedu.homechef.model.menu.Price;
-
 /**
  * Parses input arguments and creates a new AddMenuCommand object.
  */
@@ -35,8 +32,10 @@ public class AddMenuCommandParser implements Parser<AddMenuCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_MENU_NAME, PREFIX_PRICE, PREFIX_AVAILABILITY);
 
-        MenuItemName name = new MenuItemName(argMultimap.getValue(PREFIX_MENU_NAME).get().trim());
-        Price price = new Price(argMultimap.getValue(PREFIX_PRICE).get().trim());
+        seedu.homechef.model.menu.MenuItemName name =
+                ParserUtil.parseMenuItemName(argMultimap.getValue(PREFIX_MENU_NAME).get());
+        seedu.homechef.model.menu.Price price =
+                ParserUtil.parseMenuPrice(argMultimap.getValue(PREFIX_PRICE).get());
         boolean available = true;
         if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
             available = ParserUtil.parseAvailability(argMultimap.getValue(PREFIX_AVAILABILITY).get());

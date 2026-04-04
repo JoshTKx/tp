@@ -53,7 +53,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the order identified "
             + "by the index number used in the displayed order list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a non-zero positive integer) "
             + "[" + PREFIX_FOOD + "FOOD] "
             + "[" + PREFIX_CUSTOMER + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "

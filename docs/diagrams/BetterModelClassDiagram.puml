@@ -9,10 +9,10 @@ HomeChef *-right-> "1" UniqueTagList
 UniqueTagList -[hidden]down- UniqueOrderList
 UniqueTagList -[hidden]down- UniqueOrderList
 
-UniqueTagList -right-> "*" Tag
+UniqueTagList -right-> "*" DietTag
 UniqueOrderList -right-> Order
 
-Order -up-> "*" Tag
+Order -up-> "*" DietTag
 
 Order *--> Food
 Order *--> Customer

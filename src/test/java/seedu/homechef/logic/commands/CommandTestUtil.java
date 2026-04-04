@@ -16,7 +16,6 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 import static seedu.homechef.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import seedu.homechef.commons.core.index.Index;
@@ -24,7 +23,6 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.order.CompletionStatus;
-import seedu.homechef.model.order.CustomerContainsKeywordsPredicate;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
@@ -186,8 +184,9 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredOrderList().size());
 
         Order order = model.getFilteredOrderList().get(targetIndex.getZeroBased());
-        final String[] splitName = order.getCustomer().toString().split("\\s+");
-        model.updateFilteredOrderList(new CustomerContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final String firstName = order.getCustomer().toString().split("\\s+")[0].toLowerCase();
+        model.updateFilteredOrderList(currentOrder ->
+                currentOrder.getCustomer().toString().toLowerCase().contains(firstName));
 
         assertEquals(1, model.getFilteredOrderList().size());
     }

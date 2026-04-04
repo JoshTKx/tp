@@ -29,7 +29,7 @@ public class EditMenuCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the menu item identified "
             + "by the index number used in the displayed menu list. "
             + "At least one field must be provided.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a non-zero positive integer) "
             + "[" + PREFIX_MENU_NAME + "NAME] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_AVAILABILITY + "AVAILABILITY]\n"

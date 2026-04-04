@@ -34,7 +34,7 @@ public class MarkCompleteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the order identified by the index number used in the displayed order list as complete.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: INDEX (must be a non-zero positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_COMPLETE_ORDER_SUCCESS = "Marked Order as Complete: %1$s";
