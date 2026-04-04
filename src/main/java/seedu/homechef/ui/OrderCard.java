@@ -231,9 +231,8 @@ public class OrderCard extends UiPart<Region> {
                 .forEach(tag -> dietTags.getChildren().add(new Label(tag.toString())));
     }
 
-    private void setPriceDisplay() {
-        String orderPrice = order.getPrice().toString();
-        String priceLabel = "Total: " + PAYMENT_SYMBOL + orderPrice;
+    private void setPriceDisplay(Price price) {
+        String priceLabel = "Total: " + PAYMENT_SYMBOL + price;
         price.setText(priceLabel);
     }
 }
