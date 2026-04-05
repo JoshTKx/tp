@@ -32,15 +32,11 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_AVAILABILITY = "Availability must be 'true' or 'false'.";
-
-    private static final String VALID_PAYMENT_TYPE_NAMES = Arrays.stream(PaymentType.values())
-            .map(Enum::name)
-            .collect(Collectors.joining(", "));
-
     public static final String MESSAGE_METHOD_REQUIRED_FOR_DETAILS =
             "m/ required when payment details (r/, b/, w/) are provided.";
     public static final String MESSAGE_INVALID_PAYMENT_METHOD =
-            "Invalid payment method: '%s'. Valid types: " + VALID_PAYMENT_TYPE_NAMES + ".";
+            "Invalid payment method: '%s'. Valid types: "
+            + Arrays.stream(PaymentType.values()).map(Enum::name).collect(Collectors.joining(", ")) + ".";
     public static final String MESSAGE_UNEXPECTED_FIELDS_FOR_CASH =
             "r/, b/, w/ are not accepted for CASH.";
     public static final String MESSAGE_REF_REQUIRED_FOR =
@@ -55,6 +51,10 @@ public class ParserUtil {
             "w/ is only valid for EWALLET payment type.";
     public static final String MESSAGE_CARD_REF_INVALID =
             "r/ for CARD must be exactly 4 numeric digits (e.g. r/4321).";
+
+    private static final String VALID_PAYMENT_TYPE_NAMES = Arrays.stream(PaymentType.values())
+            .map(Enum::name)
+            .collect(Collectors.joining(", "));
 
     /**
      * Trims leading and trailing whitespaces in {@code String input} and
@@ -296,7 +296,8 @@ public class ParserUtil {
      * @param ref the payment reference (r/ prefix value), or empty if not provided
      * @param bankName the bank name (b/ prefix value), or empty if not provided
      * @param walletProvider the wallet provider (w/ prefix value), or empty if not provided
-     * @return an {@code Optional} containing the parsed {@code PaymentInfo}, or empty if no payment fields were provided
+     * @return an {@code Optional} containing the parsed {@code PaymentInfo},
+     *         or empty if no payment fields were provided
      * @throws ParseException if the combination of provided values is invalid for any payment type.
      */
     public static Optional<PaymentInfo> parsePaymentInfo(
