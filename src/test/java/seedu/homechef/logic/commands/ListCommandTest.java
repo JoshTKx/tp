@@ -1,6 +1,8 @@
 package seedu.homechef.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.homechef.logic.commands.CommandTestUtil.showOrderAtIndex;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
@@ -36,12 +38,14 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
+        // EP: no filters provided
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showOrderAtIndex(model, INDEX_FIRST_ORDER);
+        // EP: existing filtered state reset back to show-all
         assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -53,6 +57,7 @@ public class ListCommandTest {
         assertCommandSuccess(new ListCommand(target), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
 
         List<Order> shown = model.getFilteredOrderList();
+        // EP: date-only filter
         assertEquals(true, shown.stream().allMatch(o -> o.getDate().equals(target)));
     }
 
@@ -68,7 +73,50 @@ public class ListCommandTest {
                 order.getDate().equals(target)
                         && order.getFood().toString().toLowerCase().contains("cake"));
 
+        // EP: multiple filters combined with logical AND
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_withCustomerQuery_filtersListCaseInsensitively() {
+        ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
+        d.setCustomerQuery("alice");
+
+        expectedModel.updateFilteredOrderList(order ->
+                order.getCustomer().toString().toLowerCase().contains("alice"));
+
+        assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        // EP: customer substring filter is case-insensitive
+        assertTrue(model.getFilteredOrderList().stream()
+                .allMatch(order -> order.getCustomer().toString().toLowerCase().contains("alice")));
+    }
+
+    @Test
+    public void execute_withFoodQuery_filtersListCaseInsensitively() {
+        ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
+        d.setFoodQuery("cake");
+
+        expectedModel.updateFilteredOrderList(order ->
+                order.getFood().toString().toLowerCase().contains("cake"));
+
+        assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        // EP: food substring filter is case-insensitive
+        assertTrue(model.getFilteredOrderList().stream()
+                .allMatch(order -> order.getFood().toString().toLowerCase().contains("cake")));
+    }
+
+    @Test
+    public void execute_withPhoneQuery_filtersList() {
+        ListCommand.ListFilterDescriptor d = new ListCommand.ListFilterDescriptor();
+        d.setPhoneQuery("9435");
+
+        expectedModel.updateFilteredOrderList(order ->
+                order.getPhone().toString().toLowerCase().contains("9435"));
+
+        assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        // EP: phone substring filter
+        assertTrue(model.getFilteredOrderList().stream()
+                .allMatch(order -> order.getPhone().toString().contains("9435")));
     }
 
     @Test
@@ -79,6 +127,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredOrderList(order ->
                 order.getCompletionStatus() == CompletionStatus.COMPLETED);
 
+        // EP: completion-status-only filter
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -90,6 +139,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredOrderList(order ->
                 order.getPaymentStatus() == PaymentStatus.PAID);
 
+        // EP: payment-status-only filter
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -106,6 +156,7 @@ public class ListCommandTest {
                 order.getCompletionStatus().equals(completed)
                         && order.getPaymentStatus().equals(unpaid));
 
+        // EP: status filters combined without text/date filters
         assertCommandSuccess(new ListCommand(d), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -125,8 +176,48 @@ public class ListCommandTest {
         ListCommand.ListFilterDescriptor desc2 = new ListCommand.ListFilterDescriptor();
         desc2.setFoodQuery("cake");
 
+        // EP: same object -> returns true
+        assertEquals(new ListCommand(desc1), new ListCommand(desc1));
+        // EP: same descriptor values -> returns true
         assertEquals(new ListCommand(desc1), new ListCommand(desc1Copy));
+        // EP: different descriptor values -> returns false
         org.junit.jupiter.api.Assertions.assertNotEquals(new ListCommand(desc1), new ListCommand(desc2));
+        // EP: null -> returns false
         org.junit.jupiter.api.Assertions.assertNotEquals(new ListCommand(desc1), null);
+        // EP: different types -> returns false
+        org.junit.jupiter.api.Assertions.assertNotEquals(new ListCommand(desc1), 1);
+    }
+
+    @Test
+    public void listFilterDescriptor_equals() {
+        ListCommand.ListFilterDescriptor descriptor = new ListCommand.ListFilterDescriptor();
+        descriptor.setDate(new Date("16-04-2003"));
+        descriptor.setCustomerQuery("alice");
+        descriptor.setFoodQuery("cake");
+        descriptor.setPhoneQuery("1234");
+        descriptor.setCompletionStatus(CompletionStatus.COMPLETED);
+        descriptor.setPaymentStatus(PaymentStatus.PAID);
+
+        ListCommand.ListFilterDescriptor sameDescriptor = new ListCommand.ListFilterDescriptor();
+        sameDescriptor.setDate(new Date("16-04-2003"));
+        sameDescriptor.setCustomerQuery("alice");
+        sameDescriptor.setFoodQuery("cake");
+        sameDescriptor.setPhoneQuery("1234");
+        sameDescriptor.setCompletionStatus(CompletionStatus.COMPLETED);
+        sameDescriptor.setPaymentStatus(PaymentStatus.PAID);
+
+        ListCommand.ListFilterDescriptor differentDescriptor = new ListCommand.ListFilterDescriptor();
+        differentDescriptor.setPaymentStatus(PaymentStatus.UNPAID);
+
+        // EP: same object -> returns true
+        assertTrue(descriptor.equals(descriptor));
+        // EP: same field values across all filter slots -> returns true
+        assertTrue(descriptor.equals(sameDescriptor));
+        // EP: null -> returns false
+        assertFalse(descriptor.equals(null));
+        // EP: different types -> returns false
+        assertFalse(descriptor.equals(1));
+        // EP: at least one differing field -> returns false
+        assertFalse(descriptor.equals(differentDescriptor));
     }
 }
