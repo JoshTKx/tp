@@ -12,10 +12,9 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.UserPrefs;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.menu.MenuItem;
-import seedu.homechef.model.menu.MenuItemName;
-import seedu.homechef.model.menu.Price;
-import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.testutil.TypicalMenuItems;
 
@@ -43,10 +42,10 @@ public class EditCommandIntegrationTest {
     @Test
     public void execute_editFoodToUnavailableItem_throwsCommandException() {
         MenuItem unavailable = new MenuItem(
-                new MenuItemName("Sourdough Bread"), new Price("8.00"), false);
+                new Food("Sourdough Bread"), new Price("8.00"), false);
         model.setMenuItem(
                 model.getFilteredMenuItemList().stream()
-                        .filter(i -> i.getName().fullName.equals("Sourdough Bread"))
+                        .filter(i -> i.getFood().toString().equals("Sourdough Bread"))
                         .findFirst().get(),
                 unavailable);
 

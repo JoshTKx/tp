@@ -7,24 +7,23 @@ import java.util.stream.Collectors;
 
 import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.ReadOnlyHomeChef;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.menu.MenuBook;
 import seedu.homechef.model.menu.MenuItem;
-import seedu.homechef.model.menu.MenuItemName;
 import seedu.homechef.model.menu.ReadOnlyMenuBook;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
+import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
-import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
-import seedu.homechef.model.order.Price;
 import seedu.homechef.model.order.Quantity;
-import seedu.homechef.model.tag.DietTag;
 
 /**
  * Contains utility methods for populating {@code HomeChef} with sample data.
@@ -83,22 +82,26 @@ public class SampleDataUtil {
     }
 
     /**
+     * Returns sample menu items corresponding to the sample foods.
+     */
+    public static MenuItem[] getSampleMenuItems() {
+        MenuItem cake = new MenuItem(new Food("Birthday Cake"), new Price("10.50"), true);
+        MenuItem cupcakes = new MenuItem(new Food("Cupcakes (24pcs)"), new Price("10.50"), true);
+        MenuItem cookies = new MenuItem(new Food("Chocolate Chip Cookies (3pcs)"), new Price("10.50"), true);
+        MenuItem assortment = new MenuItem(new Food("Cookies Assortment (50pcs)"), new Price("10.50"), true);
+        MenuItem pie = new MenuItem(new Food("Blueberry Pie"), new Price("10.50"), true);
+        MenuItem bread = new MenuItem(new Food("Sourdough Bread (3pcs)"), new Price("10.50"), true);
+        return new MenuItem[]{cake, cupcakes, cookies, assortment, pie, bread};
+    }
+
+    /**
      * Returns a {@code ReadOnlyMenuBook} containing menu items for each unique food in the sample orders.
      * Each item is available and priced at 10.00.
      */
     public static ReadOnlyMenuBook getSampleMenuBook() {
         MenuBook menuBook = new MenuBook();
-        String[] sampleFoodNames = {
-            "Birthday Cake",
-            "Cupcakes (24pcs)",
-            "Chocolate Chip Cookies (3pcs)",
-            "Cookies Assortment (50pcs)",
-            "Blueberry Pie",
-            "Sourdough Bread (3pcs)"
-        };
-        for (String foodName : sampleFoodNames) {
-            seedu.homechef.model.menu.Price menuPrice = new seedu.homechef.model.menu.Price("10.50");
-            menuBook.addMenuItem(new MenuItem(new MenuItemName(foodName), menuPrice, true));
+        for (MenuItem sampleMenuItem : getSampleMenuItems()) {
+            menuBook.addMenuItem(sampleMenuItem);
         }
         return menuBook;
     }

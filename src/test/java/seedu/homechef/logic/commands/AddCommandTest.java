@@ -227,7 +227,7 @@ public class AddCommandTest {
 
         @Override
         public void setMenuItem(seedu.homechef.model.menu.MenuItem target,
-                seedu.homechef.model.menu.MenuItem editedItem) {
+                                seedu.homechef.model.menu.MenuItem editedItem) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -264,8 +264,8 @@ public class AddCommandTest {
         public seedu.homechef.model.menu.ReadOnlyMenuBook getMenuBook() {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
-                    new seedu.homechef.model.menu.MenuItemName("Birthday Cake"),
-                    new seedu.homechef.model.menu.Price("25.00"), true));
+                    new seedu.homechef.model.common.Food("Birthday Cake"),
+                    new seedu.homechef.model.common.Price("25.00"), true));
             return menuBook;
         }
     }
@@ -297,8 +297,8 @@ public class AddCommandTest {
         public seedu.homechef.model.menu.ReadOnlyMenuBook getMenuBook() {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
-                    new seedu.homechef.model.menu.MenuItemName("Birthday Cake"),
-                    new seedu.homechef.model.menu.Price("25.00"), true));
+                    new seedu.homechef.model.common.Food("Birthday Cake"),
+                    new seedu.homechef.model.common.Price("25.00"), true));
             return menuBook;
         }
 
@@ -307,8 +307,8 @@ public class AddCommandTest {
             javafx.collections.ObservableList<seedu.homechef.model.menu.MenuItem> list =
                     javafx.collections.FXCollections.observableArrayList();
             list.add(new seedu.homechef.model.menu.MenuItem(
-                    new seedu.homechef.model.menu.MenuItemName("Birthday Cake"),
-                    new seedu.homechef.model.menu.Price("25.00"), true));
+                    new seedu.homechef.model.common.Food("Birthday Cake"),
+                    new seedu.homechef.model.common.Price("25.00"), true));
             return list;
         }
     }

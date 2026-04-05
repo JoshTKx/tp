@@ -7,6 +7,8 @@ import static seedu.homechef.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.homechef.model.order.DietTag;
+
 public class DietTagTest {
 
     @Test

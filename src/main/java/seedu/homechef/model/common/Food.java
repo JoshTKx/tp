@@ -1,4 +1,4 @@
-package seedu.homechef.model.order;
+package seedu.homechef.model.common;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.homechef.commons.util.AppUtil.checkArgument;
@@ -49,19 +49,21 @@ public class Food {
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
         if (!(other instanceof Food)) {
             return false;
         }
-
         Food otherFood = (Food) other;
         return foodName.equalsIgnoreCase(otherFood.foodName);
+    }
+
+    public boolean nameContains(String other) {
+        return foodName.toLowerCase().contains(other.toLowerCase());
     }
 
     @Override
     public int hashCode() {
         return foodName.hashCode();
     }
-
 }
+
+

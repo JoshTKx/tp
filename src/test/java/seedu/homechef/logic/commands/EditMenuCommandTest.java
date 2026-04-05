@@ -21,18 +21,18 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.ReadOnlyHomeChef;
 import seedu.homechef.model.ReadOnlyUserPrefs;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.menu.MenuItem;
-import seedu.homechef.model.menu.MenuItemName;
-import seedu.homechef.model.menu.Price;
 import seedu.homechef.model.menu.ReadOnlyMenuBook;
 import seedu.homechef.model.order.Order;
 
 public class EditMenuCommandTest {
 
     private static final MenuItem CHICKEN = new MenuItem(
-            new MenuItemName("Chicken Rice"), new Price("5.50"), true);
+            new Food("Chicken Rice"), new Price("5.50"), true);
     private static final MenuItem NASI = new MenuItem(
-            new MenuItemName("Nasi Goreng"), new Price("6.00"), true);
+            new Food("Nasi Goreng"), new Price("6.00"), true);
 
     @Test
     public void execute_editPrice_success() throws Exception {
@@ -52,7 +52,7 @@ public class EditMenuCommandTest {
         ModelStubWithMenuItemList modelStub = new ModelStubWithMenuItemList(CHICKEN);
 
         EditMenuDescriptor descriptor = new EditMenuDescriptor();
-        descriptor.setName(new MenuItemName("Mee Goreng"));
+        descriptor.setName(new Food("Mee Goreng"));
         CommandResult result = new EditMenuCommand(Index.fromOneBased(1), descriptor).execute(modelStub);
 
         // EP: only name edited; other fields unchanged
@@ -78,7 +78,7 @@ public class EditMenuCommandTest {
         ModelStubWithMenuItemList modelStub = new ModelStubWithMenuItemList(CHICKEN, NASI);
 
         EditMenuDescriptor descriptor = new EditMenuDescriptor();
-        descriptor.setName(new MenuItemName("Nasi Goreng"));
+        descriptor.setName(new Food("Nasi Goreng"));
         EditMenuCommand editCommand = new EditMenuCommand(Index.fromOneBased(1), descriptor);
 
         // EP: edited identity clashes with an existing menu item

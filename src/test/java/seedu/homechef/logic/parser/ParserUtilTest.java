@@ -25,16 +25,16 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import seedu.homechef.logic.parser.exceptions.ParseException;
-import seedu.homechef.model.menu.MenuItemName;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.Customer;
+import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
-import seedu.homechef.model.order.Price;
 import seedu.homechef.model.order.Quantity;
-import seedu.homechef.model.tag.DietTag;
 
 public class ParserUtilTest {
     private static final String INVALID_CUSTOMER = "R@chel";
@@ -254,20 +254,20 @@ public class ParserUtilTest {
     @Test
     public void parseMenuItemName_validValueWithWhitespace_returnsTrimmedMenuItemName() throws Exception {
         String menuItemNameWithWhitespace = WHITESPACE + "Chicken Rice" + WHITESPACE;
-        MenuItemName expectedName = new MenuItemName("Chicken Rice");
-        assertEquals(expectedName, ParserUtil.parseMenuItemName(menuItemNameWithWhitespace));
+        Food expectedName = new Food("Chicken Rice");
+        assertEquals(expectedName, ParserUtil.parseFood(menuItemNameWithWhitespace));
     }
 
     @Test
     public void parseMenuPrice_validValueWithOneDecimal_normalizesToTwoDecimalPlaces() throws Exception {
         // EP: valid one-decimal menu price should be normalized for display consistency.
-        assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").value);
+        assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").toString());
     }
 
     @Test
     public void parseMenuPrice_validIntegerValue_normalizesToTwoDecimalPlaces() throws Exception {
         // EP: valid integer menu price should be normalized for display consistency.
-        assertEquals("12.00", ParserUtil.parseMenuPrice("12").value);
+        assertEquals("12.00", ParserUtil.parseMenuPrice("12").toString());
     }
 
     @Test

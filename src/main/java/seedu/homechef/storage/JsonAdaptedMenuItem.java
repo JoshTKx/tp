@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.homechef.commons.exceptions.IllegalValueException;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.menu.MenuItem;
-import seedu.homechef.model.menu.MenuItemName;
-import seedu.homechef.model.menu.Price;
 
 /**
  * Jackson-friendly version of {@link MenuItem}.
@@ -35,8 +35,8 @@ class JsonAdaptedMenuItem {
      * Converts a given {@code MenuItem} into this class for Jackson use.
      */
     public JsonAdaptedMenuItem(MenuItem source) {
-        name = source.getName().fullName;
-        price = source.getPrice().value;
+        name = source.getFood().toString();
+        price = source.getPrice().toString();
         available = source.isAvailable();
     }
 
@@ -48,10 +48,10 @@ class JsonAdaptedMenuItem {
     public MenuItem toModelType() throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    MenuItemName.class.getSimpleName()));
+                    Food.class.getSimpleName()));
         }
-        if (!MenuItemName.isValidMenuItemName(name)) {
-            throw new IllegalValueException(MenuItemName.MESSAGE_CONSTRAINTS);
+        if (!Food.isValidFood(name)) {
+            throw new IllegalValueException(Food.MESSAGE_CONSTRAINTS);
         }
 
         if (price == null) {
@@ -63,6 +63,6 @@ class JsonAdaptedMenuItem {
         }
 
         boolean isAvailable = available == null ? true : available;
-        return new MenuItem(new MenuItemName(name), new Price(price), isAvailable);
+        return new MenuItem(new Food(name), new Price(price), isAvailable);
     }
 }

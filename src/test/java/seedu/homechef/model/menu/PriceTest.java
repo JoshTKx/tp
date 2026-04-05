@@ -7,6 +7,8 @@ import static seedu.homechef.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.homechef.model.common.Price;
+
 public class PriceTest {
 
     @Test
@@ -70,12 +72,12 @@ public class PriceTest {
     @Test
     public void constructor_validPriceWithOneDecimal_normalizesToTwoDecimalPlaces() {
         // EP: valid one-decimal input should be accepted and normalized for display consistency.
-        assertEquals("5.50", new Price("5.5").value);
+        assertEquals("5.50", new Price("5.5").toString());
     }
 
     @Test
     public void constructor_validIntegerPrice_normalizesToTwoDecimalPlaces() {
         // EP: valid integer input should be accepted and normalized for display consistency.
-        assertEquals("12.00", new Price("12").value);
+        assertEquals("12.00", new Price("12").toString());
     }
 }

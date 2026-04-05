@@ -12,18 +12,17 @@ import java.util.stream.Collectors;
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
 import seedu.homechef.logic.parser.exceptions.ParseException;
-import seedu.homechef.model.menu.MenuItemName;
+import seedu.homechef.model.common.Food;
+import seedu.homechef.model.common.Price;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
+import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
-import seedu.homechef.model.order.Food;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
-import seedu.homechef.model.order.Price;
 import seedu.homechef.model.order.Quantity;
-import seedu.homechef.model.tag.DietTag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -98,23 +97,6 @@ public class ParserUtil {
             throw new ParseException(Food.MESSAGE_CONSTRAINTS);
         }
         return new Food(trimmedName);
-    }
-
-    /**
-     * Parses a {@code String menuItemName} into a {@code MenuItemName}.
-     * String will be normalized by trimming and replacing whitespace with a single space.
-     *
-     * @param menuItemName The menu item name string to parse.
-     * @return A MenuItemName object representing the parsed menu item name.
-     * @throws ParseException if the given {@code menuItemName} is invalid.
-     */
-    public static MenuItemName parseMenuItemName(String menuItemName) throws ParseException {
-        requireNonNull(menuItemName);
-        String trimmedName = normalizeWhitespace(menuItemName);
-        if (!MenuItemName.isValidMenuItemName(trimmedName)) {
-            throw new ParseException(MenuItemName.MESSAGE_CONSTRAINTS);
-        }
-        return new MenuItemName(trimmedName);
     }
 
     /**
@@ -260,13 +242,13 @@ public class ParserUtil {
      * @return A menu Price object representing the parsed menu price.
      * @throws ParseException if the given {@code price} is invalid.
      */
-    public static seedu.homechef.model.menu.Price parseMenuPrice(String price) throws ParseException {
+    public static seedu.homechef.model.common.Price parseMenuPrice(String price) throws ParseException {
         requireNonNull(price);
         String trimmedPrice = normalizeWhitespace(price);
-        if (!seedu.homechef.model.menu.Price.isValidPrice(trimmedPrice)) {
-            throw new ParseException(seedu.homechef.model.menu.Price.MESSAGE_CONSTRAINTS);
+        if (!seedu.homechef.model.common.Price.isValidPrice(trimmedPrice)) {
+            throw new ParseException(seedu.homechef.model.common.Price.MESSAGE_CONSTRAINTS);
         }
-        return new seedu.homechef.model.menu.Price(trimmedPrice);
+        return new seedu.homechef.model.common.Price(trimmedPrice);
     }
 
     /**
