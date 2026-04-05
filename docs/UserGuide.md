@@ -125,7 +125,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 > ![overdue date](images/overdueDate.png)
 
 <div markdown="span" class="alert alert-primary">:bulb:
-**Notes about the add command:**
+**Notes about the add command:**<br>
 * `FOOD` must match an **existing food's name** in the current menu exactly.
   * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
@@ -150,7 +150,7 @@ This can be useful for finding orders specific to a certain customer, a certain 
 
 Format: `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION STATUS] [ps/PAYMENT STATUS]`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Notes about the list command:**
+<div markdown="span" class="alert alert-primary">:bulb: **Notes about the list command:**<br>
 * Lists all orders when no parameters are given.
 * Filters are case-insensitive for `c/`, `f/` and `p/`.
 * `DATE` must be in the format `dd-MM-yyyy`.
@@ -259,7 +259,7 @@ Format:
 [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`
 
 <div markdown="span" class="alert alert-primary">:bulb: 
-**Notes about the edit command:**
+**Notes about the edit command:**<br>
 * At least one of the optional fields must be provided.
   * If no fields are provided, a message will appear telling you to provide a field.
 * Existing values will be updated to the input values.
@@ -401,7 +401,17 @@ Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (
 **A**: Download the app in the other computer and set it up as mentioned in the Quick Guide section above.<br>
 Overwrite the empty data file it creates with the file that contains the data of your previous HomeChef home folder (the `homechef.json` and `menu.json` files).
 
-**Q**: Help! The order list and menu are blank, has my data **all** been deleted?<br>
+**Q**: How do I get back the sample data that the app came with when I first booted it up?<br>
+**A**: Open the folder that contains `homechef.jar`. Simply delete the `homechef.json` and `menu.json` files located in the `data` folder. The next time you open the app, all the original sample orders and menu items will be restored.
+
+**Q**: What's the rectangular box below where I put in the commands?<br>
+**A**: That's the status window! It tells you if the commands you type in are typed correctly, and if it is executed properly. It also gives suggestions and hints if you input commands incorrectly.<br>
+If the status information given is still unclear, feel free to refer to the command information above.
+
+**Q**: The order list is blank! Is my data all gone?<br>
+**A**: This may not necessarily be the case. Check by using the `list` command with **no parameters**. This should reset the order list to its default view, which includes every single order that has been added. If this still fails to resolve the problem, see the next question.
+
+**Q**: Help! My data **all** been deleted!<br>
 **A**: Unfortunately, **yes**. There is no way to recover the data unless a **backup copy** was made of the `homechef.json` and `menu.json` files.<br>
 If the copies exist, copy them over to the `data` folder located in the folder that contains the jar file you downloaded.
 
