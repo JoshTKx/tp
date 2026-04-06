@@ -18,6 +18,7 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import seedu.homechef.commons.util.ToStringBuilder;
@@ -79,22 +80,25 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         String targetFoodName = toAdd.getFood().toString();
-        List<MenuItem> matchingItems = model.getMenuBook().getMenuItemList().stream()
-                .filter(item -> item.getFood().nameContains(targetFoodName))
-                .collect(Collectors.toList());
-
-        if (matchingItems.isEmpty()) {
-            throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, targetFoodName));
+        Optional<MenuItem> exactMatch = model.getMenuBook().findExact(targetFoodName);
+        MenuItem matchingItem;
+        if (exactMatch.isPresent()) {
+            matchingItem = exactMatch.get();
+        } else {
+            List<MenuItem> substringMatches = model.getMenuBook().findBySubstring(targetFoodName);
+            if (substringMatches.isEmpty()) {
+                throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, targetFoodName));
+            }
+            if (substringMatches.size() > 1) {
+                String matchingNames = substringMatches.stream()
+                        .map(item -> item.getFood().toString())
+                        .collect(Collectors.joining(", "));
+                throw new CommandException(
+                        String.format(MESSAGE_MENU_ITEM_AMBIGUOUS, targetFoodName, matchingNames));
+            }
+            matchingItem = substringMatches.get(0);
         }
 
-        if (matchingItems.size() > 1) {
-            String matchingNames = matchingItems.stream()
-                    .map(item -> item.getFood().toString())
-                    .collect(Collectors.joining(", "));
-            throw new CommandException(String.format(MESSAGE_MENU_ITEM_AMBIGUOUS, targetFoodName, matchingNames));
-        }
-
-        MenuItem matchingItem = matchingItems.get(0);
         if (!matchingItem.isAvailable()) {
             throw new CommandException(String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, targetFoodName));
         }

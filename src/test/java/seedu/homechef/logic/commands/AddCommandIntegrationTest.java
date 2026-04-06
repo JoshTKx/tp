@@ -97,12 +97,23 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_foodMatchesMultipleMenuItems_throwsCommandException() {
-        // "Wedding Cake" is a substring of both "Wedding Cake - 3 Tier" and "Wedding Cake" in the typical menu
-        Order ambiguousOrder = new OrderBuilder().withFood("Wedding Cake").build();
+        // "Cake" has no exact match but is a substring of "Birthday Cake", "Wedding Cake - 3 Tier",
+        // and "Wedding Cake" — all three should be listed in the error
+        Order ambiguousOrder = new OrderBuilder().withFood("Cake").build();
         CommandException thrown = assertThrows(CommandException.class, ()
                 -> new AddCommand(ambiguousOrder).execute(model));
-        assertTrue(thrown.getMessage().contains("Wedding Cake - 3 Tier"),
+        assertTrue(thrown.getMessage().contains("Birthday Cake"),
                 "Error message should list matching menu items");
+    }
+
+    @Test
+    public void execute_foodExactMatchTakesPriorityOverSubstring_success() throws Exception {
+        // "Wedding Cake" is both an exact menu item and a substring of "Wedding Cake - 3 Tier".
+        // Exact match should win and the order should be accepted at the correct price.
+        Order exactOrder = new OrderBuilder().withFood("Wedding Cake").build();
+        new AddCommand(exactOrder).execute(model);
+        Order expectedOrder = new OrderBuilder().withFood("Wedding Cake").withPrice("80.00").build();
+        assertTrue(model.getFilteredOrderList().contains(expectedOrder));
     }
 
     @Test
