@@ -100,8 +100,7 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class,
                 String.format(seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_AMBIGUOUS,
-                        "Cake", "Birthday Cake, Wedding Cake"),
-                () -> addCommand.execute(modelStub));
+                        "Cake", "Birthday Cake, Wedding Cake"), () -> addCommand.execute(modelStub));
     }
 
     @Test
