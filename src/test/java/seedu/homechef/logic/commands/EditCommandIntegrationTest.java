@@ -14,6 +14,7 @@ import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.UserPrefs;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
+import seedu.homechef.model.menu.Availability;
 import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.testutil.TypicalMenuItems;
@@ -42,7 +43,7 @@ public class EditCommandIntegrationTest {
     @Test
     public void execute_editFoodToUnavailableItem_throwsCommandException() {
         MenuItem unavailable = new MenuItem(
-                new Food("Sourdough Bread"), new Price("8.00"), false);
+                new Food("Sourdough Bread"), new Price("8.00"), Availability.NO);
         model.setMenuItem(
                 model.getFilteredMenuItemList().stream()
                         .filter(i -> i.getFood().toString().equals("Sourdough Bread"))
