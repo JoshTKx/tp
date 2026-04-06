@@ -228,8 +228,7 @@ public class JsonAdaptedOrderTest {
 
     @Test
     public void toModelType_validPayNowPayment_roundTrips() throws Exception {
-        PaymentInfo payNow = new PaymentInfo(
-                PaymentType.PAYNOW, "+65 91234567", null, null, null, null, null);
+        PaymentInfo payNow = PaymentInfo.payNow("+65 91234567");
         Order orderWithPayment = new OrderBuilder(BENSON).withPaymentInfo(payNow).build();
         JsonAdaptedOrder adapted = new JsonAdaptedOrder(orderWithPayment);
         Order result = adapted.toModelType();
@@ -241,32 +240,36 @@ public class JsonAdaptedOrderTest {
 
     @Test
     public void toModelType_validBankPayment_roundTrips() throws Exception {
-        PaymentInfo bank = new PaymentInfo(PaymentType.BANK, null, "DBS", "REF123", null, null, null);
+        PaymentInfo bank = PaymentInfo.bank("REF123");
         Order orderWithPayment = new OrderBuilder(BENSON).withPaymentInfo(bank).build();
         JsonAdaptedOrder adapted = new JsonAdaptedOrder(orderWithPayment);
         assertEquals(orderWithPayment, adapted.toModelType());
     }
 
     @Test
-    public void toModelType_validCardPayment_roundTrips() throws Exception {
-        PaymentInfo card = new PaymentInfo(PaymentType.CARD, null, null, null, "4321", null, null);
-        Order orderWithPayment = new OrderBuilder(BENSON).withPaymentInfo(card).build();
-        JsonAdaptedOrder adapted = new JsonAdaptedOrder(orderWithPayment);
-        assertEquals(orderWithPayment, adapted.toModelType());
+    public void toModelType_legacyCardType_mapsToBank() throws Exception {
+        JsonAdaptedOrder order = new JsonAdaptedOrder(
+                VALID_FOOD, VALID_CUSTOMER, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DATE,
+                VALID_PRICE, VALID_COMPLETION_STATUS, VALID_PAYMENT_STATUS, VALID_TAGS,
+                "CARD", null, null, "4321", null, null, null, null);
+        Order result = order.toModelType();
+        assertEquals(PaymentType.BANK, result.getPaymentInfo().get().getType());
+        assertEquals("4321", result.getPaymentInfo().get().getReferenceNumber());
     }
 
     @Test
-    public void toModelType_validEWalletPayment_roundTrips() throws Exception {
-        PaymentInfo eWallet = new PaymentInfo(
-                PaymentType.EWALLET, null, null, null, null, "GrabPay", "user@grab.com");
-        Order orderWithPayment = new OrderBuilder(BENSON).withPaymentInfo(eWallet).build();
-        JsonAdaptedOrder adapted = new JsonAdaptedOrder(orderWithPayment);
-        assertEquals(orderWithPayment, adapted.toModelType());
+    public void toModelType_legacyEWalletType_mapsToBank() throws Exception {
+        JsonAdaptedOrder order = new JsonAdaptedOrder(
+                VALID_FOOD, VALID_CUSTOMER, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DATE,
+                VALID_PRICE, VALID_COMPLETION_STATUS, VALID_PAYMENT_STATUS, VALID_TAGS,
+                "EWALLET", null, null, null, null, "GrabPay", "user@grab.com", null);
+        Order result = order.toModelType();
+        assertEquals(PaymentType.BANK, result.getPaymentInfo().get().getType());
     }
 
     @Test
     public void toModelType_validCashPayment_roundTrips() throws Exception {
-        PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cash = PaymentInfo.cash();
         Order orderWithPayment = new OrderBuilder(BENSON).withPaymentInfo(cash).build();
         JsonAdaptedOrder adapted = new JsonAdaptedOrder(orderWithPayment);
         assertEquals(orderWithPayment, adapted.toModelType());

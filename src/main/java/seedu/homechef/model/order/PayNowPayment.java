@@ -1,0 +1,53 @@
+package seedu.homechef.model.order;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.Objects;
+
+/**
+ * Represents a PayNow payment.
+ */
+public final class PayNowPayment implements PaymentInfo {
+
+    private final String handle;
+
+    public PayNowPayment(String handle) {
+        requireNonNull(handle);
+        if (handle.isBlank()) {
+            throw new IllegalArgumentException(MESSAGE_INVALID_PAYNOW_HANDLE);
+        }
+        this.handle = handle;
+    }
+
+    @Override
+    public String getHandle() {
+        return handle;
+    }
+
+    @Override
+    public PaymentType getType() {
+        return PaymentType.PAYNOW;
+    }
+
+    @Override
+    public String toString() {
+        return "PAYNOW (handle: " + handle + ")";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof PayNowPayment)) {
+            return false;
+        }
+        PayNowPayment otherPayment = (PayNowPayment) other;
+        return Objects.equals(handle, otherPayment.handle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(PaymentType.PAYNOW, handle);
+    }
+}

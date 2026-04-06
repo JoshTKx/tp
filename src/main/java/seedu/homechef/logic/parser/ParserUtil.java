@@ -2,12 +2,10 @@ package seedu.homechef.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.commons.util.StringUtil;
@@ -20,7 +18,6 @@ import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
 
@@ -31,29 +28,14 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_AVAILABILITY = "Availability must be 'true' or 'false'.";
-    public static final String MESSAGE_METHOD_REQUIRED_FOR_DETAILS =
-            "m/ required when payment details (r/, b/, w/) are provided.";
-    public static final String MESSAGE_INVALID_PAYMENT_METHOD =
-            "Invalid payment method: '%s'. Valid types: "
-            + Arrays.stream(PaymentType.values()).map(Enum::name).collect(Collectors.joining(", ")) + ".";
-    public static final String MESSAGE_UNEXPECTED_FIELDS_FOR_CASH =
-            "r/, b/, w/ are not accepted for CASH.";
-    public static final String MESSAGE_REF_REQUIRED_FOR =
-            "r/ required for %s.";
-    public static final String MESSAGE_BANK_NAME_REQUIRED =
-            "b/ required for BANK.";
-    public static final String MESSAGE_BANK_NAME_NOT_VALID =
-            "b/ is only valid for BANK payment type.";
-    public static final String MESSAGE_WALLET_PROVIDER_REQUIRED =
-            "w/ required for EWALLET.";
-    public static final String MESSAGE_WALLET_PROVIDER_NOT_VALID =
-            "w/ is only valid for EWALLET payment type.";
-    public static final String MESSAGE_CARD_REF_INVALID =
-            "r/ for CARD must be exactly 4 numeric digits (e.g. r/4321).";
-
-    private static final String VALID_PAYMENT_TYPE_NAMES = Arrays.stream(PaymentType.values())
-            .map(Enum::name)
-            .collect(Collectors.joining(", "));
+    public static final String MESSAGE_MULTIPLE_PAYMENT_PREFIXES =
+            "Only one payment prefix may be provided: bank/, paynow/, or cash/.";
+    public static final String MESSAGE_CASH_PAYMENT_DOES_NOT_ACCEPT_VALUE =
+            "cash/ does not accept a value.";
+    public static final String MESSAGE_BANK_PAYMENT_REQUIRED =
+            "bank/ requires a non-blank bank reference/details value.";
+    public static final String MESSAGE_PAYNOW_PAYMENT_REQUIRED =
+            "paynow/ requires a non-blank PayNow phone number or handle.";
 
     /**
      * Trims leading and trailing whitespaces in {@code String input} and
@@ -269,140 +251,54 @@ public class ParserUtil {
     }
 
     /**
-     * Parses payment info from the four optional payment prefix values.
+     * Parses payment info from the three optional payment prefixes.
      * Returns empty if no payment prefixes were provided.
-     * The {@code ref} parameter maps to different semantic fields depending on the type:
-     * PayNow handle, bank reference number, card last-4 digits, or wallet account ID.
-     *
-     * @param method the payment method type (m/ prefix value), or empty if not provided
-     * @param ref the payment reference (r/ prefix value), or empty if not provided
-     * @param bankName the bank name (b/ prefix value), or empty if not provided
-     * @param walletProvider the wallet provider (w/ prefix value), or empty if not provided
-     * @return an {@code Optional} containing the parsed {@code PaymentInfo},
-     *         or empty if no payment fields were provided
-     * @throws ParseException if the combination of provided values is invalid for any payment type.
      */
     public static Optional<PaymentInfo> parsePaymentInfo(
-            Optional<String> method,
-            Optional<String> ref,
-            Optional<String> bankName,
-            Optional<String> walletProvider) throws ParseException {
-
-        boolean hasRef = ref.isPresent();
-        boolean hasBankName = bankName.isPresent();
-        boolean hasWalletProvider = walletProvider.isPresent();
-
-        if (method.isEmpty()) {
-            if (hasRef || hasBankName || hasWalletProvider) {
-                throw new ParseException(MESSAGE_METHOD_REQUIRED_FOR_DETAILS);
-            }
+            Optional<String> bankPayment,
+            Optional<String> payNowPayment,
+            Optional<String> cashPayment) throws ParseException {
+        int prefixCount = countPresent(bankPayment, payNowPayment, cashPayment);
+        if (prefixCount == 0) {
             return Optional.empty();
         }
-
-        PaymentType type = parsePaymentType(method.get());
-
-        PaymentInfo paymentInfo;
-        switch (type) {
-        case CASH:
-            paymentInfo = parseCashPayment(hasRef, hasBankName, hasWalletProvider);
-            break;
-        case PAYNOW:
-            paymentInfo = parsePayNowPayment(ref, hasBankName, hasWalletProvider);
-            break;
-        case BANK:
-            paymentInfo = parseBankPayment(ref, bankName, hasWalletProvider);
-            break;
-        case CARD:
-            paymentInfo = parseCardPayment(ref, hasBankName, hasWalletProvider);
-            break;
-        case EWALLET:
-            paymentInfo = parseEWalletPayment(ref, walletProvider, hasBankName);
-            break;
-        default:
-            throw new ParseException(String.format(MESSAGE_INVALID_PAYMENT_METHOD, method.get().trim()));
+        if (prefixCount > 1) {
+            throw new ParseException(MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
         }
 
-        return Optional.of(paymentInfo);
-    }
+        if (cashPayment.isPresent()) {
+            if (!cashPayment.get().isEmpty()) {
+                throw new ParseException(MESSAGE_CASH_PAYMENT_DOES_NOT_ACCEPT_VALUE);
+            }
+            return Optional.of(PaymentInfo.cash());
+        }
 
-    private static PaymentType parsePaymentType(String method) throws ParseException {
+        if (bankPayment.isPresent()) {
+            if (bankPayment.get().isBlank()) {
+                throw new ParseException(MESSAGE_BANK_PAYMENT_REQUIRED);
+            }
+            return Optional.of(PaymentInfo.bank(normalizeWhitespace(bankPayment.get())));
+        }
+
+        if (payNowPayment.get().isBlank()) {
+            throw new ParseException(MESSAGE_PAYNOW_PAYMENT_REQUIRED);
+        }
         try {
-            return PaymentType.valueOf(method.trim().toUpperCase());
+            return Optional.of(PaymentInfo.payNow(normalizeWhitespace(payNowPayment.get())));
         } catch (IllegalArgumentException e) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_PAYMENT_METHOD, method.trim()));
+            throw new ParseException(e.getMessage());
         }
     }
 
-    private static PaymentInfo parseCashPayment(
-            boolean hasRef, boolean hasBankName, boolean hasWalletProvider) throws ParseException {
-        if (hasRef || hasBankName || hasWalletProvider) {
-            throw new ParseException(MESSAGE_UNEXPECTED_FIELDS_FOR_CASH);
+    @SafeVarargs
+    private static int countPresent(Optional<String>... values) {
+        int count = 0;
+        for (Optional<String> value : values) {
+            if (value.isPresent()) {
+                count++;
+            }
         }
-        return new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
-    }
-
-    private static PaymentInfo parsePayNowPayment(
-            Optional<String> ref, boolean hasBankName, boolean hasWalletProvider) throws ParseException {
-        if (ref.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_REF_REQUIRED_FOR, "PAYNOW"));
-        }
-        if (hasBankName) {
-            throw new ParseException(MESSAGE_BANK_NAME_NOT_VALID);
-        }
-        if (hasWalletProvider) {
-            throw new ParseException(MESSAGE_WALLET_PROVIDER_NOT_VALID);
-        }
-        if (ref.get().startsWith("+") && !ref.get().matches(PaymentInfo.PAYNOW_PHONE_REGEX)) {
-            throw new ParseException(PaymentInfo.MESSAGE_INVALID_PAYNOW_PHONE);
-        }
-        return new PaymentInfo(PaymentType.PAYNOW, ref.get(), null, null, null, null, null);
-    }
-
-    private static PaymentInfo parseBankPayment(
-            Optional<String> ref, Optional<String> bankName, boolean hasWalletProvider) throws ParseException {
-        if (ref.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_REF_REQUIRED_FOR, "BANK"));
-        }
-        if (bankName.isEmpty()) {
-            throw new ParseException(MESSAGE_BANK_NAME_REQUIRED);
-        }
-        if (hasWalletProvider) {
-            throw new ParseException(MESSAGE_WALLET_PROVIDER_NOT_VALID);
-        }
-        return new PaymentInfo(PaymentType.BANK, null, bankName.get(), ref.get(), null, null, null);
-    }
-
-    private static PaymentInfo parseCardPayment(
-            Optional<String> ref, boolean hasBankName, boolean hasWalletProvider) throws ParseException {
-        if (ref.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_REF_REQUIRED_FOR, "CARD"));
-        }
-        if (hasBankName) {
-            throw new ParseException(MESSAGE_BANK_NAME_NOT_VALID);
-        }
-        if (hasWalletProvider) {
-            throw new ParseException(MESSAGE_WALLET_PROVIDER_NOT_VALID);
-        }
-        if (!PaymentInfo.isValidLastFourDigits(ref.get())) {
-            throw new ParseException(MESSAGE_CARD_REF_INVALID);
-        }
-        return new PaymentInfo(PaymentType.CARD, null, null, null, ref.get(), null, null);
-    }
-
-    private static PaymentInfo parseEWalletPayment(
-            Optional<String> ref, Optional<String> walletProvider, boolean hasBankName) throws ParseException {
-        if (ref.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_REF_REQUIRED_FOR, "EWALLET"));
-        }
-        if (walletProvider.isEmpty()) {
-            throw new ParseException(MESSAGE_WALLET_PROVIDER_REQUIRED);
-        }
-        if (hasBankName) {
-            throw new ParseException(MESSAGE_BANK_NAME_NOT_VALID);
-        }
-        return new PaymentInfo(
-                PaymentType.EWALLET, null, null, null, null, walletProvider.get(), ref.get());
+        return count;
     }
 
     /**

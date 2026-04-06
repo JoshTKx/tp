@@ -13,10 +13,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
-    public static final Prefix PREFIX_PAYMENT_METHOD = new Prefix("m/");
-    public static final Prefix PREFIX_PAYMENT_REF = new Prefix("r/");
-    public static final Prefix PREFIX_BANK_NAME = new Prefix("b/");
-    public static final Prefix PREFIX_WALLET_PROVIDER = new Prefix("w/");
+    public static final Prefix PREFIX_BANK_PAYMENT = new Prefix("bank/");
+    public static final Prefix PREFIX_PAYNOW_PAYMENT = new Prefix("paynow/");
+    public static final Prefix PREFIX_CASH_PAYMENT = new Prefix("cash/");
     public static final Prefix PREFIX_PRICE = new Prefix("$/");
     public static final Prefix PREFIX_AVAILABILITY = new Prefix("v/");
     public static final Prefix PREFIX_COMPLETION_STATUS = new Prefix("cs/");

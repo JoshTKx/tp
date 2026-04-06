@@ -121,11 +121,12 @@ class JsonAdaptedOrder {
             PaymentInfo info = optPaymentInfo.get();
             paymentType = info.getType().name();
             paymentHandle = info.getHandle();
-            paymentBankName = info.getBankName();
             paymentReferenceNumber = info.getReferenceNumber();
-            paymentLastFourDigits = info.getLastFourDigits();
-            paymentWalletProvider = info.getWalletProvider();
-            paymentWalletAccountId = info.getWalletAccountId();
+            // Keep legacy storage fields nullable; we only write the simplified model now.
+            paymentBankName = null;
+            paymentLastFourDigits = null;
+            paymentWalletProvider = null;
+            paymentWalletAccountId = null;
         } else {
             paymentType = null;
             paymentHandle = null;
@@ -228,15 +229,9 @@ class JsonAdaptedOrder {
         if (paymentType == null) {
             modelPaymentInfo = Optional.empty();
         } else {
-            PaymentType type;
+            PaymentType type = parseStoredPaymentType();
             try {
-                type = PaymentType.valueOf(paymentType);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalValueException(
-                        "Invalid stored payment type: " + paymentType, e);
-            }
-            try {
-                modelPaymentInfo = Optional.of(new PaymentInfo(
+                modelPaymentInfo = Optional.of(PaymentInfo.fromLegacyFields(
                         type, paymentHandle, paymentBankName, paymentReferenceNumber,
                         paymentLastFourDigits, paymentWalletProvider, paymentWalletAccountId));
             } catch (IllegalArgumentException e) {
@@ -249,6 +244,22 @@ class JsonAdaptedOrder {
 
         return new Order(modelFood, modelCustomer, modelPhone, modelEmail, modelAddress, modelDate,
                 modelCompletionStatus, modelPaymentStatus, modelDietTags, modelQuantity, modelPrice, modelPaymentInfo);
+    }
+
+    private PaymentType parseStoredPaymentType() throws IllegalValueException {
+        switch (paymentType) {
+        case "CASH":
+            return PaymentType.CASH;
+        case "PAYNOW":
+            return PaymentType.PAYNOW;
+        case "BANK":
+            return PaymentType.BANK;
+        case "CARD":
+        case "EWALLET":
+            return PaymentType.BANK;
+        default:
+            throw new IllegalValueException("Invalid stored payment type: " + paymentType);
+        }
     }
 
 }

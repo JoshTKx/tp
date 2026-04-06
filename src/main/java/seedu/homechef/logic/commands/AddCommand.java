@@ -4,17 +4,16 @@ import static java.util.Objects.requireNonNull;
 import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_NOT_FOUND;
 import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_UNAVAILABLE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_PAYMENT;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CASH_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_METHOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_REF;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
 import java.util.Optional;
 
@@ -45,10 +44,9 @@ public class AddCommand extends Command {
             + PREFIX_DATE + "DATE "
             + "[" + PREFIX_QUANTITY + "QUANTITY] "
             + "[" + PREFIX_TAG + "TAG]... "
-            + "[" + PREFIX_PAYMENT_METHOD + "PAYMENT_METHOD] "
-            + "[" + PREFIX_PAYMENT_REF + "PAYMENT_REF] "
-            + "[" + PREFIX_BANK_NAME + "BANK_NAME] "
-            + "[" + PREFIX_WALLET_PROVIDER + "WALLET_PROVIDER] "
+            + "[" + PREFIX_BANK_PAYMENT + "BANK_DETAILS] "
+            + "[" + PREFIX_PAYNOW_PAYMENT + "PAYNOW_CONTACT] "
+            + "[" + PREFIX_CASH_PAYMENT + "] "
             + "\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FOOD + "Birthday Cake "
@@ -57,7 +55,8 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "NUS "
             + PREFIX_DATE + "20-10-2026 "
-            + PREFIX_TAG + "dairyfree ";
+            + PREFIX_TAG + "dairyfree "
+            + PREFIX_BANK_PAYMENT + "DBS-123456";
 
     public static final String MESSAGE_SUCCESS = "New order added: %1$s";
     public static final String MESSAGE_DUPLICATE_ORDER = "This order already exists in the HomeChef";

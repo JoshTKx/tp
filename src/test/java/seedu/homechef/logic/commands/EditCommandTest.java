@@ -213,8 +213,7 @@ public class EditCommandTest {
         Model model = new ModelManager(
                 getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        PaymentInfo payNow = new PaymentInfo(
-                PaymentType.PAYNOW, "+65 91234567", null, null, null, null, null);
+        PaymentInfo payNow = PaymentInfo.payNow("+65 91234567");
 
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(payNow).build();
@@ -236,12 +235,11 @@ public class EditCommandTest {
         Model model = new ModelManager(
                 getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        PaymentInfo payNow = new PaymentInfo(
-                PaymentType.PAYNOW, "+65 91234567", null, null, null, null, null);
+        PaymentInfo payNow = PaymentInfo.payNow("+65 91234567");
         Order orderWithPayNow = new OrderBuilder(orderToEdit).withPaymentInfo(payNow).build();
         model.setOrder(orderToEdit, orderWithPayNow);
 
-        PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cash = PaymentInfo.cash();
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(cash).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_ORDER, descriptor);
@@ -261,7 +259,7 @@ public class EditCommandTest {
 
     @Test
     public void editDescriptor_paymentInfoOnly_isAnyFieldEdited() {
-        PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cash = PaymentInfo.cash();
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(cash).build();
         assertTrue(descriptor.isAnyFieldEdited());

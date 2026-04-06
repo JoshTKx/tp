@@ -2,17 +2,16 @@ package seedu.homechef.logic.parser;
 
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_PAYMENT;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CASH_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_METHOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_REF;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
 import java.util.Optional;
 import java.util.Set;
@@ -51,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_FOOD, PREFIX_CUSTOMER, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_DATE, PREFIX_TAG, PREFIX_QUANTITY,
-                        PREFIX_PAYMENT_METHOD, PREFIX_PAYMENT_REF, PREFIX_BANK_NAME, PREFIX_WALLET_PROVIDER);
+                        PREFIX_BANK_PAYMENT, PREFIX_PAYNOW_PAYMENT, PREFIX_CASH_PAYMENT);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_FOOD, PREFIX_CUSTOMER, PREFIX_ADDRESS,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_DATE)
@@ -73,10 +72,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         PaymentStatus paymentStatus = PaymentStatus.UNPAID;
         Set<DietTag> dietTagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Optional<PaymentInfo> paymentInfo = ParserUtil.parsePaymentInfo(
-                argMultimap.getValue(PREFIX_PAYMENT_METHOD),
-                argMultimap.getValue(PREFIX_PAYMENT_REF),
-                argMultimap.getValue(PREFIX_BANK_NAME),
-                argMultimap.getValue(PREFIX_WALLET_PROVIDER));
+                argMultimap.getValue(PREFIX_BANK_PAYMENT),
+                argMultimap.getValue(PREFIX_PAYNOW_PAYMENT),
+                argMultimap.getValue(PREFIX_CASH_PAYMENT));
         Quantity quantity = argMultimap.getValue(PREFIX_QUANTITY).isPresent()
                             ? ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY).get())
                             : new Quantity(1);

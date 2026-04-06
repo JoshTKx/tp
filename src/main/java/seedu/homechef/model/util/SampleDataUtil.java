@@ -21,7 +21,6 @@ import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
 
@@ -77,7 +76,7 @@ public class SampleDataUtil {
                 PaymentStatus.PAID,
                 getTagSet("colleagues"),
                 new Price("10.50"),
-                Optional.of(new PaymentInfo(PaymentType.BANK, null, "Singapore Bank", "1234567", null, null, null)));
+                Optional.of(PaymentInfo.bank("1234567")));
         return new Order[]{alex, bernice, charlotte, david, irfan, roy};
     }
 
