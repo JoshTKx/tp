@@ -35,21 +35,12 @@ import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_DATE_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_FOOD_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_BANK;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_PAYNOW;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -121,7 +112,8 @@ public class AddCommandParserTest {
         assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
                 + ADDRESS_DESC_BOB + DATE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC + DATE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
+                + INVALID_ADDRESS_DESC + DATE_DESC_BOB + TAG_DESC_HUSBAND
+                + TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + INVALID_DATE_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Date.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -165,7 +157,8 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_paymentValidation_failures() {
-        String base = FOOD_DESC_AMY + CUSTOMER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY;
+        String base = FOOD_DESC_AMY + CUSTOMER_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY;
         assertParseFailure(parser, base + INVALID_PAYNOW_PAYMENT_DESC, MESSAGE_PAYNOW_PAYMENT_REQUIRED);
         assertParseFailure(parser, base + INVALID_BANK_PAYMENT_DESC, MESSAGE_BANK_PAYMENT_REQUIRED);
         assertParseFailure(parser, base + " cash/accepted", MESSAGE_CASH_PAYMENT_DOES_NOT_ACCEPT_VALUE);

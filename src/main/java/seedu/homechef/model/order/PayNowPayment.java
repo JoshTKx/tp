@@ -11,6 +11,10 @@ public final class PayNowPayment implements PaymentInfo {
 
     private final String handle;
 
+    /**
+     *  Creates a PayNow payment with the specified handle.
+     * @param handle
+     */
     public PayNowPayment(String handle) {
         requireNonNull(handle);
         if (handle.isBlank()) {

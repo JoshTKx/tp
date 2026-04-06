@@ -15,6 +15,11 @@ public final class BankPayment implements PaymentInfo {
         this.reference = null;
     }
 
+    /**
+     * Creates a bank transfer payment with the specified reference.
+     *
+     * @param reference Bank transfer reference.
+     */
     public BankPayment(String reference) {
         requireNonNull(reference);
         if (reference.isBlank()) {

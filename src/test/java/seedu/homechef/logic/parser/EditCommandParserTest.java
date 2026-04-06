@@ -2,12 +2,10 @@ package seedu.homechef.logic.parser;
 
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.BANK_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.CUSTOMER_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_BANK_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_CUSTOMER_DESC;
@@ -16,7 +14,6 @@ import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_PAYNOW_PAYME
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.PAYNOW_PAYMENT_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.homechef.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -25,12 +22,9 @@ import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_BANK;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_PAYNOW;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
@@ -102,7 +96,8 @@ public class EditCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         Index targetIndex = INDEX_THIRD_ORDER;
         assertParseSuccess(parser, targetIndex.getOneBased() + CUSTOMER_DESC_AMY,
-                new EditCommand(targetIndex, new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY).build()));
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY).build()));
     }
 
     @Test
@@ -124,15 +119,18 @@ public class EditCommandParserTest {
     public void parse_payment_success() {
         Index targetIndex = INDEX_FIRST_ORDER;
         assertParseSuccess(parser, targetIndex.getOneBased() + CASH_PAYMENT_DESC,
-                new EditCommand(targetIndex, new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo.cash()).build()));
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo.cash()).build()));
 
         assertParseSuccess(parser, targetIndex.getOneBased() + PAYNOW_PAYMENT_DESC,
                 new EditCommand(targetIndex,
-                        new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo.payNow(VALID_PAYMENT_PAYNOW)).build()));
+                        new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo
+                                .payNow(VALID_PAYMENT_PAYNOW)).build()));
 
         assertParseSuccess(parser, targetIndex.getOneBased() + BANK_PAYMENT_DESC,
                 new EditCommand(targetIndex,
-                        new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo.bank(VALID_PAYMENT_BANK)).build()));
+                        new EditOrderDescriptorBuilder().withPaymentInfo(PaymentInfo
+                                .bank(VALID_PAYMENT_BANK)).build()));
     }
 
     @Test
