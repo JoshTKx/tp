@@ -62,7 +62,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]..."
             + "[" + PREFIX_BANK_PAYMENT + "BANK_DETAILS] "
             + "[" + PREFIX_PAYNOW_PAYMENT + "PAYNOW_CONTACT] "
-            + "[" + PREFIX_CASH_PAYMENT + "] "
+            + "[" + PREFIX_CASH_PAYMENT + "true|false] "
             + "\nExample: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -146,9 +146,14 @@ public class EditCommand extends Command {
         PaymentStatus updatedPaymentStatus = orderToEdit.getPaymentStatus();
         Price updatedPrice = orderToEdit.getPrice();
         Set<DietTag> updatedDietTags = descriptor.getTags().orElse(orderToEdit.getTags());
-        Optional<PaymentInfo> updatedPaymentInfo = descriptor.getPaymentInfo().isPresent()
-                                                   ? descriptor.getPaymentInfo()
-                                                   : orderToEdit.getPaymentInfo();
+        Optional<PaymentInfo> updatedPaymentInfo;
+        if (descriptor.isPaymentInfoCleared()) {
+            updatedPaymentInfo = Optional.empty();
+        } else if (descriptor.getPaymentInfo().isPresent()) {
+            updatedPaymentInfo = descriptor.getPaymentInfo();
+        } else {
+            updatedPaymentInfo = orderToEdit.getPaymentInfo();
+        }
 
         return new Order(updatedFood, updatedCustomer, updatedPhone, updatedEmail, updatedAddress, updatedDate,
                 updatedCompletionStatus, updatedPaymentStatus, updatedDietTags, updatedPrice, updatedPaymentInfo);
@@ -191,6 +196,7 @@ public class EditCommand extends Command {
         private Date date;
         private Set<DietTag> dietTags;
         private PaymentInfo paymentInfo;
+        private boolean isPaymentInfoCleared;
 
         public EditOrderDescriptor() {
         }
@@ -208,6 +214,9 @@ public class EditCommand extends Command {
             setDate(toCopy.date);
             setTags(toCopy.dietTags);
             setPaymentInfo(toCopy.paymentInfo);
+            if (toCopy.isPaymentInfoCleared) {
+                clearPaymentInfo();
+            }
         }
 
         /**
@@ -215,7 +224,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(food, customer, phone, email, address,
-                    date, dietTags, paymentInfo);
+                    date, dietTags, paymentInfo, isPaymentInfoCleared);
         }
 
         public void setFood(Food food) {
@@ -288,6 +297,15 @@ public class EditCommand extends Command {
          */
         public void setPaymentInfo(PaymentInfo paymentInfo) {
             this.paymentInfo = paymentInfo;
+            this.isPaymentInfoCleared = false;
+        }
+
+        /**
+         * Clears the payment info from the order.
+         */
+        public void clearPaymentInfo() {
+            this.paymentInfo = null;
+            this.isPaymentInfoCleared = true;
         }
 
         /**
@@ -295,6 +313,13 @@ public class EditCommand extends Command {
          */
         public Optional<PaymentInfo> getPaymentInfo() {
             return Optional.ofNullable(paymentInfo);
+        }
+
+        /**
+         * Returns true if payment info should be cleared from the order.
+         */
+        public boolean isPaymentInfoCleared() {
+            return isPaymentInfoCleared;
         }
 
         @Override
@@ -316,7 +341,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditOrderDescriptor.address)
                     && Objects.equals(date, otherEditOrderDescriptor.date)
                     && Objects.equals(dietTags, otherEditOrderDescriptor.dietTags)
-                    && Objects.equals(paymentInfo, otherEditOrderDescriptor.paymentInfo);
+                    && Objects.equals(paymentInfo, otherEditOrderDescriptor.paymentInfo)
+                    && isPaymentInfoCleared == otherEditOrderDescriptor.isPaymentInfoCleared;
         }
 
         @Override
@@ -330,6 +356,7 @@ public class EditCommand extends Command {
                     .add("date", date)
                     .add("dietTags", dietTags)
                     .add("paymentInfo", paymentInfo)
+                    .add("isPaymentInfoCleared", isPaymentInfoCleared)
                     .toString();
         }
     }

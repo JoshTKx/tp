@@ -266,5 +266,32 @@ public class EditCommandTest {
         assertTrue(descriptor.isAnyFieldEdited());
     }
 
+    @Test
+    public void execute_paymentInfoCleared_success() {
+        Model model = new ModelManager(
+                getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
+        Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
+        PaymentInfo payNow = new PayNowPayment("+65 91234567");
+        Order orderWithPayNow = new OrderBuilder(orderToEdit).withPaymentInfo(payNow).build();
+        model.setOrder(orderToEdit, orderWithPayNow);
+
+        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
+                .clearPaymentInfo().build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_ORDER, descriptor);
+
+        Order expectedOrder = new Order(orderWithPayNow.getFood(), orderWithPayNow.getCustomer(),
+                orderWithPayNow.getPhone(), orderWithPayNow.getEmail(), orderWithPayNow.getAddress(),
+                orderWithPayNow.getDate(), orderWithPayNow.getCompletionStatus(), orderWithPayNow.getPaymentStatus(),
+                orderWithPayNow.getTags(), orderWithPayNow.getQuantity(), orderWithPayNow.getPrice(),
+                java.util.Optional.empty());
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ORDER_SUCCESS, Messages.format(expectedOrder));
+        Model expectedModel = new ModelManager(
+                new HomeChef(model.getHomeChef()), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
+        expectedModel.setOrder(orderWithPayNow, expectedOrder);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertTrue(expectedModel.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased()).getPaymentInfo().isEmpty());
+    }
+
 }
 

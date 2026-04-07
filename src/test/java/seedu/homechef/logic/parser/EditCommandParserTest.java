@@ -31,7 +31,6 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_BANK_PAYMENT_REQUIRED;
-import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_CASH_PAYMENT_DOES_NOT_ACCEPT_VALUE;
 import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_MULTIPLE_PAYMENT_PREFIXES;
 import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_PAYNOW_PAYMENT_REQUIRED;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
@@ -133,13 +132,26 @@ public class EditCommandParserTest {
                 new EditCommand(targetIndex,
                         new EditOrderDescriptorBuilder().withPaymentInfo(
                                 new BankPayment(VALID_PAYMENT_BANK)).build()));
+
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/true",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(new CashPayment()).build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/yes",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(new CashPayment()).build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/false",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().clearPaymentInfo().build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/no",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().clearPaymentInfo().build()));
     }
 
     @Test
     public void parse_payment_failure() {
         assertParseFailure(parser, "1" + INVALID_PAYNOW_PAYMENT_DESC, MESSAGE_PAYNOW_PAYMENT_REQUIRED);
         assertParseFailure(parser, "1" + INVALID_BANK_PAYMENT_DESC, MESSAGE_BANK_PAYMENT_REQUIRED);
-        assertParseFailure(parser, "1 cash/accepted", MESSAGE_CASH_PAYMENT_DOES_NOT_ACCEPT_VALUE);
+        assertParseFailure(parser, "1 cash/accepted", EditCommandParser.MESSAGE_CASH_PAYMENT_BOOLEAN_REQUIRED);
         assertParseFailure(parser, "1" + BANK_PAYMENT_DESC + PAYNOW_PAYMENT_DESC, MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
     }
 

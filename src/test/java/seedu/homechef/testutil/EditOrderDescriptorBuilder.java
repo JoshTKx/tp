@@ -111,6 +111,14 @@ public class EditOrderDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Clears payment info in the descriptor.
+     */
+    public EditOrderDescriptorBuilder clearPaymentInfo() {
+        descriptor.clearPaymentInfo();
+        return this;
+    }
+
     public EditOrderDescriptor build() {
         return descriptor;
     }

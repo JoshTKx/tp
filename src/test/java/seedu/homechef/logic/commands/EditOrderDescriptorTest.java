@@ -88,6 +88,10 @@ public class EditOrderDescriptorTest {
         EditOrderDescriptor amyWithPaymentCopy = new EditOrderDescriptorBuilder(DESC_AMY)
                 .withPaymentInfo(new CashPayment()).build();
         assertTrue(amyWithPayment.equals(amyWithPaymentCopy));
+
+        // EP: clear payment info flag differs -> returns false
+        EditOrderDescriptor clearedPayment = new EditOrderDescriptorBuilder(DESC_AMY).clearPaymentInfo().build();
+        assertFalse(DESC_AMY.equals(clearedPayment));
     }
 
     @Test
@@ -101,7 +105,8 @@ public class EditOrderDescriptorTest {
                 + editOrderDescriptor.getAddress().orElse(null) + ", date="
                 + editOrderDescriptor.getDate().orElse(null) + ", dietTags="
                 + editOrderDescriptor.getTags().orElse(null) + ", paymentInfo="
-                + editOrderDescriptor.getPaymentInfo().orElse(null) + "}";
+                + editOrderDescriptor.getPaymentInfo().orElse(null) + ", isPaymentInfoCleared="
+                + editOrderDescriptor.isPaymentInfoCleared() + "}";
         assertEquals(expected, editOrderDescriptor.toString());
     }
 }
