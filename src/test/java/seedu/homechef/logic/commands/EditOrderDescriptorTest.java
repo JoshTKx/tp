@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.homechef.logic.commands.EditCommand.EditOrderDescriptor;
 import seedu.homechef.model.order.CashPayment;
-import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PayNowPayment;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
 

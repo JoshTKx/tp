@@ -27,8 +27,8 @@ import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.UserPrefs;
 import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Order;
-import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PayNowPayment;
+import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
 import seedu.homechef.testutil.OrderBuilder;
 import seedu.homechef.testutil.TypicalMenuItems;
@@ -290,7 +290,8 @@ public class EditCommandTest {
         expectedModel.setOrder(orderWithPayNow, expectedOrder);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-        assertTrue(expectedModel.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased()).getPaymentInfo().isEmpty());
+        assertTrue(expectedModel.getFilteredOrderList()
+                .get(INDEX_FIRST_ORDER.getZeroBased()).getPaymentInfo().isEmpty());
     }
 
 }
