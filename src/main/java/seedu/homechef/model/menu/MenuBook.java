@@ -3,8 +3,6 @@ package seedu.homechef.model.menu;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.homechef.commons.util.ToStringBuilder;
@@ -79,20 +77,6 @@ public class MenuBook implements ReadOnlyMenuBook {
     @Override
     public ObservableList<MenuItem> getMenuItemList() {
         return menuItems.asUnmodifiableObservableList();
-    }
-
-    @Override
-    public Optional<MenuItem> findExact(String foodName) {
-        return getMenuItemList().stream()
-                .filter(item -> item.getFood().toString().equalsIgnoreCase(foodName))
-                .findFirst();
-    }
-
-    @Override
-    public List<MenuItem> findBySubstring(String foodName) {
-        return getMenuItemList().stream()
-                .filter(item -> item.getFood().nameContains(foodName))
-                .collect(Collectors.toList());
     }
 
     @Override

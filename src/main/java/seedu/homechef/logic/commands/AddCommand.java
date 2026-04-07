@@ -1,6 +1,8 @@
 package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_AMBIGUOUS;
+import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_NOT_FOUND;
 import static seedu.homechef.logic.Messages.MESSAGE_MENU_ITEM_UNAVAILABLE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
@@ -15,6 +17,11 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javafx.collections.ObservableList;
 import seedu.homechef.commons.util.ToStringBuilder;
 import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.exceptions.CommandException;
@@ -74,7 +81,28 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         String targetFoodName = toAdd.getFood().toString();
-        MenuItem matchingItem = MenuItemResolver.resolve(model.getMenuBook(), targetFoodName);
+        ObservableList<MenuItem> menuItems = model.getMenuBook().getMenuItemList();
+        Optional<MenuItem> exactMatch = menuItems.stream()
+                .filter(item -> item.getFood().toString().equalsIgnoreCase(targetFoodName))
+                .findFirst();
+        MenuItem matchingItem;
+        if (exactMatch.isPresent()) {
+            matchingItem = exactMatch.get();
+        } else {
+            List<MenuItem> substringMatches = menuItems.stream()
+                    .filter(item -> item.getFood().nameContains(targetFoodName))
+                    .collect(Collectors.toList());
+            if (substringMatches.isEmpty()) {
+                throw new CommandException(String.format(MESSAGE_MENU_ITEM_NOT_FOUND, targetFoodName));
+            }
+            if (substringMatches.size() > 1) {
+                String matchingNames = substringMatches.stream()
+                        .map(item -> item.getFood().toString())
+                        .collect(Collectors.joining(", "));
+                throw new CommandException(String.format(MESSAGE_MENU_ITEM_AMBIGUOUS, targetFoodName, matchingNames));
+            }
+            matchingItem = substringMatches.get(0);
+        }
 
         if (!matchingItem.isAvailable()) {
             throw new CommandException(
