@@ -1,7 +1,6 @@
 package seedu.homechef.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_BANK_NAME_NOT_VALID;
 import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_BANK_NAME_REQUIRED;
@@ -27,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
+import seedu.homechef.model.menu.Availability;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.DietTag;
@@ -412,8 +412,8 @@ public class ParserUtilTest {
     public void parsePaymentInfo_unknownType_throwsParseExceptionWithMessage() {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_INVALID_PAYMENT_METHOD, "CRYPTO"), () ->
-                ParserUtil.parsePaymentInfo(
-                        Optional.of("CRYPTO"), Optional.empty(), Optional.empty(), Optional.empty()));
+                        ParserUtil.parsePaymentInfo(
+                                Optional.of("CRYPTO"), Optional.empty(), Optional.empty(), Optional.empty()));
     }
 
     @Test
@@ -441,8 +441,8 @@ public class ParserUtilTest {
     public void parsePaymentInfo_payNowMissingRef_throwsParseExceptionWithMessage() {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_REF_REQUIRED_FOR, "PAYNOW"), () ->
-                ParserUtil.parsePaymentInfo(
-                        Optional.of("PAYNOW"), Optional.empty(), Optional.empty(), Optional.empty()));
+                        ParserUtil.parsePaymentInfo(
+                                Optional.of("PAYNOW"), Optional.empty(), Optional.empty(), Optional.empty()));
     }
 
     @Test
@@ -463,8 +463,8 @@ public class ParserUtilTest {
     public void parsePaymentInfo_bankMissingRef_throwsParseExceptionWithMessage() {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_REF_REQUIRED_FOR, "BANK"), () ->
-                ParserUtil.parsePaymentInfo(
-                        Optional.of("BANK"), Optional.empty(), Optional.of("DBS"), Optional.empty()));
+                        ParserUtil.parsePaymentInfo(
+                                Optional.of("BANK"), Optional.empty(), Optional.of("DBS"), Optional.empty()));
     }
 
     @Test
@@ -485,8 +485,8 @@ public class ParserUtilTest {
     public void parsePaymentInfo_cardMissingRef_throwsParseExceptionWithMessage() {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_REF_REQUIRED_FOR, "CARD"), () ->
-                ParserUtil.parsePaymentInfo(
-                        Optional.of("CARD"), Optional.empty(), Optional.empty(), Optional.empty()));
+                        ParserUtil.parsePaymentInfo(
+                                Optional.of("CARD"), Optional.empty(), Optional.empty(), Optional.empty()));
     }
 
     @Test
@@ -514,8 +514,8 @@ public class ParserUtilTest {
     public void parsePaymentInfo_eWalletMissingRef_throwsParseExceptionWithMessage() {
         assertThrows(ParseException.class,
                 String.format(MESSAGE_REF_REQUIRED_FOR, "EWALLET"), () ->
-                ParserUtil.parsePaymentInfo(
-                        Optional.of("EWALLET"), Optional.empty(), Optional.empty(), Optional.of("GrabPay")));
+                        ParserUtil.parsePaymentInfo(
+                                Optional.of("EWALLET"), Optional.empty(), Optional.empty(), Optional.of("GrabPay")));
     }
 
     @Test
@@ -536,24 +536,23 @@ public class ParserUtilTest {
     //---------------- Tests for parseAvailability ----------------------------------------
 
     @Test
-    public void parseAvailability_true_returnsTrue() throws Exception {
-        assertTrue(ParserUtil.parseAvailability("true"));
-    }
-
-    @Test
-    public void parseAvailability_false_returnsFalse() throws Exception {
-        assertFalse(ParserUtil.parseAvailability("false"));
-    }
-
-    @Test
     public void parseAvailability_mixedCaseAndWhitespace_returnsParsedValue() throws Exception {
-        assertTrue(ParserUtil.parseAvailability("  TRUE  "));
-        assertFalse(ParserUtil.parseAvailability("  False  "));
+        assertEquals(Availability.YES, ParserUtil.parseAvailability("  yEs  "));
+        assertEquals(Availability.NO, ParserUtil.parseAvailability("  nO  "));
+    }
+
+    @Test
+    public void parseAvailability_enumNames_returnsParsedValue() throws Exception {
+        assertEquals(Availability.YES, ParserUtil.parseAvailability("Yes"));
+        assertEquals(Availability.NO, ParserUtil.parseAvailability("NO"));
     }
 
     @Test
     public void parseAvailability_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("yes"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("true"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("false"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("available"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("unavailable"));
         assertThrows(ParseException.class, () -> ParserUtil.parseAvailability("1"));
         assertThrows(ParseException.class, () -> ParserUtil.parseAvailability(""));
     }

@@ -32,6 +32,7 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
+import seedu.homechef.model.menu.Availability;
 import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Address;
 import seedu.homechef.model.order.CompletionStatus;
@@ -110,7 +111,7 @@ public class EditCommand extends Command {
                     .findFirst();
 
             if (matchingItem.isPresent()) {
-                if (!matchingItem.get().isAvailable()) {
+                if (matchingItem.get().getAvailability() == Availability.NO) {
                     throw new CommandException(String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, targetFoodName));
                 }
                 String canonicalName = matchingItem.get().getFood().toString();
