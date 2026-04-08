@@ -21,6 +21,7 @@ import seedu.homechef.logic.commands.exceptions.CommandException;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
+import seedu.homechef.model.menu.Availability;
 import seedu.homechef.model.menu.MenuItem;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.Quantity;
@@ -76,7 +77,7 @@ public class AddCommand extends Command {
         String targetFoodName = toAdd.getFood().toString();
         MenuItem matchingItem = resolveMenuItem(model.getMenuBook().getMenuItemList(), targetFoodName);
 
-        if (!matchingItem.isAvailable()) {
+        if (matchingItem.getAvailability() == Availability.NO) {
             throw new CommandException(
                     String.format(MESSAGE_MENU_ITEM_UNAVAILABLE, matchingItem.getFood().toString()));
         }

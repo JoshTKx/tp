@@ -277,7 +277,8 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"), true));
+                    new seedu.homechef.model.common.Price("25.00"),
+                    seedu.homechef.model.menu.Availability.YES));
             return menuBook;
         }
     }
@@ -291,10 +292,12 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"), true));
+                    new seedu.homechef.model.common.Price("25.00"),
+                    seedu.homechef.model.menu.Availability.YES));
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Wedding Cake"),
-                    new seedu.homechef.model.common.Price("80.00"), true));
+                    new seedu.homechef.model.common.Price("80.00"),
+                    seedu.homechef.model.menu.Availability.YES));
             return menuBook;
         }
     }
@@ -327,7 +330,8 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"), true));
+                    new seedu.homechef.model.common.Price("25.00"),
+                    seedu.homechef.model.menu.Availability.YES));
             return menuBook;
         }
 
@@ -337,7 +341,8 @@ public class AddCommandTest {
                     javafx.collections.FXCollections.observableArrayList();
             list.add(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"), true));
+                    new seedu.homechef.model.common.Price("25.00"),
+                    seedu.homechef.model.menu.Availability.YES));
             return list;
         }
     }
