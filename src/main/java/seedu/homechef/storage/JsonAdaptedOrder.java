@@ -245,7 +245,12 @@ class JsonAdaptedOrder {
         }
 
         int qty = (quantity != null) ? quantity : 1;
-        final Quantity modelQuantity = new Quantity(qty);
+        final Quantity modelQuantity;
+        try {
+            modelQuantity = new Quantity(qty);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException(Quantity.MESSAGE_CONSTRAINTS, e);
+        }
 
         return new Order(modelFood, modelCustomer, modelPhone, modelEmail, modelAddress, modelDate,
                 modelCompletionStatus, modelPaymentStatus, modelDietTags, modelQuantity, modelPrice, modelPaymentInfo);
