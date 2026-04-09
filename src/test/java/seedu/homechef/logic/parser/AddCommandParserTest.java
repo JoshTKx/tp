@@ -5,8 +5,8 @@ import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.BANK_PAYMENT_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.CASH_NO_PAYMENT_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.CUSTOMER_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.CUSTOMER_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.DATE_DESC_AMY;
@@ -16,8 +16,8 @@ import static seedu.homechef.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.FOOD_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.FOOD_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_BANK_PAYMENT_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_CUSTOMER_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
@@ -123,7 +123,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + DATE_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND, DietTag.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DATE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DATE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 
