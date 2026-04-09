@@ -165,7 +165,8 @@ public class Order {
                 && otherOrder.getDate().equals(getDate())
                 && otherOrder.getTags().equals(getTags())
                 && otherOrder.getPrice().equals(getPrice())
-                && otherOrder.getQuantity().equals(getQuantity());
+                && otherOrder.getQuantity().equals(getQuantity())
+                && otherOrder.getPaymentInfo().equals(getPaymentInfo());
     }
 
     /**
