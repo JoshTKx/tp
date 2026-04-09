@@ -133,7 +133,7 @@ Adds an order to the order list.
 All orders are initially set as 'Pending' and 'Unpaid'.
 
 Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]...
-[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]`
+[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`
 
 * Orders have their completion status set to `Pending` by default.
 * Orders also have their payment status set to `Unpaid` by default.
@@ -157,7 +157,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
   * `QUANTITY` must be a positive integer between `1` and `999` (inclusive). Any other value will show an error message.
 * An order can have any number of dietTags (including 0)
 * Payment info is optional and supports exactly one method at a time.
-  * Use `cash/` for cash. Cash does not take a payment reference/details value.
+  * Use `cash/yes` to set cash payment, or `cash/no` to leave the order without payment info.
   * Use `paynow/PAYNOW_CONTACT` for PayNow. The contact must be non-blank.
   * Use `bank/BANK_DETAILS` for bank transfer. The reference must be non-blank.
 </div>
@@ -167,7 +167,7 @@ Examples:
 * `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026`
   `add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts`
 
-* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 bank/123456789`
+* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 cash/yes`
 * `add f/Nasi Lemak q/3 c/John p/91234567 e/john@example.com a/123 Street d/01-12-2024` Adds an order of `3` units of
   `Nasi Lemak`. The total price shown will be the menu price multiplied by `3`.
 
@@ -288,7 +288,7 @@ This helps with updating orders when information changes, without having to dele
 
 Format:
 `edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]...
-[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]`
+[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`
 
 <div markdown="1" class="alert alert-primary">:bulb:
 **Notes about the edit command:**<br>
@@ -300,8 +300,8 @@ Format:
 * When editing dietTags, the existing dietTags of the order will be removed i.e adding of dietTags is not cumulative.
 * You can remove all the order's dietTags by typing `t/` without specifying any dietTags after it.
 * For cash payment in `edit`:
-  * `cash/` sets payment info to cash, matching the `add` command.
-  * `cash/no` (or `cash/false`) clears payment info.
+  * `cash/yes` sets payment info to cash, matching the `add` command.
+  * `cash/no` clears payment info.
 * For PayNow and bank payment in `edit`:
   * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank contact/reference.
   * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
@@ -313,7 +313,7 @@ Examples:
   and `johndoe@example.com` respectively.
 * `edit 2 c/Betsy Crower t/` Edits the name of the 2nd order's customer to be `Betsy Crower` and clears all existing
   dietTags.
-* `edit 3 cash/` Sets the 3rd order's payment info to cash.
+* `edit 3 cash/yes` Sets the 3rd order's payment info to cash.
 * `edit 1` Shows an error message saying `At least one field to edit must be provided.`
 ### Deleting an order : `delete`
 
@@ -487,7 +487,7 @@ downloaded.
 
 | Action               | Format, Examples                                                                                                                                                                                                                                                    |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 bank/DBS-123456` |
+| **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 cash/yes` |
 | **List**             | `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`<br> e.g., `list d/18-10-2026 cs/completed ps/Paid`                                                                                                                       |
 | **Mark In Progress** | `inprogress INDEX` <br> e.g., `inprogress 2`                                                                                                                                                                                                                        |
 | **Mark Complete**    | `complete INDEX` <br> e.g., `complete 4`                                                                                                                                                                                                                            |
@@ -495,7 +495,7 @@ downloaded.
 | **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                    |
 | **Mark Partial**     | `partial INDEX` <br> e.g., `partial 1`                                                                                                                                                                                                                              |
 | **Mark Unpaid**      | `unpaid INDEX` <br> e.g., `unpaid 1`                                                                                                                                                                                                                                |
-| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/yes` |
+| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no` |
 | **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                 |
 | **Clear**            | `clear`                                                                                                                                                                                                                                                             |
 | **Add Menu**         | `add-menu n/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu n/Bee Hoon $/5.00 v/true`                                                                                                                                                                           |
