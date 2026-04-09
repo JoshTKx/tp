@@ -2,17 +2,16 @@ package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_PAYMENT;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CASH_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_METHOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_REF;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 import static seedu.homechef.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.Collections;
@@ -62,10 +61,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_DATE + "DATE] "
             + "[" + PREFIX_QUANTITY + "QUANTITY] "
             + "[" + PREFIX_TAG + "TAG]..."
-            + "[" + PREFIX_PAYMENT_METHOD + "PAYMENT_METHOD] "
-            + "[" + PREFIX_PAYMENT_REF + "PAYMENT_REF] "
-            + "[" + PREFIX_BANK_NAME + "BANK_NAME] "
-            + "[" + PREFIX_WALLET_PROVIDER + "WALLET_PROVIDER] "
+            + "[" + PREFIX_BANK_PAYMENT + "BANK_DETAILS] "
+            + "[" + PREFIX_PAYNOW_PAYMENT + "PAYNOW_CONTACT] "
+            + "[" + PREFIX_CASH_PAYMENT + "true|false] "
             + "\nExample: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -141,9 +139,7 @@ public class EditCommand extends Command {
         Quantity updatedQuantity = descriptor.getQuantity().orElse(orderToEdit.getQuantity());
         Price updatedPrice = orderToEdit.getPrice();
         Set<DietTag> updatedDietTags = descriptor.getTags().orElse(orderToEdit.getTags());
-        Optional<PaymentInfo> updatedPaymentInfo = descriptor.getPaymentInfo().isPresent()
-                                                   ? descriptor.getPaymentInfo()
-                                                   : orderToEdit.getPaymentInfo();
+        Optional<PaymentInfo> updatedPaymentInfo = resolveUpdatedPaymentInfo(orderToEdit, descriptor);
 
         return new Order(updatedFood, updatedCustomer, updatedPhone, updatedEmail, updatedAddress, updatedDate,
                 updatedCompletionStatus, updatedPaymentStatus, updatedDietTags,
@@ -188,6 +184,7 @@ public class EditCommand extends Command {
         private Quantity quantity;
         private Set<DietTag> dietTags;
         private PaymentInfo paymentInfo;
+        private boolean isPaymentInfoCleared;
 
         public EditOrderDescriptor() {
         }
@@ -206,6 +203,9 @@ public class EditCommand extends Command {
             setQuantity(toCopy.quantity);
             setTags(toCopy.dietTags);
             setPaymentInfo(toCopy.paymentInfo);
+            if (toCopy.isPaymentInfoCleared) {
+                clearPaymentInfo();
+            }
         }
 
         /**
@@ -213,7 +213,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(food, customer, phone, email, address,
-                    date, quantity, dietTags, paymentInfo);
+                    date, quantity, dietTags, paymentInfo) || isPaymentInfoCleared;
         }
 
         public void setFood(Food food) {
@@ -300,6 +300,15 @@ public class EditCommand extends Command {
          */
         public void setPaymentInfo(PaymentInfo paymentInfo) {
             this.paymentInfo = paymentInfo;
+            this.isPaymentInfoCleared = false;
+        }
+
+        /**
+         * Clears the payment info from the order.
+         */
+        public void clearPaymentInfo() {
+            this.paymentInfo = null;
+            this.isPaymentInfoCleared = true;
         }
 
         /**
@@ -307,6 +316,13 @@ public class EditCommand extends Command {
          */
         public Optional<PaymentInfo> getPaymentInfo() {
             return Optional.ofNullable(paymentInfo);
+        }
+
+        /**
+         * Returns true if payment info should be cleared from the order.
+         */
+        public boolean isPaymentInfoCleared() {
+            return isPaymentInfoCleared;
         }
 
         @Override
@@ -329,7 +345,8 @@ public class EditCommand extends Command {
                     && Objects.equals(date, otherEditOrderDescriptor.date)
                     && Objects.equals(quantity, otherEditOrderDescriptor.quantity)
                     && Objects.equals(dietTags, otherEditOrderDescriptor.dietTags)
-                    && Objects.equals(paymentInfo, otherEditOrderDescriptor.paymentInfo);
+                    && Objects.equals(paymentInfo, otherEditOrderDescriptor.paymentInfo)
+                    && isPaymentInfoCleared == otherEditOrderDescriptor.isPaymentInfoCleared;
         }
 
         @Override
@@ -344,7 +361,17 @@ public class EditCommand extends Command {
                     .add("quantity", quantity)
                     .add("dietTags", dietTags)
                     .add("paymentInfo", paymentInfo)
+                    .add("isPaymentInfoCleared", isPaymentInfoCleared)
                     .toString();
         }
+    }
+
+    private static Optional<PaymentInfo> resolveUpdatedPaymentInfo(Order orderToEdit, EditOrderDescriptor descriptor) {
+        if (descriptor.isPaymentInfoCleared()) {
+            return Optional.empty();
+        }
+        return descriptor.getPaymentInfo().isPresent()
+                ? descriptor.getPaymentInfo()
+                : orderToEdit.getPaymentInfo();
     }
 }

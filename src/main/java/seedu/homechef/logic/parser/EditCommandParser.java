@@ -3,17 +3,16 @@ package seedu.homechef.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_NAME;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_BANK_PAYMENT;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CASH_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_METHOD;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYMENT_REF;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_WALLET_PROVIDER;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,6 +23,7 @@ import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.commands.EditCommand;
 import seedu.homechef.logic.commands.EditCommand.EditOrderDescriptor;
 import seedu.homechef.logic.parser.exceptions.ParseException;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.PaymentInfo;
 
@@ -31,6 +31,8 @@ import seedu.homechef.model.order.PaymentInfo;
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditCommandParser implements Parser<EditCommand> {
+    public static final String MESSAGE_CASH_PAYMENT_BOOLEAN_REQUIRED =
+            "For edit, cash/ only accepts true/false (or yes/no).";
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -43,7 +45,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_FOOD, PREFIX_CUSTOMER, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_DATE, PREFIX_QUANTITY, PREFIX_TAG,
-                        PREFIX_PAYMENT_METHOD, PREFIX_PAYMENT_REF, PREFIX_BANK_NAME, PREFIX_WALLET_PROVIDER);
+                        PREFIX_BANK_PAYMENT, PREFIX_PAYNOW_PAYMENT, PREFIX_CASH_PAYMENT);
 
         Index index;
 
@@ -83,12 +85,30 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editOrderDescriptor::setTags);
 
-        Optional<PaymentInfo> paymentInfo = ParserUtil.parsePaymentInfo(
-                argMultimap.getValue(PREFIX_PAYMENT_METHOD),
-                argMultimap.getValue(PREFIX_PAYMENT_REF),
-                argMultimap.getValue(PREFIX_BANK_NAME),
-                argMultimap.getValue(PREFIX_WALLET_PROVIDER));
-        paymentInfo.ifPresent(editOrderDescriptor::setPaymentInfo);
+        Optional<String> bankPayment = argMultimap.getValue(PREFIX_BANK_PAYMENT);
+        Optional<String> payNowPayment = argMultimap.getValue(PREFIX_PAYNOW_PAYMENT);
+        Optional<String> cashPayment = argMultimap.getValue(PREFIX_CASH_PAYMENT);
+        int paymentPrefixCount = countPresent(bankPayment, payNowPayment, cashPayment);
+        if (paymentPrefixCount > 1) {
+            throw new ParseException(ParserUtil.MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
+        }
+        if (cashPayment.isPresent()) {
+            String normalizedCashValue = cashPayment.get().isBlank()
+                    ? ""
+                    : ParserUtil.normalizeWhitespace(cashPayment.get()).toLowerCase();
+            if (normalizedCashValue.isEmpty() || normalizedCashValue.equals("true")
+                    || normalizedCashValue.equals("yes")) {
+                editOrderDescriptor.setPaymentInfo(new CashPayment());
+            } else if (normalizedCashValue.equals("false") || normalizedCashValue.equals("no")) {
+                editOrderDescriptor.clearPaymentInfo();
+            } else {
+                throw new ParseException(MESSAGE_CASH_PAYMENT_BOOLEAN_REQUIRED);
+            }
+        } else {
+            Optional<PaymentInfo> paymentInfo = ParserUtil.parsePaymentInfo(
+                    bankPayment, payNowPayment, Optional.empty());
+            paymentInfo.ifPresent(editOrderDescriptor::setPaymentInfo);
+        }
 
         if (!editOrderDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
@@ -110,6 +130,17 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
+    }
+
+    @SafeVarargs
+    private static int countPresent(Optional<String>... values) {
+        int count = 0;
+        for (Optional<String> value : values) {
+            if (value.isPresent()) {
+                count++;
+            }
+        }
+        return count;
     }
 
 }

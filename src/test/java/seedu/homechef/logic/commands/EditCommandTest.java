@@ -25,9 +25,10 @@ import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.ModelManager;
 import seedu.homechef.model.UserPrefs;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PayNowPayment;
 import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
 import seedu.homechef.testutil.OrderBuilder;
 import seedu.homechef.testutil.TypicalMenuItems;
@@ -213,8 +214,7 @@ public class EditCommandTest {
         Model model = new ModelManager(
                 getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        PaymentInfo payNow = new PaymentInfo(
-                PaymentType.PAYNOW, "+65 91234567", null, null, null, null, null);
+        PaymentInfo payNow = new PayNowPayment("+65 91234567");
 
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(payNow).build();
@@ -236,12 +236,11 @@ public class EditCommandTest {
         Model model = new ModelManager(
                 getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
         Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        PaymentInfo payNow = new PaymentInfo(
-                PaymentType.PAYNOW, "+65 91234567", null, null, null, null, null);
+        PaymentInfo payNow = new PayNowPayment("+65 91234567");
         Order orderWithPayNow = new OrderBuilder(orderToEdit).withPaymentInfo(payNow).build();
         model.setOrder(orderToEdit, orderWithPayNow);
 
-        PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cash = new CashPayment();
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(cash).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_ORDER, descriptor);
@@ -255,16 +254,45 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
         Order result = expectedModel.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        assertEquals(PaymentType.CASH, result.getPaymentInfo().get().getType());
+        assertEquals(PaymentInfo.METHOD_CASH, result.getPaymentInfo().get().getMethod());
         assertNull(result.getPaymentInfo().get().getHandle());
     }
 
     @Test
     public void editDescriptor_paymentInfoOnly_isAnyFieldEdited() {
-        PaymentInfo cash = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cash = new CashPayment();
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
                 .withPaymentInfo(cash).build();
         assertTrue(descriptor.isAnyFieldEdited());
     }
 
+    @Test
+    public void execute_paymentInfoCleared_success() {
+        Model model = new ModelManager(
+                getTypicalHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
+        Order orderToEdit = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
+        PaymentInfo payNow = new PayNowPayment("+65 91234567");
+        Order orderWithPayNow = new OrderBuilder(orderToEdit).withPaymentInfo(payNow).build();
+        model.setOrder(orderToEdit, orderWithPayNow);
+
+        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
+                .clearPaymentInfo().build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_ORDER, descriptor);
+
+        Order expectedOrder = new Order(orderWithPayNow.getFood(), orderWithPayNow.getCustomer(),
+                orderWithPayNow.getPhone(), orderWithPayNow.getEmail(), orderWithPayNow.getAddress(),
+                orderWithPayNow.getDate(), orderWithPayNow.getCompletionStatus(), orderWithPayNow.getPaymentStatus(),
+                orderWithPayNow.getTags(), orderWithPayNow.getQuantity(), orderWithPayNow.getPrice(),
+                java.util.Optional.empty());
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ORDER_SUCCESS, Messages.format(expectedOrder));
+        Model expectedModel = new ModelManager(
+                new HomeChef(model.getHomeChef()), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
+        expectedModel.setOrder(orderWithPayNow, expectedOrder);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertTrue(expectedModel.getFilteredOrderList()
+                .get(INDEX_FIRST_ORDER.getZeroBased()).getPaymentInfo().isEmpty());
+    }
+
 }
+

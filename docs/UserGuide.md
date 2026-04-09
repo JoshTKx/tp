@@ -132,8 +132,8 @@ The following are the commands that interact with this order list.
 Adds an order to the order list.
 All orders are initially set as 'Pending' and 'Unpaid'.
 
-Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]…
-[m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`
+Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]...
+[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]`
 
 - Orders have their completion status set to `Pending` by default.
 - Orders also have their payment status set to `Unpaid` by default.
@@ -156,6 +156,10 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
   * The total order price is calculated as `PRICE` x `QUANTITY`.
   * `QUANTITY` must be a positive integer between `1` and `999` (inclusive). Any other value will show an error message.
 * An order can have any number of dietTags (including 0)
+* Payment info is optional and supports exactly one method at a time.
+  * Use `cash/` for cash (no value).
+  * Use `paynow/PAYNOW_CONTACT` for PayNow (non-blank string).
+  * Use `bank/BANK_DETAILS` for bank transfer (non-blank string).
 </div>
 
 Examples:
@@ -163,7 +167,7 @@ Examples:
 - `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026`
   `add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts`
 
-- `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village m/Bank r/123456789 b/Monkey Bank d/18-03-2026`
+- `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 bank/123456789`
 - `add f/Nasi Lemak q/3 c/John p/91234567 e/john@example.com a/123 Street d/01-12-2024` Adds an order of `3` units of
   `Nasi Lemak`. The total price shown will be the menu price multiplied by `3`.
 
@@ -283,19 +287,22 @@ This helps with updating orders when information changes, without having to dele
 </div>
 
 Format:
-`edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]…
-> > > > > > > [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`
+`edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]...
+
+> > > > > > > [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`
 
 <div markdown="span" class="alert alert-primary">:bulb:
 **Notes about the edit command:**<br>
 * At least one of the optional fields must be provided.
   * If no fields are provided, a message will appear telling you to provide a field.
 * Existing values will be updated to the input values.
-* If `f/FOOD` is changed, the order’s price is automatically updated to match the new menu item’s price.
-* If `q/QUANTITY` is changed, the order’s total price is recalculated as `unit price × quantity`.
+* If `f/FOOD` is changed, the order's price is automatically updated to match the new menu item's price.
+* If `q/QUANTITY` is changed, the order's total price is recalculated as `unit price x quantity`.
 * When editing dietTags, the existing dietTags of the order will be removed i.e adding of dietTags is not cumulative.
-* You can remove all the order’s dietTags by typing `t/` without
-    specifying any dietTags after it.
+* You can remove all the order's dietTags by typing `t/` without specifying any dietTags after it.
+* For cash payment in `edit`:
+  * `cash/yes` (or `cash/true`) sets payment info to cash.
+  * `cash/no` (or `cash/false`) clears payment info.
 </div>
 
 Examples:
@@ -304,8 +311,8 @@ Examples:
   and `johndoe@example.com` respectively.
 - `edit 2 c/Betsy Crower t/` Edits the name of the 2nd order's customer to be `Betsy Crower` and clears all existing
   dietTags.
+- `edit 3 cash/yes` Sets the 3rd order's payment info to cash.
 - `edit 1` Shows an error message saying `At least one field to edit must be provided.`
-
 ### Deleting an order : `delete`
 
 Deletes the specified order.
@@ -453,7 +460,7 @@ Overwrite the empty data file it creates with the file that contains the data of
 the `data` folder. The next time you open the app, all the original sample orders and menu items will be restored.
 
 **Q**: What's the rectangular box below where I put in the commands?<br>
-**A**: That's the status window! It tells you if the commands you type in are typed correctly and if it is executed
+**A**: That's the status window! It tells you if the commands you type in are typed correctly, and if it is executed
 properly. It also gives suggestions and hints if you input commands incorrectly.<br>
 If the status information given is still unclear, feel free to refer to the command information above.
 
@@ -472,7 +479,7 @@ downloaded.
 
 | Action               | Format, Examples                                                                                                                                                                                                                                                    |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]…​ [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026` |
+| **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 bank/DBS-123456` |
 | **List**             | `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`<br> e.g., `list d/18-10-2026 cs/completed ps/Paid`                                                                                                                       |
 | **Mark In Progress** | `inprogress INDEX` <br> e.g., `inprogress 2`                                                                                                                                                                                                                        |
 | **Mark Complete**    | `complete INDEX` <br> e.g., `complete 4`                                                                                                                                                                                                                            |
@@ -480,7 +487,7 @@ downloaded.
 | **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                    |
 | **Mark Partial**     | `partial INDEX` <br> e.g., `partial 1`                                                                                                                                                                                                                              |
 | **Mark Unpaid**      | `unpaid INDEX` <br> e.g., `unpaid 1`                                                                                                                                                                                                                                |
-| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]…​ [m/PAYMENT METHOD] [r/PAYMENT REF] [b/BANK NAME] [w/WALLET PROVIDER]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com`                                      |
+| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/yes` |
 | **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                 |
 | **Clear**            | `clear`                                                                                                                                                                                                                                                             |
 | **Add Menu**         | `add-menu n/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu n/Bee Hoon $/5.00 v/true`                                                                                                                                                                           |
@@ -488,3 +495,9 @@ downloaded.
 | **Edit Menu**        | `edit-menu INDEX [n/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 n/Pain au Chocolat $/3.50 v/true`                                                                                                                                                     |
 | **Help**             | `help`                                                                                                                                                                                                                                                              |
 | **Exit**             | `exit`                                                                                                                                                                                                                                                              |
+
+
+
+
+
+

@@ -23,6 +23,7 @@ import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
+import seedu.homechef.model.order.Quantity;
 
 /**
  * Marks an order as partially paid in HomeChef.
@@ -77,11 +78,12 @@ public class PartialCommand extends Command {
         CompletionStatus completionStatus = orderToMarkPartial.getCompletionStatus();
         PaymentStatus updatedPaymentStatus = PaymentStatus.PARTIAL;
         Set<DietTag> dietTags = orderToMarkPartial.getTags();
+        Quantity quantity = orderToMarkPartial.getQuantity();
         Price price = orderToMarkPartial.getPrice();
         Optional<PaymentInfo> paymentInfo = orderToMarkPartial.getPaymentInfo();
 
         return new Order(food, customer, phone, email, address, date,
-                completionStatus, updatedPaymentStatus, dietTags, price, paymentInfo);
+                completionStatus, updatedPaymentStatus, dietTags, quantity, price, paymentInfo);
     }
 
     private String generateSuccessMessage(Order order) {

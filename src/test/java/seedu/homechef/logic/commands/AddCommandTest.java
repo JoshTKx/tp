@@ -22,9 +22,9 @@ import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.ReadOnlyHomeChef;
 import seedu.homechef.model.ReadOnlyUserPrefs;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.testutil.OrderBuilder;
 
 public class AddCommandTest {
@@ -51,7 +51,7 @@ public class AddCommandTest {
     @Test
     public void execute_orderWithPaymentInfo_addSuccessful() throws Exception {
         ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
-        PaymentInfo cashPayment = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cashPayment = new CashPayment();
         Order inputOrder = new OrderBuilder().withPaymentInfo(cashPayment).build();
         // price is always derived from the menu item ("Birthday Cake" costs "25.00" in the stub)
         Order expectedOrder = new OrderBuilder().withPrice("25.00").withPaymentInfo(cashPayment).build();
@@ -348,3 +348,4 @@ public class AddCommandTest {
     }
 
 }
+

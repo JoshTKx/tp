@@ -39,7 +39,8 @@ public class PartialCommandTest {
         Order editedOrder = new Order(
                 orderToEdit.getFood(), orderToEdit.getCustomer(), orderToEdit.getPhone(),
                 orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),
-                orderToEdit.getCompletionStatus(), partialStatus, orderToEdit.getTags(), orderToEdit.getPrice());
+                orderToEdit.getCompletionStatus(), partialStatus, orderToEdit.getTags(),
+                orderToEdit.getQuantity(), orderToEdit.getPrice(), orderToEdit.getPaymentInfo());
 
         String expectedMessage = String.format(PartialCommand.MESSAGE_MARK_PARTIAL_SUCCESS,
                 Messages.format(editedOrder));
@@ -70,7 +71,8 @@ public class PartialCommandTest {
         Order editedOrder = new Order(
                 orderToEdit.getFood(), orderToEdit.getCustomer(), orderToEdit.getPhone(),
                 orderToEdit.getEmail(), orderToEdit.getAddress(), orderToEdit.getDate(),
-                orderToEdit.getCompletionStatus(), partialStatus, orderToEdit.getTags(), orderToEdit.getPrice());
+                orderToEdit.getCompletionStatus(), partialStatus, orderToEdit.getTags(),
+                orderToEdit.getQuantity(), orderToEdit.getPrice(), orderToEdit.getPaymentInfo());
 
         String expectedMessage = String.format(PartialCommand.MESSAGE_MARK_PARTIAL_SUCCESS,
                 Messages.format(editedOrder));
