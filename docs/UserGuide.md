@@ -1,15 +1,14 @@
---------------------------------------------------------------------------------------------------------------------
+---
 layout: page
 title: User Guide
---------------------------------------------------------------------------------------------------------------------
+---
 
 HomeChef-Helper (HomeChef) is a simple, intuitive desktop app for managing orders and payments for any **self-made food
 business owners!**<br>
 From new cooks with no experience managing their orders, to expert home food business owners with extensive knowledge,
 the app helps to **consolidate the order and food information in an easy-to-read format**, helping you get things done
 faster!<br>
-With a simple typing interface and a clear order list and food menu, this app is here to help you 
-**manage orders quick** if you can **type fast**.
+With a simple typing interface and a clear order list and food menu, this app is here to help you **manage orders quick** if you can **type fast**.
 
 * Table of Contents
   {:toc}
@@ -84,8 +83,7 @@ With a simple typing interface and a clear order list and food menu, this app is
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add f/FOOD`, `FOOD` is a parameter which can be used as `add f/Chocolate Cake`.
 
-* `INDEX` values can only be non-zero positive whole numbers. Any input `INDEX` that is `0`, **negative** or a **decimal
-  ** will give an error message.<br>
+* `INDEX` values can only be non-zero positive whole numbers. Any input `INDEX` that is `0`, **negative** or a **decimal** will give an error message.<br>
   e.g. `0`, `-1` and `2.0` will give `Invalid command format` error messages.
 
 * `INDEX` values cannot be larger than the size of the shown list.<br>
@@ -356,6 +354,7 @@ The following are the commands that interact with this menu.
   * This is so that you can freely change the menu without affecting past orders. After all, if someone ordered bread
     but one year later you switched to cooking noodles, that old order should still be retained for recording
     purposes!
+
 </div>
 
 ### Adding a food item : `add-menu`
