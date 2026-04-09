@@ -110,7 +110,7 @@ public class OrderCard extends UiPart<Region> {
         setCompletionStatusDisplay(order.getCompletionStatus());
         setPaymentStatusDisplay(order.getPaymentStatus());
         order.getPaymentInfo().ifPresentOrElse(
-                info -> paymentInfo.setText("Payment: " + info.toString()), () -> {
+                info -> paymentInfo.setText("Payment: " + info), () -> {
                     paymentInfo.setVisible(false);
                     paymentInfo.setManaged(false);
                 });
