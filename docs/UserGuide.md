@@ -8,8 +8,8 @@ business owners!**<br>
 From new cooks with no experience managing their orders, to expert home food business owners with extensive knowledge,
 the app helps to **consolidate the order and food information in an easy-to-read format**, helping you get things done
 faster!<br>
-With a simple typing interface and a clear order list and food menu, this app is here to help you **manage orders quick
-** if you can **type fast**.
+With a simple typing interface and a clear order list and food menu, this app is here to help you 
+**manage orders quick** if you can **type fast**.
 
 * Table of Contents
   {:toc}
@@ -356,7 +356,6 @@ The following are the commands that interact with this menu.
   * This is so that you can freely change the menu without affecting past orders. After all, if someone ordered bread
     but one year later you switched to cooking noodles, that old order should still be retained for recording
     purposes!
-
 </div>
 
 ### Adding a food item : `add-menu`
