@@ -153,6 +153,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_BANK_PAYMENT_DESC, MESSAGE_BANK_PAYMENT_REQUIRED);
         assertParseFailure(parser, "1 cash/accepted", EditCommandParser.MESSAGE_CASH_PAYMENT_BOOLEAN_REQUIRED);
         assertParseFailure(parser, "1" + BANK_PAYMENT_DESC + PAYNOW_PAYMENT_DESC, MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
+        assertParseFailure(parser, "1" + CASH_PAYMENT_DESC + BANK_PAYMENT_DESC, MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
+        assertParseFailure(parser, "1" + CASH_PAYMENT_DESC + PAYNOW_PAYMENT_DESC, MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
     }
 
     @Test

@@ -288,7 +288,7 @@ This helps with updating orders when information changes, without having to dele
 
 Format:
 `edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]...
-[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`
+[bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/]`
 
 <div markdown="1" class="alert alert-primary">:bulb:
 **Notes about the edit command:**<br>
@@ -300,7 +300,7 @@ Format:
 * When editing dietTags, the existing dietTags of the order will be removed i.e adding of dietTags is not cumulative.
 * You can remove all the order's dietTags by typing `t/` without specifying any dietTags after it.
 * For cash payment in `edit`:
-  * `cash/yes` (or `cash/true`) sets payment info to cash.
+  * `cash/` sets payment info to cash, matching the `add` command.
   * `cash/no` (or `cash/false`) clears payment info.
 * For PayNow and bank payment in `edit`:
   * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank contact/reference.
@@ -313,7 +313,7 @@ Examples:
   and `johndoe@example.com` respectively.
 * `edit 2 c/Betsy Crower t/` Edits the name of the 2nd order's customer to be `Betsy Crower` and clears all existing
   dietTags.
-* `edit 3 cash/yes` Sets the 3rd order's payment info to cash.
+* `edit 3 cash/` Sets the 3rd order's payment info to cash.
 * `edit 1` Shows an error message saying `At least one field to edit must be provided.`
 ### Deleting an order : `delete`
 
