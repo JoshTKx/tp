@@ -3,8 +3,8 @@ package seedu.homechef.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_COMPLETION_STATUS_PENDING;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_STATUS_UNPAID;
 import static seedu.homechef.testutil.Assert.assertThrows;
 import static seedu.homechef.testutil.TypicalOrders.ALICE;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
@@ -46,7 +46,9 @@ public class HomeChefTest {
     @Test
     public void resetData_withDuplicateOrders_throwsDuplicateOrderException() {
         // Two orders with the same identity fields
-        Order editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Order editedAlice = new OrderBuilder(ALICE)
+                .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
+                .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
                 .build();
         List<Order> newOrders = Arrays.asList(ALICE, editedAlice);
         HomeChefStub newData = new HomeChefStub(newOrders);
@@ -73,7 +75,9 @@ public class HomeChefTest {
     @Test
     public void hasOrder_orderWithSameIdentityFieldsInHomeChef_returnsTrue() {
         homeChef.addOrder(ALICE);
-        Order editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Order editedAlice = new OrderBuilder(ALICE)
+                .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
+                .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
                 .build();
         assertTrue(homeChef.hasOrder(editedAlice));
     }

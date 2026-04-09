@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_COMPLETION_STATUS_PENDING;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_DATE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_FOOD_BOB;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_STATUS_UNPAID;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.homechef.testutil.Assert.assertThrows;
@@ -34,18 +36,23 @@ public class OrderTest {
         // same object -> returns true
         assertTrue(ALICE.isSameOrder(ALICE));
 
-        // same Customer, food and date; other attributes different -> returns true
-        Order editedAlice = new OrderBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSameOrder(editedAlice));
+        // same Customer, food, date, phone, email, address, payment info, ; completion status different -> returns true
+        Order editedAlice1 = new OrderBuilder(ALICE)
+                .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
+                .build();
+        Order editedAlice2 = new OrderBuilder(ALICE)
+                .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
+                .build();
+        assertTrue(ALICE.isSameOrder(editedAlice1));
+        assertTrue(ALICE.isSameOrder(editedAlice2));
 
         // EP: different customers
         // null -> returns false
         assertFalse(ALICE.isSameOrder(null));
 
         // different Customer, all other attributes same -> returns false
-        editedAlice = new OrderBuilder(ALICE).withCustomer(VALID_CUSTOMER_BOB).build();
-        assertFalse(ALICE.isSameOrder(editedAlice));
+        editedAlice1 = new OrderBuilder(ALICE).withCustomer(VALID_CUSTOMER_BOB).build();
+        assertFalse(ALICE.isSameOrder(editedAlice1));
 
         // Customer differs in case, all other attributes same -> returns true
         Order editedBob = new OrderBuilder(BOB).withCustomer(VALID_CUSTOMER_BOB.toLowerCase()).build();
@@ -57,12 +64,12 @@ public class OrderTest {
         assertFalse(BOB.isSameOrder(editedBob));
 
         // different food, same customer and date -> returns false
-        editedAlice = new OrderBuilder(ALICE).withFood(VALID_FOOD_BOB).build();
-        assertFalse(ALICE.isSameOrder(editedAlice));
+        editedAlice1 = new OrderBuilder(ALICE).withFood(VALID_FOOD_BOB).build();
+        assertFalse(ALICE.isSameOrder(editedAlice1));
 
         // same customer and food, different date -> returns false
-        editedAlice = new OrderBuilder(ALICE).withDate(VALID_DATE_BOB).build();
-        assertFalse(ALICE.isSameOrder(editedAlice));
+        editedAlice1 = new OrderBuilder(ALICE).withDate(VALID_DATE_BOB).build();
+        assertFalse(ALICE.isSameOrder(editedAlice1));
     }
 
     @Test
