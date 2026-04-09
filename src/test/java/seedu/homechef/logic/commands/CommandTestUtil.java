@@ -99,6 +99,17 @@ public class CommandTestUtil {
     public static final EditCommand.EditOrderDescriptor DESC_AMY;
     public static final EditCommand.EditOrderDescriptor DESC_BOB;
 
+    // Menu test constants
+    public static final String VALID_MENU_BIRTHDAY_PRICE = "20.00";
+    public static final String VALID_MENU_BREAD_PRICE = "9.80";
+    public static final String VALID_MENU_CUPCAKES_PRICE = "35.70";
+    public static final String VALID_MENU_COOKIES_PRICE = "8.50";
+    public static final String VALID_MENU_THREETIER_PRICE = "150.00";
+    public static final String VALID_MENU_MUFFIN_PRICE = "12.60";
+    public static final String VALID_MENU_DOUGHNUT_PRICE = "18";
+    public static final String VALID_MENU_WEDDING_PRICE = "80.00";
+    public static final String VALID_MENU_CHICKEN_PRICE = "5.50";
+
     static {
         DESC_AMY = new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)

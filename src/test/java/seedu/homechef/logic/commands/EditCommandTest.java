@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_BOB;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BIRTHDAY_PRICE;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -51,7 +52,7 @@ public class EditCommandTest {
                 .withEmail("amy@gmail.com")
                 .withAddress("123, Jurong West Ave 6, #08-111")
                 .withDate("10-03-2026")
-                .withPrice("25.00") // price derived from menu; "Birthday Cake" costs "25.00"
+                .withPrice(VALID_MENU_BIRTHDAY_PRICE) // price derived from menu; "Birthday Cake" costs "20.00"
                 .build();
 
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()

@@ -3,8 +3,8 @@ package seedu.homechef.model.order;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_COMPLETION_STATUS_PENDING;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_STATUS_UNPAID;
 import static seedu.homechef.testutil.Assert.assertThrows;
 import static seedu.homechef.testutil.TypicalOrders.ALICE;
 import static seedu.homechef.testutil.TypicalOrders.BOB;
@@ -42,9 +42,14 @@ public class UniqueOrderListTest {
     @Test
     public void contains_orderWithSameIdentityFieldsInList_returnsTrue() {
         uniqueOrderList.add(ALICE);
-        Order editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Order editedAlice1 = new OrderBuilder(ALICE)
+                .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
                 .build();
-        assertTrue(uniqueOrderList.contains(editedAlice));
+        Order editedAlice2 = new OrderBuilder(ALICE)
+                .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
+                .build();
+        assertTrue(uniqueOrderList.contains(editedAlice1));
+        assertTrue(uniqueOrderList.contains(editedAlice2));
     }
 
     @Test
@@ -85,7 +90,9 @@ public class UniqueOrderListTest {
     @Test
     public void setOrder_editedOrderHasSameIdentity_success() {
         uniqueOrderList.add(ALICE);
-        Order editedAlice = new OrderBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Order editedAlice = new OrderBuilder(ALICE)
+                .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
+                .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
                 .build();
         uniqueOrderList.setOrder(ALICE, editedAlice);
         UniqueOrderList expectedUniqueOrderList = new UniqueOrderList();

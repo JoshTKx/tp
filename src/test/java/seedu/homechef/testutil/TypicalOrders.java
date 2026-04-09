@@ -13,6 +13,13 @@ import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_FOOD_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_FOOD_BOB;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BIRTHDAY_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BREAD_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_COOKIES_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_CUPCAKES_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_DOUGHNUT_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_MUFFIN_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_THREETIER_PRICE;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_STATUS_PAID;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_STATUS_UNPAID;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
@@ -42,7 +49,7 @@ public class TypicalOrders {
             .withCompletionStatus(VALID_COMPLETION_STATUS_IN_PROGRESS)
             .withPaymentStatus(VALID_PAYMENT_STATUS_PAID)
             .withTags("friends")
-            .withPrice("20.00").build();
+            .withPrice(VALID_MENU_BIRTHDAY_PRICE).build();
     public static final Order BENSON = new OrderBuilder().withFood("Sourdough Bread").withCustomer("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withDate("26-03-2026")
@@ -50,33 +57,33 @@ public class TypicalOrders {
             .withCompletionStatus(VALID_COMPLETION_STATUS_COMPLETE)
             .withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
             .withTags("owesMoney", "friends")
-            .withPrice("9.80").build();
+            .withPrice(VALID_MENU_BREAD_PRICE).build();
     public static final Order CARL = new OrderBuilder().withFood("Cupcakes (24pcs)").withCustomer("Carl Kurz")
             .withPhone("95352563").withDate("03-04-2026")
             .withEmail("heinz@example.com").withPaymentStatus(VALID_PAYMENT_STATUS_PAID)
             .withAddress("wall street")
             .withCompletionStatus(VALID_COMPLETION_STATUS_PENDING)
-            .withPrice("35.70").build();
+            .withPrice(VALID_MENU_CUPCAKES_PRICE).build();
     public static final Order DANIEL = new OrderBuilder().withFood("Wedding Cake - 3 Tier")
             .withCustomer("Daniel Meier").withPhone("87652533").withDate("07-04-2026")
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withPaymentStatus(VALID_PAYMENT_STATUS_PAID).withTags("friends")
-            .withPrice("88.80").build();
+            .withPrice(VALID_MENU_THREETIER_PRICE).build();
     public static final Order ELLE = new OrderBuilder().withFood("Chocolate Chip Cookies (3pcs)")
             .withCustomer("Elle Meyer").withPhone("9482224").withDate("02-04-2026")
             .withEmail("werner@example.com").withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
             .withAddress("michegan ave")
-            .withPrice("8.50").build();
+            .withPrice(VALID_MENU_COOKIES_PRICE).build();
     public static final Order FIONA = new OrderBuilder().withFood("Muffin (4pc)").withCustomer("Fiona Kunz")
             .withPhone("9482427").withDate("17-04-2026")
             .withEmail("lydia@example.com").withPaymentStatus(VALID_PAYMENT_STATUS_UNPAID)
             .withAddress("little tokyo")
-            .withPrice("12.60").build();
+            .withPrice(VALID_MENU_MUFFIN_PRICE).build();
     public static final Order GEORGE = new OrderBuilder().withFood("Doughnut Assortment")
             .withCustomer("George Best").withPhone("9482442").withDate("19-04-2026")
             .withEmail("anna@example.com").withPaymentStatus(VALID_PAYMENT_STATUS_PAID)
             .withAddress("4th street")
-            .withPrice("18").build();
+            .withPrice(VALID_MENU_DOUGHNUT_PRICE).build();
 
     // Manually added
     public static final Order HOON = new OrderBuilder().withFood("Curry Puff").withCustomer("Hoon Meier")
