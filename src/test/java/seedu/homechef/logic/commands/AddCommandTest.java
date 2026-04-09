@@ -22,9 +22,9 @@ import seedu.homechef.model.HomeChef;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.ReadOnlyHomeChef;
 import seedu.homechef.model.ReadOnlyUserPrefs;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.testutil.OrderBuilder;
 
 public class AddCommandTest {
@@ -38,8 +38,8 @@ public class AddCommandTest {
     public void execute_orderAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
         Order inputOrder = new OrderBuilder().build();
-        // price is always derived from the menu item ("Birthday Cake" costs "25.00" in the stub)
-        Order expectedOrder = new OrderBuilder().withPrice("25.00").build();
+        // price is always derived from the menu item ("Birthday Cake" costs "6.70" in the stub)
+        Order expectedOrder = new OrderBuilder().withPrice(OrderBuilder.DEFAULT_PRICE).build();
 
         CommandResult commandResult = new AddCommand(inputOrder).execute(modelStub);
 
@@ -51,10 +51,13 @@ public class AddCommandTest {
     @Test
     public void execute_orderWithPaymentInfo_addSuccessful() throws Exception {
         ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
-        PaymentInfo cashPayment = new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null);
+        PaymentInfo cashPayment = new CashPayment();
         Order inputOrder = new OrderBuilder().withPaymentInfo(cashPayment).build();
-        // price is always derived from the menu item ("Birthday Cake" costs "25.00" in the stub)
-        Order expectedOrder = new OrderBuilder().withPrice("25.00").withPaymentInfo(cashPayment).build();
+        // price is always derived from the menu item ("Birthday Cake" costs "6.70" in the stub)
+        Order expectedOrder = new OrderBuilder()
+                .withPrice(OrderBuilder.DEFAULT_PRICE)
+                .withPaymentInfo(cashPayment)
+                .build();
 
         CommandResult commandResult = new AddCommand(inputOrder).execute(modelStub);
 
@@ -66,9 +69,11 @@ public class AddCommandTest {
     @Test
     public void execute_orderWithQuantityThree_priceMulipliedByThree() throws Exception {
         ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
-        // Stub menu has "Birthday Cake" at $25.00; quantity 3 -> expected total $75.00
+        // Stub menu has "Birthday Cake" at $6.70; quantity 3 -> expected total $20.10
+        Double expectedPriceValue = Double.parseDouble(OrderBuilder.DEFAULT_PRICE) * 3;
+        String expectedPriceString = expectedPriceValue.toString();
         Order inputOrder = new OrderBuilder().withQuantity(3).build();
-        Order expectedOrder = new OrderBuilder().withQuantity(3).withPrice("75.00").build();
+        Order expectedOrder = new OrderBuilder().withQuantity(3).withPrice(expectedPriceString).build();
 
         CommandResult commandResult = new AddCommand(inputOrder).execute(modelStub);
 
@@ -80,9 +85,9 @@ public class AddCommandTest {
     @Test
     public void execute_orderWithDefaultQuantity_priceNotMultiplied() throws Exception {
         ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
-        // quantity defaults to 1; price stays $25.00
+        // quantity defaults to 1; price stays $6.70
         Order inputOrder = new OrderBuilder().build();
-        Order expectedOrder = new OrderBuilder().withPrice("25.00").build();
+        Order expectedOrder = new OrderBuilder().withPrice(OrderBuilder.DEFAULT_PRICE).build();
 
         CommandResult commandResult = new AddCommand(inputOrder).execute(modelStub);
 
@@ -105,7 +110,7 @@ public class AddCommandTest {
 
     @Test
     public void execute_duplicateOrder_throwsCommandException() {
-        Order validOrder = new OrderBuilder().build();
+        Order validOrder = new OrderBuilder().withPrice(OrderBuilder.DEFAULT_PRICE).build();
         AddCommand addCommand = new AddCommand(validOrder);
         ModelStub modelStub = new ModelStubWithOrder(validOrder);
 
@@ -277,7 +282,7 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"),
+                    new seedu.homechef.model.common.Price(OrderBuilder.DEFAULT_PRICE),
                     seedu.homechef.model.menu.Availability.YES));
             return menuBook;
         }
@@ -292,7 +297,7 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"),
+                    new seedu.homechef.model.common.Price(OrderBuilder.DEFAULT_PRICE),
                     seedu.homechef.model.menu.Availability.YES));
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Wedding Cake"),
@@ -330,7 +335,7 @@ public class AddCommandTest {
             seedu.homechef.model.menu.MenuBook menuBook = new seedu.homechef.model.menu.MenuBook();
             menuBook.addMenuItem(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"),
+                    new seedu.homechef.model.common.Price(OrderBuilder.DEFAULT_PRICE),
                     seedu.homechef.model.menu.Availability.YES));
             return menuBook;
         }
@@ -341,10 +346,11 @@ public class AddCommandTest {
                     javafx.collections.FXCollections.observableArrayList();
             list.add(new seedu.homechef.model.menu.MenuItem(
                     new seedu.homechef.model.common.Food("Birthday Cake"),
-                    new seedu.homechef.model.common.Price("25.00"),
+                    new seedu.homechef.model.common.Price(OrderBuilder.DEFAULT_PRICE),
                     seedu.homechef.model.menu.Availability.YES));
             return list;
         }
     }
 
 }
+

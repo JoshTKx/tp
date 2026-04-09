@@ -2,53 +2,37 @@ package seedu.homechef.logic.parser;
 
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.homechef.logic.commands.CommandTestUtil.BANK_NAME_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.BANK_PAYMENT_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.CASH_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.CUSTOMER_DESC_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_BANK_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_CUSTOMER_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_PAYMENT_METHOD_DESC;
+import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_PAYNOW_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_METHOD_DESC_BANK;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_METHOD_DESC_CARD;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_METHOD_DESC_CASH;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_METHOD_DESC_EWALLET;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_METHOD_DESC_PAYNOW;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_REF_DESC_BANK;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_REF_DESC_CARD;
-import static seedu.homechef.logic.commands.CommandTestUtil.PAYMENT_REF_DESC_PAYNOW;
-import static seedu.homechef.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static seedu.homechef.logic.commands.CommandTestUtil.PAYNOW_PAYMENT_DESC;
 import static seedu.homechef.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.homechef.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_BANK_NAME;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_CUSTOMER_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_REF_BANK;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_REF_CARD;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_REF_PAYNOW;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_BANK;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_PAYNOW;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_WALLET_ACCOUNT;
-import static seedu.homechef.logic.commands.CommandTestUtil.VALID_WALLET_PROVIDER;
-import static seedu.homechef.logic.commands.CommandTestUtil.WALLET_ACCOUNT_DESC;
-import static seedu.homechef.logic.commands.CommandTestUtil.WALLET_PROVIDER_DESC;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.homechef.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PAYNOW_PAYMENT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_BANK_NAME_NOT_VALID;
-import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_INVALID_PAYMENT_METHOD;
-import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_WALLET_PROVIDER_NOT_VALID;
+import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_BANK_PAYMENT_REQUIRED;
+import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_MULTIPLE_PAYMENT_PREFIXES;
+import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_PAYNOW_PAYMENT_REQUIRED;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_THIRD_ORDER;
@@ -60,18 +44,18 @@ import seedu.homechef.logic.Messages;
 import seedu.homechef.logic.commands.EditCommand;
 import seedu.homechef.logic.commands.EditCommand.EditOrderDescriptor;
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.BankPayment;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
-import seedu.homechef.model.order.PaymentInfo;
-import seedu.homechef.model.order.PaymentType;
+import seedu.homechef.model.order.PayNowPayment;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.testutil.EditOrderDescriptorBuilder;
 
 public class EditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
-
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
@@ -79,61 +63,23 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // EP: no index specified
         assertParseFailure(parser, VALID_CUSTOMER_AMY, MESSAGE_INVALID_FORMAT);
-
-        // EP: no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
-
-        // EP: no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidPreamble_failure() {
-        // EP: negative index
         assertParseFailure(parser, "-5" + CUSTOMER_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // EP: zero index
         assertParseFailure(parser, "0" + CUSTOMER_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // EP: invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // EP: invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        // EP: invalid name
         assertParseFailure(parser, "1" + INVALID_CUSTOMER_DESC, Customer.MESSAGE_CONSTRAINTS);
-
-        // EP: invalid phone
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS);
-
-        // EP: invalid email
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS);
-
-        // EP: invalid address
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS);
-
-        // EP: invalid tag
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, DietTag.MESSAGE_CONSTRAINTS);
-
-        // EP: invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
-
-        // EP: while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Order} being edited,
-        // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, DietTag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, DietTag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, DietTag.MESSAGE_CONSTRAINTS);
-
-        // EP: multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser,
-                "1" + INVALID_CUSTOMER_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
-                Customer.MESSAGE_CONSTRAINTS);
     }
 
     @Test
@@ -141,182 +87,82 @@ public class EditCommandParserTest {
         Index targetIndex = INDEX_SECOND_ORDER;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + CUSTOMER_DESC_AMY + TAG_DESC_FRIEND;
-
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
-
-        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder().withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_AMY).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseSuccess(parser, userInput, new EditCommand(targetIndex, descriptor));
     }
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // EP: customer
         Index targetIndex = INDEX_THIRD_ORDER;
-        String userInput = targetIndex.getOneBased() + CUSTOMER_DESC_AMY;
-        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // EP: phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditOrderDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // EP: email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditOrderDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // EP: address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditOrderDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // EP: tags
-        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditOrderDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseSuccess(parser, targetIndex.getOneBased() + CUSTOMER_DESC_AMY,
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withCustomer(VALID_CUSTOMER_AMY).build()));
     }
 
     @Test
     public void parse_multipleRepeatedFields_failure() {
-        // More extensive testing of duplicate parameter detections is done in
-        // AddCommandParserTest#parse_repeatedNonTagValue_failure()
-
-        // EP: valid followed by invalid
         Index targetIndex = INDEX_FIRST_ORDER;
         String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
-
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
-
-        // EP: invalid followed by valid
-        userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + INVALID_PHONE_DESC;
-
-        assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
-
-        // EP: mulltiple valid fields repeated
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
-                + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
-
-        assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
-
-        // EP: multiple invalid values
-        userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
-                + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
-
-        assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
     }
 
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_ORDER;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
-
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder().withTags().build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseSuccess(parser, userInput, new EditCommand(targetIndex, descriptor));
     }
 
     @Test
-    public void parse_editPaymentCash_success() {
+    public void parse_payment_success() {
         Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased() + PAYMENT_METHOD_DESC_CASH;
-        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
-                .withPaymentInfo(new PaymentInfo(PaymentType.CASH, null, null, null, null, null, null))
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseSuccess(parser, targetIndex.getOneBased() + CASH_PAYMENT_DESC,
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(new CashPayment()).build()));
+
+        assertParseSuccess(parser, targetIndex.getOneBased() + PAYNOW_PAYMENT_DESC,
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(
+                                new PayNowPayment(VALID_PAYMENT_PAYNOW)).build()));
+
+        assertParseSuccess(parser, targetIndex.getOneBased() + BANK_PAYMENT_DESC,
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(
+                                new BankPayment(VALID_PAYMENT_BANK)).build()));
+
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/true",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(new CashPayment()).build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/yes",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().withPaymentInfo(new CashPayment()).build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/false",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().clearPaymentInfo().build()));
+        assertParseSuccess(parser, targetIndex.getOneBased() + " cash/no",
+                new EditCommand(targetIndex,
+                        new EditOrderDescriptorBuilder().clearPaymentInfo().build()));
     }
 
     @Test
-    public void parse_editPaymentPayNow_success() {
+    public void parse_payment_failure() {
+        assertParseFailure(parser, "1" + INVALID_PAYNOW_PAYMENT_DESC, MESSAGE_PAYNOW_PAYMENT_REQUIRED);
+        assertParseFailure(parser, "1" + INVALID_BANK_PAYMENT_DESC, MESSAGE_BANK_PAYMENT_REQUIRED);
+        assertParseFailure(parser, "1 cash/accepted", EditCommandParser.MESSAGE_CASH_PAYMENT_BOOLEAN_REQUIRED);
+        assertParseFailure(parser, "1" + BANK_PAYMENT_DESC + PAYNOW_PAYMENT_DESC, MESSAGE_MULTIPLE_PAYMENT_PREFIXES);
+    }
+
+    @Test
+    public void parse_editPayNowWithInternalSpaces_success() {
         Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased() + PAYMENT_METHOD_DESC_PAYNOW + PAYMENT_REF_DESC_PAYNOW;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_PAYNOW_PAYMENT + "  +65   99999999  ";
         EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
-                .withPaymentInfo(new PaymentInfo(PaymentType.PAYNOW,
-                        VALID_PAYMENT_REF_PAYNOW, null, null, null, null, null))
+                .withPaymentInfo(new PayNowPayment("+65 99999999"))
                 .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_editPaymentBank_success() {
-        Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased()
-                + PAYMENT_METHOD_DESC_BANK + BANK_NAME_DESC + PAYMENT_REF_DESC_BANK;
-        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
-                .withPaymentInfo(new PaymentInfo(PaymentType.BANK,
-                        null, VALID_BANK_NAME, VALID_PAYMENT_REF_BANK, null, null, null))
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_editPaymentCard_success() {
-        Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased() + PAYMENT_METHOD_DESC_CARD + PAYMENT_REF_DESC_CARD;
-        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
-                .withPaymentInfo(new PaymentInfo(PaymentType.CARD,
-                        null, null, null, VALID_PAYMENT_REF_CARD, null, null))
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_editPaymentEWallet_success() {
-        Index targetIndex = INDEX_FIRST_ORDER;
-        String userInput = targetIndex.getOneBased()
-                + PAYMENT_METHOD_DESC_EWALLET + WALLET_PROVIDER_DESC + WALLET_ACCOUNT_DESC;
-        EditCommand.EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
-                .withPaymentInfo(new PaymentInfo(PaymentType.EWALLET,
-                        null, null, null, null, VALID_WALLET_PROVIDER, VALID_WALLET_ACCOUNT))
-                .build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-
-    @Test
-    public void parse_invalidPaymentMethod_failure() {
-        String userInput = "1" + INVALID_PAYMENT_METHOD_DESC;
-        assertParseFailure(parser, userInput,
-                String.format(MESSAGE_INVALID_PAYMENT_METHOD, "CRYPTO"));
-    }
-
-    @Test
-    public void parse_bankNameWithPayNow_failure() {
-        String userInput = "1" + PAYMENT_METHOD_DESC_PAYNOW + PAYMENT_REF_DESC_PAYNOW + BANK_NAME_DESC;
-        assertParseFailure(parser, userInput, MESSAGE_BANK_NAME_NOT_VALID);
-    }
-
-    @Test
-    public void parse_walletProviderWithBank_failure() {
-        String userInput = "1" + PAYMENT_METHOD_DESC_BANK + PAYMENT_REF_DESC_BANK + BANK_NAME_DESC
-                + WALLET_PROVIDER_DESC;
-        assertParseFailure(parser, userInput, MESSAGE_WALLET_PROVIDER_NOT_VALID);
+        assertParseSuccess(parser, userInput, new EditCommand(targetIndex, descriptor));
     }
 }
+

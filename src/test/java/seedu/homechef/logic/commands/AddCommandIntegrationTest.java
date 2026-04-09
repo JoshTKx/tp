@@ -3,6 +3,9 @@ package seedu.homechef.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BIRTHDAY_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_CHICKEN_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_WEDDING_PRICE;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
@@ -25,6 +28,7 @@ import seedu.homechef.testutil.OrderBuilder;
 import seedu.homechef.testutil.TypicalMenuItems;
 import seedu.homechef.testutil.TypicalOrders;
 
+
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
@@ -40,8 +44,8 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_newOrder_success() {
         Order inputOrder = new OrderBuilder().build();
-        // price is derived from the menu; "Birthday Cake" costs "25.00"
-        Order expectedOrder = new OrderBuilder().withPrice("25.00").build();
+        // price is derived from the menu; "Birthday Cake" costs "20.00"
+        Order expectedOrder = new OrderBuilder().withPrice(VALID_MENU_BIRTHDAY_PRICE).build();
 
         Model expectedModel = new ModelManager(
                 model.getHomeChef(), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
@@ -64,7 +68,7 @@ public class AddCommandIntegrationTest {
         Order inputOrder = new OrderBuilder().withFood("Chicken Rice").build();
         new AddCommand(inputOrder).execute(model);
         // price is derived from menu; "Chicken Rice" costs "5.50"
-        Order expectedOrder = new OrderBuilder().withFood("Chicken Rice").withPrice("5.50").build();
+        Order expectedOrder = new OrderBuilder().withFood("Chicken Rice").withPrice(VALID_MENU_CHICKEN_PRICE).build();
         assertTrue(model.getFilteredOrderList().contains(expectedOrder));
     }
 
@@ -72,7 +76,7 @@ public class AddCommandIntegrationTest {
     public void execute_foodMatchesUnavailableMenuItem_throwsCommandException() {
         MenuItem unavailableChicken = new MenuItem(
                 new Food("Chicken Rice"),
-                new Price("5.50"), Availability.NO);
+                new Price(VALID_MENU_CHICKEN_PRICE), Availability.NO);
         MenuBook mb = new MenuBook();
         mb.addMenuItem(unavailableChicken);
         for (MenuItem item : TypicalMenuItems.getTypicalMenuItems()) {
@@ -113,7 +117,10 @@ public class AddCommandIntegrationTest {
         // Exact match should win and the order should be accepted at the correct price.
         Order exactOrder = new OrderBuilder().withFood("Wedding Cake").build();
         new AddCommand(exactOrder).execute(model);
-        Order expectedOrder = new OrderBuilder().withFood("Wedding Cake").withPrice("80.00").build();
+        Order expectedOrder = new OrderBuilder()
+                .withFood("Wedding Cake")
+                .withPrice(VALID_MENU_WEDDING_PRICE)
+                .build();
         assertTrue(model.getFilteredOrderList().contains(expectedOrder));
     }
 

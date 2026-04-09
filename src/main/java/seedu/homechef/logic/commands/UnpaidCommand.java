@@ -23,6 +23,7 @@ import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
+import seedu.homechef.model.order.Quantity;
 
 /**
  * Marks an order as unpaid in HomeChef.
@@ -78,11 +79,12 @@ public class UnpaidCommand extends Command {
         CompletionStatus completionStatus = orderToMarkUnpaid.getCompletionStatus();
         PaymentStatus updatedPaymentStatus = PaymentStatus.UNPAID;
         Set<DietTag> dietTags = orderToMarkUnpaid.getTags();
+        Quantity quantity = orderToMarkUnpaid.getQuantity();
         Price price = orderToMarkUnpaid.getPrice();
         Optional<PaymentInfo> paymentInfo = orderToMarkUnpaid.getPaymentInfo();
 
         return new Order(food, customer, phone, email, address, date,
-                completionStatus, updatedPaymentStatus, dietTags, price, paymentInfo);
+                completionStatus, updatedPaymentStatus, dietTags, quantity, price, paymentInfo);
     }
 
     /**

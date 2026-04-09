@@ -23,6 +23,7 @@ import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
 import seedu.homechef.model.order.Phone;
+import seedu.homechef.model.order.Quantity;
 
 /**
  * Marks an order as paid for in the HomeChef.
@@ -78,11 +79,12 @@ public class PaidCommand extends Command {
         CompletionStatus completionStatus = orderToMarkPaid.getCompletionStatus();
         PaymentStatus updatedPaymentStatus = PaymentStatus.PAID;
         Set<DietTag> dietTags = orderToMarkPaid.getTags();
+        Quantity quantity = orderToMarkPaid.getQuantity();
         Price price = orderToMarkPaid.getPrice();
         Optional<PaymentInfo> paymentInfo = orderToMarkPaid.getPaymentInfo();
 
         return new Order(food, customer, phone, email, address, date,
-                completionStatus, updatedPaymentStatus, dietTags, price, paymentInfo);
+                completionStatus, updatedPaymentStatus, dietTags, quantity, price, paymentInfo);
     }
 
     /**

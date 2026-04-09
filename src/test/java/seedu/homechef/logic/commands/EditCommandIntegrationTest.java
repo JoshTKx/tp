@@ -2,6 +2,9 @@ package seedu.homechef.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BIRTHDAY_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_BREAD_PRICE;
+import static seedu.homechef.logic.commands.CommandTestUtil.VALID_MENU_CHICKEN_PRICE;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,15 +38,17 @@ public class EditCommandIntegrationTest {
 
     @Test
     public void execute_editQuantity_updatesQuantityAndRecalculatesPrice() throws Exception {
-        // Alice's order defaults to quantity 1; "Birthday Cake" costs $25.00 on the menu
+        // Alice's order defaults to quantity 1; "Birthday Cake" costs $20.00 on the menu
         Index indexAlice = Index.fromOneBased(1);
         EditCommand.EditOrderDescriptor descriptor = new EditCommand.EditOrderDescriptor();
         descriptor.setQuantity(new Quantity(3));
+        double editedPriceValue = Double.parseDouble(VALID_MENU_BIRTHDAY_PRICE) * 3;
+        String editedPriceString = Double.toString(editedPriceValue);
         new EditCommand(indexAlice, descriptor).execute(model);
 
         Order stored = model.getFilteredOrderList().get(0);
         assertEquals(new Quantity(3), stored.getQuantity());
-        assertEquals(new Price("75.00"), stored.getPrice());
+        assertEquals(new Price(editedPriceString), stored.getPrice());
     }
 
     @Test
@@ -52,6 +57,8 @@ public class EditCommandIntegrationTest {
         Index indexAlice = Index.fromOneBased(1);
         EditCommand.EditOrderDescriptor setQty = new EditCommand.EditOrderDescriptor();
         setQty.setQuantity(new Quantity(3));
+        double editedPriceValue = Double.parseDouble(VALID_MENU_CHICKEN_PRICE) * 3;
+        String editedPriceString = Double.toString(editedPriceValue);
         new EditCommand(indexAlice, setQty).execute(model);
 
         EditCommand.EditOrderDescriptor changeFood = new EditCommand.EditOrderDescriptor();
@@ -60,7 +67,7 @@ public class EditCommandIntegrationTest {
 
         Order stored = model.getFilteredOrderList().get(0);
         assertEquals(new Quantity(3), stored.getQuantity());
-        assertEquals(new Price("16.50"), stored.getPrice());
+        assertEquals(new Price(editedPriceString), stored.getPrice());
     }
 
     @Test
@@ -75,7 +82,7 @@ public class EditCommandIntegrationTest {
     @Test
     public void execute_editFoodToUnavailableItem_throwsCommandException() {
         MenuItem unavailable = new MenuItem(
-                new Food("Sourdough Bread"), new Price("8.00"), Availability.NO);
+                new Food("Sourdough Bread"), new Price(VALID_MENU_BREAD_PRICE), Availability.NO);
         model.setMenuItem(
                 model.getFilteredMenuItemList().stream()
                         .filter(i -> i.getFood().toString().equals("Sourdough Bread"))

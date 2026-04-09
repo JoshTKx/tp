@@ -13,15 +13,16 @@ import seedu.homechef.commons.exceptions.IllegalValueException;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.BankPayment;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.Date;
 import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
 import seedu.homechef.model.order.Order;
+import seedu.homechef.model.order.PayNowPayment;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.PaymentStatus;
-import seedu.homechef.model.order.PaymentType;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
 
@@ -31,6 +32,8 @@ import seedu.homechef.model.order.Quantity;
 class JsonAdaptedOrder {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Order's %s field is missing!";
+    private static final String MESSAGE_INVALID_PAYMENT_METHOD =
+            "Unsupported payment method. Expected one of: CASH, PAYNOW, BANK.";
 
     private final String food;
     private final String customer;
@@ -42,13 +45,8 @@ class JsonAdaptedOrder {
     private final String paymentStatus;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String price;
-    private final String paymentType;
-    private final String paymentHandle;
-    private final String paymentBankName;
-    private final String paymentReferenceNumber;
-    private final String paymentLastFourDigits;
-    private final String paymentWalletProvider;
-    private final String paymentWalletAccountId;
+    private final String paymentMethod;
+    private final String paymentDetails;
 
     @JsonProperty("quantity")
     private final Integer quantity;
@@ -68,13 +66,8 @@ class JsonAdaptedOrder {
             @JsonProperty("completionStatus") String completionStatus,
             @JsonProperty("paymentStatus") String paymentStatus,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("paymentType") String paymentType,
-            @JsonProperty("paymentHandle") String paymentHandle,
-            @JsonProperty("paymentBankName") String paymentBankName,
-            @JsonProperty("paymentReferenceNumber") String paymentReferenceNumber,
-            @JsonProperty("paymentLastFourDigits") String paymentLastFourDigits,
-            @JsonProperty("paymentWalletProvider") String paymentWalletProvider,
-            @JsonProperty("paymentWalletAccountId") String paymentWalletAccountId,
+            @JsonProperty("paymentMethod") String paymentMethod,
+            @JsonProperty("paymentDetails") String paymentDetails,
             @JsonProperty("quantity") Integer quantity) {
         this.food = food;
         this.customer = customer;
@@ -88,13 +81,8 @@ class JsonAdaptedOrder {
             this.tags.addAll(tags);
         }
         this.price = price;
-        this.paymentType = paymentType;
-        this.paymentHandle = paymentHandle;
-        this.paymentBankName = paymentBankName;
-        this.paymentReferenceNumber = paymentReferenceNumber;
-        this.paymentLastFourDigits = paymentLastFourDigits;
-        this.paymentWalletProvider = paymentWalletProvider;
-        this.paymentWalletAccountId = paymentWalletAccountId;
+        this.paymentMethod = paymentMethod;
+        this.paymentDetails = paymentDetails;
         this.quantity = quantity;
     }
 
@@ -119,21 +107,11 @@ class JsonAdaptedOrder {
         Optional<PaymentInfo> optPaymentInfo = source.getPaymentInfo();
         if (optPaymentInfo.isPresent()) {
             PaymentInfo info = optPaymentInfo.get();
-            paymentType = info.getType().name();
-            paymentHandle = info.getHandle();
-            paymentBankName = info.getBankName();
-            paymentReferenceNumber = info.getReferenceNumber();
-            paymentLastFourDigits = info.getLastFourDigits();
-            paymentWalletProvider = info.getWalletProvider();
-            paymentWalletAccountId = info.getWalletAccountId();
+            paymentMethod = info.getMethod();
+            paymentDetails = firstNonBlank(info.getHandle(), info.getReferenceNumber());
         } else {
-            paymentType = null;
-            paymentHandle = null;
-            paymentBankName = null;
-            paymentReferenceNumber = null;
-            paymentLastFourDigits = null;
-            paymentWalletProvider = null;
-            paymentWalletAccountId = null;
+            paymentMethod = null;
+            paymentDetails = null;
         }
     }
 
@@ -225,20 +203,11 @@ class JsonAdaptedOrder {
         final Price modelPrice = new Price(price);
 
         Optional<PaymentInfo> modelPaymentInfo;
-        if (paymentType == null) {
+        if (paymentMethod == null) {
             modelPaymentInfo = Optional.empty();
         } else {
-            PaymentType type;
             try {
-                type = PaymentType.valueOf(paymentType);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalValueException(
-                        "Invalid stored payment type: " + paymentType, e);
-            }
-            try {
-                modelPaymentInfo = Optional.of(new PaymentInfo(
-                        type, paymentHandle, paymentBankName, paymentReferenceNumber,
-                        paymentLastFourDigits, paymentWalletProvider, paymentWalletAccountId));
+                modelPaymentInfo = Optional.of(parsePaymentInfo(paymentMethod, paymentDetails));
             } catch (IllegalArgumentException e) {
                 throw new IllegalValueException(e.getMessage(), e);
             }
@@ -249,6 +218,32 @@ class JsonAdaptedOrder {
 
         return new Order(modelFood, modelCustomer, modelPhone, modelEmail, modelAddress, modelDate,
                 modelCompletionStatus, modelPaymentStatus, modelDietTags, modelQuantity, modelPrice, modelPaymentInfo);
+    }
+
+    private static String firstNonBlank(String... values) {
+        for (String value : values) {
+            if (value != null && !value.isBlank()) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    private static PaymentInfo parsePaymentInfo(String method, String details) {
+        String normalizedMethod = method.trim().toUpperCase();
+        switch (normalizedMethod) {
+        case PaymentInfo.METHOD_CASH:
+            return new seedu.homechef.model.order.CashPayment();
+        case PaymentInfo.METHOD_PAYNOW:
+            if (details == null || details.isBlank()) {
+                throw new IllegalArgumentException(PayNowPayment.MESSAGE_INVALID_PAYNOW_HANDLE);
+            }
+            return new PayNowPayment(details.trim());
+        case PaymentInfo.METHOD_BANK:
+            return (details == null || details.isBlank()) ? new BankPayment() : new BankPayment(details.trim());
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_PAYMENT_METHOD);
+        }
     }
 
 }

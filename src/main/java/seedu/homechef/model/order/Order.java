@@ -159,7 +159,14 @@ public class Order {
         return otherOrder != null
                 && otherOrder.getFood().equals(getFood())
                 && otherOrder.getCustomer().equals(getCustomer())
-                && otherOrder.getDate().equals(getDate());
+                && otherOrder.getPhone().equals(getPhone())
+                && otherOrder.getEmail().equals(getEmail())
+                && otherOrder.getAddress().equals(getAddress())
+                && otherOrder.getDate().equals(getDate())
+                && otherOrder.getTags().equals(getTags())
+                && otherOrder.getPrice().equals(getPrice())
+                && otherOrder.getQuantity().equals(getQuantity())
+                && otherOrder.getPaymentInfo().equals(getPaymentInfo());
     }
 
     /**
@@ -187,6 +194,7 @@ public class Order {
                 && completionStatus.equals(otherOrder.completionStatus)
                 && paymentStatus.equals(otherOrder.paymentStatus)
                 && dietTags.equals(otherOrder.dietTags)
+                && quantity.equals(otherOrder.quantity)
                 && price.equals(otherOrder.price)
                 && paymentInfo.equals(otherOrder.paymentInfo);
     }
@@ -195,7 +203,7 @@ public class Order {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(food, customer, phone, email, address, date, completionStatus,
-                paymentStatus, dietTags, price, paymentInfo);
+                paymentStatus, dietTags, quantity, price, paymentInfo);
     }
 
     @Override
@@ -207,6 +215,7 @@ public class Order {
                 .add("email", email)
                 .add("address", address)
                 .add("date", date)
+                .add("quantity", quantity)
                 .add("price", price)
                 .add("completionStatus", completionStatus)
                 .add("paymentStatus", paymentStatus)
