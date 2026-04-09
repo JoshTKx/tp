@@ -16,12 +16,12 @@ public final class PayNowPayment implements PaymentInfo {
     /**
      * Creates a PayNow payment with the specified handle.
      *
-     * @param reference
+     * @param reference PayNow phone number or handle.
      */
     public PayNowPayment(String reference) {
         requireNonNull(reference);
         if (reference.isBlank()) {
-            throw new IllegalArgumentException(MESSAGE_INVALID_PAYNOW_HANDLE);
+            throw new IllegalArgumentException(MESSAGE_INVALID_REFERENCE);
         }
         this.reference = reference;
     }

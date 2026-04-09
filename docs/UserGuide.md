@@ -157,9 +157,9 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
   * `QUANTITY` must be a positive integer between `1` and `999` (inclusive). Any other value will show an error message.
 * An order can have any number of dietTags (including 0)
 * Payment info is optional and supports exactly one method at a time.
-  * Use `cash/` for cash (no value).
-  * Use `paynow/PAYNOW_CONTACT` for PayNow (non-blank string).
-  * Use `bank/BANK_DETAILS` for bank transfer (non-blank string).
+  * Use `cash/` for cash. Cash does not take a payment reference/details value.
+  * Use `paynow/PAYNOW_CONTACT` for PayNow. The contact must be non-blank.
+  * Use `bank/BANK_DETAILS` for bank transfer. The reference must be non-blank.
 </div>
 
 Examples:
@@ -302,6 +302,9 @@ Format:
 * For cash payment in `edit`:
   * `cash/yes` (or `cash/true`) sets payment info to cash.
   * `cash/no` (or `cash/false`) clears payment info.
+* For PayNow and bank payment in `edit`:
+  * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank contact/reference.
+  * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
 </div>
 
 Examples:

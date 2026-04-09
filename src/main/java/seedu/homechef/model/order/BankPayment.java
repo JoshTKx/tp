@@ -13,10 +13,6 @@ public final class BankPayment implements PaymentInfo {
 
     private final String reference;
 
-    public BankPayment() {
-        this.reference = null;
-    }
-
     /**
      * Creates a bank transfer payment with the specified reference.
      *

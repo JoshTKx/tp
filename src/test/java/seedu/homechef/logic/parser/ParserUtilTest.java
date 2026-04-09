@@ -23,9 +23,12 @@ import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
 import seedu.homechef.model.menu.Availability;
 import seedu.homechef.model.order.Address;
+import seedu.homechef.model.order.BankPayment;
+import seedu.homechef.model.order.CashPayment;
 import seedu.homechef.model.order.Customer;
 import seedu.homechef.model.order.DietTag;
 import seedu.homechef.model.order.Email;
+import seedu.homechef.model.order.PayNowPayment;
 import seedu.homechef.model.order.PaymentInfo;
 import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
@@ -191,7 +194,7 @@ public class ParserUtilTest {
         Optional<PaymentInfo> result = ParserUtil.parsePaymentInfo(
                 Optional.empty(), Optional.empty(), Optional.of(""));
         assertTrue(result.isPresent());
-        assertEquals(PaymentInfo.METHOD_CASH, result.get().getMethod());
+        assertTrue(result.get() instanceof CashPayment);
     }
 
     @Test
@@ -199,8 +202,8 @@ public class ParserUtilTest {
         Optional<PaymentInfo> result = ParserUtil.parsePaymentInfo(
                 Optional.empty(), Optional.of("+65 91234567"), Optional.empty());
         assertTrue(result.isPresent());
-        assertEquals(PaymentInfo.METHOD_PAYNOW, result.get().getMethod());
-        assertEquals("+65 91234567", result.get().getHandle());
+        assertTrue(result.get() instanceof PayNowPayment);
+        assertEquals("+65 91234567", result.get().getReference());
     }
 
     @Test
@@ -208,19 +211,19 @@ public class ParserUtilTest {
         Optional<PaymentInfo> result = ParserUtil.parsePaymentInfo(
                 Optional.of("REF123"), Optional.empty(), Optional.empty());
         assertTrue(result.isPresent());
-        assertEquals(PaymentInfo.METHOD_BANK, result.get().getMethod());
-        assertEquals("REF123", result.get().getReferenceNumber());
+        assertTrue(result.get() instanceof BankPayment);
+        assertEquals("REF123", result.get().getReference());
     }
 
     @Test
     public void parsePaymentInfo_normalization_success() throws Exception {
         Optional<PaymentInfo> paynow = ParserUtil.parsePaymentInfo(
                 Optional.empty(), Optional.of("  +65   91234567  "), Optional.empty());
-        assertEquals("+65 91234567", paynow.get().getHandle());
+        assertEquals("+65 91234567", paynow.get().getReference());
 
         Optional<PaymentInfo> bank = ParserUtil.parsePaymentInfo(
                 Optional.of("  DBS   REF   001  "), Optional.empty(), Optional.empty());
-        assertEquals("DBS REF 001", bank.get().getReferenceNumber());
+        assertEquals("DBS REF 001", bank.get().getReference());
     }
 
     @Test
