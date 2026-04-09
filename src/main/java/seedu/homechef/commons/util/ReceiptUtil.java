@@ -49,8 +49,8 @@ public class ReceiptUtil {
     }
 
     private static String sanitizeFileComponent(String raw) {
-        String sanitized = raw.trim().replaceAll("[^A-Za-z0-9]+", "_").replaceAll("_+", "_");
-        sanitized = sanitized.replaceAll("^_|_$", "");
+        String sanitized = raw.trim().replaceAll("[\\\\/:*?\"<>|]", "_");
+        sanitized = sanitized.replaceAll("_+", "_").replaceAll("^_|_$", "");
         return sanitized.isEmpty() ? "order" : sanitized;
     }
 
