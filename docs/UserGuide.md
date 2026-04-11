@@ -372,8 +372,8 @@ Format: `add-menu f/NAME $/PRICE [v/AVAILABILITY]`
 * `PRICE` is a non-negative number up to 2 decimal places. Having less than 2 decimals is accepted.
   * Giving an input that is **not a number** or a number with **more than 2 decimals** will cause an error message to appear telling you the correct format you should use.
 * Similar functionality to that of `add` for the order list, except the fields have different prefixes.
-* `AVAILABILITY` only accepts `true` or `false` spelled exactly.
-  * Typing anything else will give an error message stating `Availability must be 'true' or 'false'`.
+* `AVAILABILITY` only accepts `yes` or `no` spelled exactly.
+  * Typing anything else will give an error message stating `Availability must be 'yes' or 'no'`.
 * If not specified, `AVAILABILITY` will be set as `Available`.
 </div>
 
@@ -381,7 +381,7 @@ Examples:
 
 * `add-menu f/Bee Hoon $/5` Adds a food item called `Bee Hoon` into the menu with a price of `$5` and is specified as
   `Available`.
-* `add-menu f/Mee Goreng $/6.00 v/false` Adds a food item called `Mee Goreng` into the menu with a price of `$6.00` and
+* `add-menu f/Mee Goreng $/6.00 v/yes` Adds a food item called `Mee Goreng` into the menu with a price of `$6.00` and
   is specified is `Unavailable`.
 
 ### Deleting a food item : `delete-menu`
@@ -404,8 +404,8 @@ Format: `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]`
 
 <div markdown="1" class="alert alert-info">
 **:information_source: Notes about the edit-menu command:**<br>
-* `AVAILABILITY` only accepts `true` or `false` spelled exactly.
-  * Typing anything else will give an error message stating `Availability must be 'true' or 'false'`.
+* `AVAILABILITY` only accepts `yes` or `no` spelled exactly.
+  * Typing anything else will give an error message stating `Availability must be 'yes' or 'no'`.
 * Editing the `PRICE` of a menu item **will not** change the price of existing orders. This is because old orders may have prices that differ from the new price of a menu item, for book keeping purposes.
 </div>
 
@@ -498,9 +498,9 @@ downloaded.
 | **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no`                                  |
 | **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                   |
 | **Clear**            | `clear`                                                                                                                                                                                                                                                               |
-| **Add Menu**         | `add-menu f/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu f/Bee Hoon $/5.00 v/true`                                                                                                                                                                             |
+| **Add Menu**         | `add-menu f/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu f/Bee Hoon $/5.00 v/yes`                                                                                                                                                                              |
 | **Delete Menu**      | `delete-menu INDEX`<br> e.g., `delete-menu 3`                                                                                                                                                                                                                         |
-| **Edit Menu**        | `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 f/Pain au Chocolat $/3.50 v/true`                                                                                                                                                       |
+| **Edit Menu**        | `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 f/Pain au Chocolat $/3.50 v/yes`                                                                                                                                                        |
 | **Help**             | `help`                                                                                                                                                                                                                                                                |
 | **Exit**             | `exit`                                                                                                                                                                                                                                                                |
 
