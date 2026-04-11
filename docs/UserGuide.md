@@ -63,7 +63,7 @@ With a simple typing interface and a clear order list and food menu, this app is
     * `delete 3` : Deletes the 3rd order shown in the current list. Perfect for removing long completed orders that you
       won't refer to anymore.
 
-    * `add-menu n/Potato Wedges $/2.20` : Adds a food item called `Potato Wedges` with a price of `$2.20` into the menu
+    * `add-menu f/Potato Wedges $/2.20` : Adds a food item called `Potato Wedges` with a price of `$2.20` into the menu
       on the right.<br>
       The newly added menu item should look like this:<br>
       ![menu item](images/sampleMenuItem.png)<br>
