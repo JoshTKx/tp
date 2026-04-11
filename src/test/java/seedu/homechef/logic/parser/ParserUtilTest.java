@@ -34,7 +34,7 @@ import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
 
 public class ParserUtilTest {
-    private static final String INVALID_CUSTOMER = "R@chel";
+    private static final String INVALID_CUSTOMER = "R#chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
@@ -42,6 +42,8 @@ public class ParserUtilTest {
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_CUSTOMER = "Rachel Walker";
+    private static final String VALID_CUSTOMER_WITH_PUNCTUATION = "Anne-Marie O'Neil/Lee @ Home";
+    private static final String VALID_CUSTOMER_WITH_UNICODE = "李雷";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
@@ -84,6 +86,14 @@ public class ParserUtilTest {
         Customer expectedCustomer = new Customer(VALID_CUSTOMER);
         assertEquals(expectedCustomer, ParserUtil.parseCustomer(VALID_CUSTOMER));
         assertEquals(expectedCustomer, ParserUtil.parseCustomer(WHITESPACE + VALID_CUSTOMER + WHITESPACE));
+
+        Customer expectedCustomerWithPunctuation = new Customer(VALID_CUSTOMER_WITH_PUNCTUATION);
+        assertEquals(expectedCustomerWithPunctuation,
+                ParserUtil.parseCustomer(WHITESPACE + VALID_CUSTOMER_WITH_PUNCTUATION + WHITESPACE));
+
+        Customer expectedUnicodeCustomer = new Customer(VALID_CUSTOMER_WITH_UNICODE);
+        assertEquals(expectedUnicodeCustomer,
+                ParserUtil.parseCustomer(WHITESPACE + VALID_CUSTOMER_WITH_UNICODE + WHITESPACE));
     }
 
     @Test
@@ -178,6 +188,14 @@ public class ParserUtilTest {
     @Test
     public void parseMenuNameAndPrice_normalized() throws Exception {
         assertEquals(new Food("Chicken Rice"), ParserUtil.parseFood(WHITESPACE + "Chicken Rice" + WHITESPACE));
+        assertEquals(new Food("Chef's Fish/Chips"), ParserUtil.parseFood(WHITESPACE + "Chef's Fish/Chips" + WHITESPACE));
+        assertEquals(new Food("Chef\u2019s Fish/Chips"),
+                ParserUtil.parseFood(WHITESPACE + "Chef\u2019s Fish/Chips" + WHITESPACE));
+        assertEquals(new Food("Fish & Chips"), ParserUtil.parseFood(WHITESPACE + "Fish & Chips" + WHITESPACE));
+        assertEquals(new Food("No. 1 Curry + Rice"),
+                ParserUtil.parseFood(WHITESPACE + "No. 1 Curry + Rice" + WHITESPACE));
+        assertEquals(new Food("Nasi @ Home"), ParserUtil.parseFood(WHITESPACE + "Nasi @ Home" + WHITESPACE));
+        assertEquals(new Food("Ramen 日本"), ParserUtil.parseFood(WHITESPACE + "Ramen 日本" + WHITESPACE));
         assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").toString());
         assertEquals("12.00", ParserUtil.parseMenuPrice("12").toString());
     }

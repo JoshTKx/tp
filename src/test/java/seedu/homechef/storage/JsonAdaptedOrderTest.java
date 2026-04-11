@@ -30,8 +30,8 @@ import seedu.homechef.model.order.Quantity;
 import seedu.homechef.testutil.OrderBuilder;
 
 public class JsonAdaptedOrderTest {
-    private static final String INVALID_FOOD = "Sp@ghetti";
-    private static final String INVALID_CUSTOMER = "R@chel";
+    private static final String INVALID_FOOD = "Spa#ghetti";
+    private static final String INVALID_CUSTOMER = "R#chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";

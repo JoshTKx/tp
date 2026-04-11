@@ -43,6 +43,7 @@ import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PAYMENT_PAYNOW
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.homechef.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_CUSTOMER;
+import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.homechef.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -192,6 +193,19 @@ public class AddCommandParserTest {
         AddCommand command = parser.parse(FOOD_DESC_AMY + CUSTOMER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + DATE_DESC_AMY);
         assertEquals(new Quantity(1), extractOrder(command).getQuantity());
+    }
+
+    @Test
+    public void parse_customerAndFoodWithApostropheAndSlash_success() throws ParseException {
+        String foodWithPunctuation = "Chef's Fish/Chips & Rice @ Home";
+        String customerWithPunctuation = "李雷 @ Home";
+        AddCommand command = parser.parse(" " + PREFIX_FOOD + foodWithPunctuation
+                + " " + PREFIX_CUSTOMER + customerWithPunctuation
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY);
+
+        Order parsedOrder = extractOrder(command);
+        assertEquals(new Food(foodWithPunctuation), parsedOrder.getFood());
+        assertEquals(new Customer(customerWithPunctuation), parsedOrder.getCustomer());
     }
 
     private static Order extractOrder(AddCommand command) {
