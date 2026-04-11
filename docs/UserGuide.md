@@ -364,7 +364,7 @@ The following are the commands that interact with this menu.
 
 Adds a food item of the given name, price and availability to the menu.
 
-Format: `add-menu n/NAME $/PRICE [v/AVAILABILITY]`
+Format: `add-menu f/NAME $/PRICE [v/AVAILABILITY]`
 
 <div markdown="1" class="alert alert-info">
 **:information_source: Notes about the add-menu command:**<br>
@@ -379,9 +379,9 @@ Format: `add-menu n/NAME $/PRICE [v/AVAILABILITY]`
 
 Examples:
 
-* `add-menu n/Bee Hoon $/5` Adds a food item called `Bee Hoon` into the menu with a price of `$5` and is specified as
+* `add-menu f/Bee Hoon $/5` Adds a food item called `Bee Hoon` into the menu with a price of `$5` and is specified as
   `Available`.
-* `add-menu n/Mee Goreng $/6.00 v/false` Adds a food item called `Mee Goreng` into the menu with a price of `$6.00` and
+* `add-menu f/Mee Goreng $/6.00 v/false` Adds a food item called `Mee Goreng` into the menu with a price of `$6.00` and
   is specified is `Unavailable`.
 
 ### Deleting a food item : `delete-menu`
@@ -400,7 +400,7 @@ Format: `delete-menu INDEX`
 Edits an existing food item in the menu.
 Similar functionality to that of `edit` for the order list, except the fields have different prefixes.
 
-Format: `edit-menu INDEX [n/NAME] [$/PRICE] [v/AVAILABILITY]`
+Format: `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]`
 
 <div markdown="1" class="alert alert-info">
 **:information_source: Notes about the edit-menu command:**<br>
@@ -411,9 +411,9 @@ Format: `edit-menu INDEX [n/NAME] [$/PRICE] [v/AVAILABILITY]`
 
 Example:
 
-* `edit-menu 1 n/Raisin Cookies $/2.00` Edits the food in the first position of the displayed menu to have the name
+* `edit-menu 1 f/Raisin Cookies $/2.00` Edits the food in the first position of the displayed menu to have the name
   `Raisin Cookies` and a price of `$2.00`.
-* `edit-menu 2 n/Pain au Chocolat $/3.50 v/false` Edits the food in the second position of the displayed menu to have
+* `edit-menu 2 f/Pain au Chocolat $/3.50 v/false` Edits the food in the second position of the displayed menu to have
   the name `Pain au Chocolat` and a price of `$3.50`.
 
 ## Other commands:
@@ -485,24 +485,24 @@ downloaded.
 
 # Command summary
 
-| Action               | Format, Examples                                                                                                                                                                                                                                                    |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Action               | Format, Examples                                                                                                                                                                                                                                                      |
+| -------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 cash/yes` |
-| **List**             | `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`<br> e.g., `list d/18-10-2026 cs/completed ps/Paid`                                                                                                                       |
-| **Mark In Progress** | `inprogress INDEX` <br> e.g., `inprogress 2`                                                                                                                                                                                                                        |
-| **Mark Complete**    | `complete INDEX` <br> e.g., `complete 4`                                                                                                                                                                                                                            |
-| **Mark Pending**     | `pending INDEX` <br> e.g., `pending 3`                                                                                                                                                                                                                              |
-| **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                    |
-| **Mark Partial**     | `partial INDEX` <br> e.g., `partial 1`                                                                                                                                                                                                                              |
-| **Mark Unpaid**      | `unpaid INDEX` <br> e.g., `unpaid 1`                                                                                                                                                                                                                                |
-| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no` |
-| **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                 |
-| **Clear**            | `clear`                                                                                                                                                                                                                                                             |
-| **Add Menu**         | `add-menu n/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu n/Bee Hoon $/5.00 v/true`                                                                                                                                                                           |
-| **Delete Menu**      | `delete-menu INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                            |
-| **Edit Menu**        | `edit-menu INDEX [n/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 n/Pain au Chocolat $/3.50 v/true`                                                                                                                                                     |
-| **Help**             | `help`                                                                                                                                                                                                                                                              |
-| **Exit**             | `exit`                                                                                                                                                                                                                                                              |
+| **List**             | `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`<br> e.g., `list d/18-10-2026 cs/completed ps/Paid`                                                                                                                         |
+| **Mark In Progress** | `inprogress INDEX` <br> e.g., `inprogress 2`                                                                                                                                                                                                                          |
+| **Mark Complete**    | `complete INDEX` <br> e.g., `complete 4`                                                                                                                                                                                                                              |
+| **Mark Pending**     | `pending INDEX` <br> e.g., `pending 3`                                                                                                                                                                                                                                |
+| **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                      |
+| **Mark Partial**     | `partial INDEX` <br> e.g., `partial 1`                                                                                                                                                                                                                                |
+| **Mark Unpaid**      | `unpaid INDEX` <br> e.g., `unpaid 1`                                                                                                                                                                                                                                  |
+| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no`                                  |
+| **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                   |
+| **Clear**            | `clear`                                                                                                                                                                                                                                                               |
+| **Add Menu**         | `add-menu f/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu f/Bee Hoon $/5.00 v/true`                                                                                                                                                                             |
+| **Delete Menu**      | `delete-menu INDEX`<br> e.g., `delete-menu 3`                                                                                                                                                                                                                         |
+| **Edit Menu**        | `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 f/Pain au Chocolat $/3.50 v/true`                                                                                                                                                       |
+| **Help**             | `help`                                                                                                                                                                                                                                                                |
+| **Exit**             | `exit`                                                                                                                                                                                                                                                                |
 
 
 
