@@ -159,7 +159,8 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 * An order can have any number of dietTags (including 0)
 * Payment info is optional and supports exactly one method at a time.
   * Use `cash/yes` to set cash payment, or `cash/no` to leave the order without payment info.
-  * Use `paynow/PAYNOW_CONTACT` for PayNow. The contact must be non-blank.
+  * Use `paynow/PAYNOW_CONTACT` for PayNow. It accepts any non-blank PayNow identifier
+    (e.g., phone number, UEN, or handle/reference), and is intentionally more flexible than `p/PHONE_NUMBER`.
   * Use `bank/BANK_DETAILS` for bank transfer. The reference must be non-blank.
 </div>
 
@@ -304,7 +305,8 @@ Format:
   * `cash/yes` sets payment info to cash, matching the `add` command.
   * `cash/no` clears payment info.
 * For PayNow and bank payment in `edit`:
-  * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank contact/reference.
+  * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank identifier/reference
+    (e.g., phone number, UEN, or handle). This is intentionally more flexible than `p/PHONE_NUMBER`.
   * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
 </div>
 
