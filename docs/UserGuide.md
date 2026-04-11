@@ -54,7 +54,7 @@ With a simple typing interface and a clear order list and food menu, this app is
       automatically.<br>
       The newly added order should look like this:<br>
       ![sample order](images/sampleOrder.png)<br>
-      Note that the ID number may defer if there are other orders in the list.<br>
+      Note that the ID number may differ if there are other orders in the list.<br>
       The date may also be of a different colour (red or orange) if the current date is after 30-03-2026.
 
     * `complete 1` : Marks the 1st order shown in the current list as completed. Helps to show what orders you have done
@@ -193,7 +193,7 @@ Format: `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION STATUS] [p
 
 Examples:
 
-* `list` Diplays the full order list.
+* `list` Displays the full order list.
 * `list d/18-10-2026` Displays an order list with all orders which have the date `18-10-2026`.
 * `list p/1234` Displays an order list with all orders with phone numbers that have `1234` in them.
 * `list d/16-04-2003 c/alice f/cake p/1234` Displays an order list with all orders that have the date `16-04-2003`, have
