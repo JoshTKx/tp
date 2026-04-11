@@ -408,6 +408,8 @@ Format: `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]`
 **:information_source: Notes about the edit-menu command:**<br>
 * `AVAILABILITY` only accepts `yes` or `no` spelled exactly.
   * Typing anything else will give an error message stating `Availability must be 'yes' or 'no'`.
+* Editing the `NAME` of a menu item **will not** change the food name in existing orders.
+  This preserves historical order records for bookkeeping purposes.
 * Editing the `PRICE` of a menu item **will not** change the price of existing orders. This is because old orders may have prices that differ from the new price of a menu item, for book keeping purposes.
 </div>
 
