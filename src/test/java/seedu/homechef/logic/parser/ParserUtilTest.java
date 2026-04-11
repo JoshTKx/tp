@@ -188,7 +188,8 @@ public class ParserUtilTest {
     @Test
     public void parseMenuNameAndPrice_normalized() throws Exception {
         assertEquals(new Food("Chicken Rice"), ParserUtil.parseFood(WHITESPACE + "Chicken Rice" + WHITESPACE));
-        assertEquals(new Food("Chef's Fish/Chips"), ParserUtil.parseFood(WHITESPACE + "Chef's Fish/Chips" + WHITESPACE));
+        assertEquals(new Food("Chef's Fish/Chips"),
+                ParserUtil.parseFood(WHITESPACE + "Chef's Fish/Chips" + WHITESPACE));
         assertEquals(new Food("Chef\u2019s Fish/Chips"),
                 ParserUtil.parseFood(WHITESPACE + "Chef\u2019s Fish/Chips" + WHITESPACE));
         assertEquals(new Food("Fish & Chips"), ParserUtil.parseFood(WHITESPACE + "Fish & Chips" + WHITESPACE));
