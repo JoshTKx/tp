@@ -163,6 +163,16 @@ The app has both an order list and a menu. When adding or editing an order, the 
 1. The app checks if the input food name in the order matches that of a food in the current menu.
 2. The app automatically calculates the total price of an order using the `quantity` field in the given order and the `price` field of matching food item in the menu.
 
+#### Menu item resolution
+
+Food lookup is handled by `MenuBook#resolveMenuItem(String foodName)` and follows a three-tier strategy:
+
+1. **Tier 0 — Index lookup:** If `foodName` parses as a positive integer within the current menu size, the item at that 1-based position is returned immediately. This allows users to type `f/1` instead of a full food name.
+2. **Tier 1 — Exact match:** Case-insensitive exact name comparison across all menu items.
+3. **Tier 2 — Substring match:** If exactly one menu item's name contains `foodName` as a substring, that item is returned. Multiple matches produce an `AmbiguousMenuItemException`; zero matches produce a `MenuItemNotFoundException`.
+
+Tier 0 takes unconditional priority. A menu item whose name is a pure integer (e.g. `"3"`) cannot be targeted by name if the menu has enough items for that integer to be a valid index.
+
 ### Automatic date formatting
 
 The app automatically formats the date field of the orders, colouring the text red when overdue, orange when urgent and white when normal.
