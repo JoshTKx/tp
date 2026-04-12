@@ -196,6 +196,13 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_invalidCalendarDate_failure() {
+        assertParseFailure(parser, FOOD_DESC_BOB + CUSTOMER_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + " d/31-02-2026" + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Date.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
     public void parse_customerAndFoodWithApostropheAndSlash_success() throws ParseException {
         String foodWithPunctuation = "Chef's Fish/Chips & Rice @ Home";
         String customerWithPunctuation = "李雷 @ Home";
@@ -218,4 +225,3 @@ public class AddCommandParserTest {
         }
     }
 }
-

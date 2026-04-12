@@ -159,7 +159,8 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
   * If any food names share the input word, an error message will tell you to `Please use the exact menu item`.<br>
     e.g. inputting `Cake` will give this error if both `Birthday Cake` and `Cupcakes` exist in the menu.
   * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
-* `DATE` is in **DD-MM-YYYY** format.
+* `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date (e.g. `31-02-2026` is rejected).
+* If you add an order with a past `DATE`, HomeChef still adds it but shows a warning that the order is overdue.
 * `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
 * `QUANTITY` specifies how many units of the food item are ordered.
@@ -313,6 +314,8 @@ Format:
   * If no fields are provided, a message will appear telling you to provide a field.
 * Existing values will be updated to the input values.
 * If `f/FOOD` is changed, the order's price is automatically updated to match the new menu item's price.
+* If `d/DATE` is provided, it must be in **DD-MM-YYYY** format and be a valid calendar date.
+* If `d/DATE` is edited to a past date, HomeChef updates the order and shows a warning that the order is overdue.
 * If `q/QUANTITY` is changed, the order's total price is recalculated as `unit price x quantity`.
 * When editing dietTags, the existing dietTags of the order will be removed i.e adding of dietTags is not cumulative.
 * You can remove all the order's dietTags by typing `t/` without specifying any dietTags after it.
@@ -470,7 +473,7 @@ Format: `exit`
 HomeChef data is saved in the hard disk automatically after any command that changes the data. There is no need to save
 manually.<br>
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:** 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the Homechef folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
 </div>
 
@@ -533,9 +536,3 @@ downloaded.
 | **Edit Menu**        | `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]` <br> e.g., `edit-menu 2 f/Pain au Chocolat $/3.50 v/yes`                                                                                                                                                        |
 | **Help**             | `help`                                                                                                                                                                                                                                                                |
 | **Exit**             | `exit`                                                                                                                                                                                                                                                                |
-
-
-
-
-
-
