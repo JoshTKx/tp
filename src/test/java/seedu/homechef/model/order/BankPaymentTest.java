@@ -28,6 +28,17 @@ public class BankPaymentTest {
     }
 
     @Test
+    public void constructor_symbolOnlyReference_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new BankPayment("!!!@@@"));
+    }
+
+    @Test
+    public void constructor_tooLongReference_throwsIllegalArgumentException() {
+        String longReference = "A".repeat(101);
+        assertThrows(IllegalArgumentException.class, () -> new BankPayment(longReference));
+    }
+
+    @Test
     public void constructor_nullReference_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new BankPayment(null));
     }

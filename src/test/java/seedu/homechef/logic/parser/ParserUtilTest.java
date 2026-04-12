@@ -269,6 +269,8 @@ public class ParserUtilTest {
                 ParserUtil.parsePaymentInfo(Optional.empty(), Optional.of("  "), Optional.empty()));
         assertThrows(ParseException.class, MESSAGE_BANK_PAYMENT_REQUIRED, () ->
                 ParserUtil.parsePaymentInfo(Optional.of(""), Optional.empty(), Optional.empty()));
+        assertThrows(ParseException.class, MESSAGE_BANK_PAYMENT_REQUIRED, () ->
+                ParserUtil.parsePaymentInfo(Optional.of("!!!@@@"), Optional.empty(), Optional.empty()));
     }
 
     @Test

@@ -3,14 +3,17 @@ package seedu.homechef.model.order;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * Represents a bank transfer payment.
  */
 public final class BankPayment implements PaymentInfo {
     public static final String MESSAGE_INVALID_REFERENCE =
-            "Bank payment requires a non-blank payment reference/details value.";
+            "Bank payment requires 1-100 characters and at least one letter or digit.";
 
+    private static final int MAX_REFERENCE_LENGTH = 100;
+    private static final Pattern HAS_ALPHANUMERIC = Pattern.compile(".*[A-Za-z0-9].*");
     private final String reference;
 
     /**
@@ -20,7 +23,10 @@ public final class BankPayment implements PaymentInfo {
      */
     public BankPayment(String reference) {
         requireNonNull(reference);
-        if (reference.isBlank()) {
+        String trimmedReference = reference.trim();
+        if (trimmedReference.isEmpty()
+                || trimmedReference.length() > MAX_REFERENCE_LENGTH
+                || !HAS_ALPHANUMERIC.matcher(trimmedReference).matches()) {
             throw new IllegalArgumentException(MESSAGE_INVALID_REFERENCE);
         }
         this.reference = reference;

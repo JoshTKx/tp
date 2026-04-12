@@ -38,7 +38,7 @@ public class ParserUtil {
     public static final String MESSAGE_CASH_PAYMENT_REQUIRED =
             "cash/ requires yes or no.";
     public static final String MESSAGE_BANK_PAYMENT_REQUIRED =
-            "bank/ requires a non-blank bank reference/details value.";
+            BankPayment.MESSAGE_INVALID_REFERENCE;
     public static final String MESSAGE_PAYNOW_PAYMENT_REQUIRED =
             "paynow/ requires a non-blank PayNow phone number or handle.";
 
@@ -279,7 +279,11 @@ public class ParserUtil {
             if (bankPayment.get().isBlank()) {
                 throw new ParseException(MESSAGE_BANK_PAYMENT_REQUIRED);
             }
-            return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
+            try {
+                return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
+            } catch (IllegalArgumentException e) {
+                throw new ParseException(e.getMessage());
+            }
         }
 
         if (payNowPayment.get().isBlank()) {
