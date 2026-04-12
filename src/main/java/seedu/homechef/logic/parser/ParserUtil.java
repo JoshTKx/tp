@@ -38,7 +38,7 @@ public class ParserUtil {
     public static final String MESSAGE_CASH_PAYMENT_REQUIRED =
             "cash/ requires yes or no.";
     public static final String MESSAGE_BANK_PAYMENT_REQUIRED =
-            BankPayment.MESSAGE_INVALID_REFERENCE;
+            BankPayment.MESSAGE_CONSTRAINTS;
     public static final String MESSAGE_PAYNOW_PAYMENT_REQUIRED =
             "paynow/ requires a non-blank PayNow phone number or handle.";
 
@@ -282,7 +282,7 @@ public class ParserUtil {
             try {
                 return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
             } catch (IllegalArgumentException e) {
-                throw new ParseException(BankPayment.MESSAGE_INVALID_REFERENCE);
+                throw new ParseException(BankPayment.MESSAGE_CONSTRAINTS);
             }
         }
 

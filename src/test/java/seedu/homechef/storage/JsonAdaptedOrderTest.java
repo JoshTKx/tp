@@ -280,7 +280,7 @@ public class JsonAdaptedOrderTest {
                 VALID_FOOD, VALID_CUSTOMER, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_DATE,
                 VALID_PRICE, VALID_COMPLETION_STATUS, VALID_PAYMENT_STATUS, VALID_TAGS,
                 "BANK", null, null);
-        assertThrows(IllegalValueException.class, BankPayment.MESSAGE_INVALID_REFERENCE, order::toModelType);
+        assertThrows(IllegalValueException.class, BankPayment.MESSAGE_CONSTRAINTS, order::toModelType);
     }
 
     @Test
