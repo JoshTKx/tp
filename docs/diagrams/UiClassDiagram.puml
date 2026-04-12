@@ -15,7 +15,6 @@ Class OrderListPanel
 Class OrderCard
 Class MenuListPanel
 Class MenuCard
-Class StatusBarFooter
 Class CommandBox
 }
 
@@ -36,7 +35,6 @@ MainWindow *-down->  "1" CommandBox
 MainWindow *-down-> "1" ResultDisplay
 MainWindow *-down-> "1" OrderListPanel
 MainWindow *-down-> "1" MenuListPanel
-MainWindow *-down-> "1" StatusBarFooter
 MainWindow --> "0..1" HelpWindow
 
 OrderListPanel -down-> "*" OrderCard
@@ -50,7 +48,6 @@ OrderListPanel --|> UiPart
 OrderCard --|> UiPart
 MenuListPanel --|> UiPart
 MenuCard --|> UiPart
-StatusBarFooter --|> UiPart
 HelpWindow --|> UiPart
 
 OrderCard ..> Model
@@ -61,7 +58,6 @@ MainWindow -left-> Logic
 OrderListPanel -[hidden]left- HelpWindow
 HelpWindow -[hidden]left- CommandBox
 CommandBox -[hidden]left- ResultDisplay
-ResultDisplay -[hidden]left- StatusBarFooter
 
 MainWindow -[hidden]-|> UiPart
 @enduml
