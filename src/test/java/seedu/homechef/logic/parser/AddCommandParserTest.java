@@ -202,7 +202,6 @@ public class AddCommandParserTest {
                 Date.MESSAGE_CONSTRAINTS);
     }
 
-    
     @Test
     public void parse_customerAndFoodWithApostropheAndSlash_success() throws ParseException {
         String foodWithPunctuation = "Chef's Fish/Chips & Rice @ Home";
