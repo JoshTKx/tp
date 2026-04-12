@@ -116,6 +116,8 @@ With a simple typing interface and a clear order list and food menu, this app is
   characters) and selected punctuation; details are listed under each command.
 * For `c/NAME` and `f/FOOD`, the first character must be a letter or digit.
 
+* `COMPLETION STATUS` is meant to be a marker for you to know that you have completed an order, not a "finalised state" which confirms that the order information is fixed. Thus, it does not affect the ability to modify any of the orders.
+
 * Extra parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
@@ -162,6 +164,12 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 * `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date (e.g. `31-02-2026` is rejected).
 * If you add an order with a past `DATE`, HomeChef still adds it but shows a warning that the order is overdue.
 * `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
+* `ADDRESS` accepts any character, but cannot be blank.
+* `EMAIL` should be of the format local-part@domain.tld and adhere to the following constraints:
+  1. The local-part should only contain alphanumeric characters and these special characters: !#$%&'*+/=?^_`{|}~._%\-
+  2. This is followed by a '@' and then a domain name.
+  3. The domain name must contain only alphanumeric characters, dots, or hyphens.
+  4. The email must end with a top-level domain (TLD) of at least 2 alphabetic characters (e.g. .com, .org, .io).
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
 * `QUANTITY` specifies how many units of the food item are ordered.
   * If omitted, `QUANTITY` defaults to `1`.
@@ -177,10 +185,11 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 
 Examples:
 
-* `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026`
-  `add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts`
+The following examples assume that a menu item of the given food name already exists in the menu. Refer to the [menu commands](#menu-commands) for more information in adding these food names to the menu.
 
-* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 cash/yes`
+* `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` Adds the order of the given information to the order list.
+* `add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts` Adds the order of the given information to the order list.
+* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 cash/yes` Adds the order of the given information to the order list.
 * `add f/Nasi Lemak q/3 c/John p/91234567 e/john@example.com a/123 Street d/01-12-2024` Adds an order of `3` units of
   `Nasi Lemak`. The total price shown will be the menu price multiplied by `3`.
 
@@ -232,6 +241,11 @@ This helps to easily tell at a glance when an order is completed.
 * On a completed order, the completion status will remain as `Complete`.
 
 Format: `complete INDEX`
+
+<div markdown="1" class="alert alert-primary">:bulb: **Notes about the complete command:**<br>
+* Orders are meant to be editable after completion, because if a mistake was made, you can fix it before printing it to receipt without having to change the status back.
+* As mentioned before, completion status is meant to be a marker for you to know that you have completed an order, so marking an order as complete will **not** make the information fixed. You still can edit a command after it is complete.
+</div>
 
 ### Marking an order as pending: `pending`
 
@@ -326,7 +340,7 @@ Format:
   * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank identifier/reference
     (e.g., phone number, UEN, or handle). This is intentionally more flexible than `p/PHONE_NUMBER` as in reality PayNow identifiers can take various forms. (See DBS  PayNow [here](https://www.dbs.com.sg/personal/deposits/pay-with-ease/paynow) for examples of PayNow identifiers.)
   * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
-* If `c/NAME` is provided, it follows the same character rules as `add`.
+* If `c/NAME`, `e/EMAIL` or `a/ADDRESS` is provided, it follows the same character rules as `add`.
 * If `f/FOOD` is provided, it must still match an existing menu item and follows the same food-name character rules as `add-menu`.
 </div>
 
@@ -375,9 +389,9 @@ The following are the commands that interact with this menu.
 <div markdown="1" class="alert alert-info">
 **:information_source: Notes about the menu:**<br>
 
-* Any modifications to the menu will not affect existing orders.
+* **Any modifications to the menu will not affect existing orders.**
   * For example: There is an order with a food name `Birthday Cake`. Deleting or editing `Birthday Cake` in the **menu** will not affect this existing order.<br>
-    But **future orders** will not be able to add food called `Birthday Cake` as it now does not exist in the menu.
+    But **future orders** will not be able to add the food called `Birthday Cake` as it now does not exist in the menu.
   * This is so that you can freely change the menu without affecting past orders. After all, if someone ordered bread
     but one year later you switched to cooking noodles, that old order should still be retained for recording
     purposes!
@@ -438,7 +452,7 @@ Format: `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]`
 * If `$/PRICE` is provided, it follows the same number rules as `add-menu` (including allowing `0` / `0.00`).
 * Editing the `NAME` of a menu item **will not** change the name of existing orders. This is because old orders may have names that differ from the new name of a menu item, for book keeping purposes.
   * e.g. In the past, someone ordered a `Birthday Cake`. 1 year later, you change the name of the `Birthday Cake` to `Event Cake`. The old order should remain in the records with the original name it was sold under to maintain consistency with the receipts.
-* Similarly, editing `PRICE` will not update existing orders either.
+* Similarly, editing `PRICE` and `AVAILABILITY` will **not** update existing orders either.
 </div>
 
 Example:
@@ -496,27 +510,30 @@ Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (
 
 # FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I **transfer my data** to another Computer?<br>
 **A**: Download the app in the other computer and set it up as mentioned in the Quick Guide section above.<br>
 Overwrite the empty data file it creates with the file that contains the data of your previous HomeChef home folder (the
 `homechef.json` and `menu.json` files).
 
-**Q**: How do I get back the sample data that the app came with when I first booted it up?<br>
-**A**: Open the folder that contains `homechef.jar`. Simply delete the `homechef.json` and `menu.json` files located in
+**Q**: How do I **get back** the **sample data** that the app came with when I first booted it up?<br>
+**A**: Open the folder that contains `homechef.jar`. Simply **delete** the `homechef.json` and `menu.json` files located in
 the `data` folder. The next time you open the app, all the original sample orders and menu items will be restored.
 
-**Q**: What's the rectangular box below where I put in the commands?<br>
+**Q**: What's the **rectangular box** below where I put in the commands?<br>
 **A**: That's the status window! It tells you if the commands you type in are typed correctly, and if it is executed
 properly. It also gives suggestions and hints if you input commands incorrectly.<br>
 If the status information given is still unclear, feel free to refer to the command information above.
 
-**Q**: The order list is blank! Is my data all gone?<br>
-**A**: This may not necessarily be the case. Check by using the `list` command with **no parameters**. This should reset
+**Q**: The order list is **blank**! Is my data all **gone**?<br>
+**A**: This may **not necessarily be the case**. Check by using the `list` command with **no parameters**. This should reset
 the order list to its default view, which includes every single order that has been added. If this still fails to
-resolve the problem, see the next question.
+resolve the problem, see the last question.
 
-**Q**: Help! My data **all** been deleted!<br>
-**A**: Unfortunately, **yes**. There is no way to recover the data unless a **backup copy** was made of the
+**Q**: The menu is **blank** too! Is that all **gone**?<br>
+**A**: For the menu, sadly you are **right** that it's gone. Refer to the next question on what to do in this case.
+
+**Q**: Help! **All** of my data has been deleted!<br>
+**A**: Unfortunately, there is no way to recover the data unless a **backup copy** was made of the
 `homechef.json` and `menu.json` files.<br>
 If the copies exist, copy them over to the `data` folder located in the folder that contains the jar file you
 downloaded.
