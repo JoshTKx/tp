@@ -64,6 +64,9 @@ public class ParserUtil {
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
         String trimmedIndex = normalizeWhitespace(oneBasedIndex);
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
+            if (trimmedIndex.matches("[1-9][0-9]*")) {
+                return Index.fromOneBased(Integer.MAX_VALUE);
+            }
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
