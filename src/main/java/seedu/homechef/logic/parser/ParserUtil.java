@@ -38,7 +38,7 @@ public class ParserUtil {
     public static final String MESSAGE_CASH_PAYMENT_REQUIRED =
             "cash/ requires yes or no.";
     public static final String MESSAGE_BANK_PAYMENT_REQUIRED =
-            BankPayment.MESSAGE_CONSTRAINTS;
+            "bank/ requires a non-blank bank reference/details value.";
     public static final String MESSAGE_PAYNOW_PAYMENT_REQUIRED =
             "paynow/ requires a non-blank PayNow phone number or handle.";
 
