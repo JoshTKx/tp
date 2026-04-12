@@ -282,7 +282,7 @@ public class ParserUtil {
             try {
                 return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
             } catch (IllegalArgumentException e) {
-                throw new ParseException(BankPayment.MESSAGE_CONSTRAINTS);
+                throw new ParseException(MESSAGE_BANK_PAYMENT_REQUIRED);
             }
         }
 
