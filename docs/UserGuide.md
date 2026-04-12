@@ -500,27 +500,30 @@ Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (
 
 # FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I **transfer my data** to another Computer?<br>
 **A**: Download the app in the other computer and set it up as mentioned in the Quick Guide section above.<br>
 Overwrite the empty data file it creates with the file that contains the data of your previous HomeChef home folder (the
 `homechef.json` and `menu.json` files).
 
-**Q**: How do I get back the sample data that the app came with when I first booted it up?<br>
-**A**: Open the folder that contains `homechef.jar`. Simply delete the `homechef.json` and `menu.json` files located in
+**Q**: How do I **get back** the **sample data** that the app came with when I first booted it up?<br>
+**A**: Open the folder that contains `homechef.jar`. Simply **delete** the `homechef.json` and `menu.json` files located in
 the `data` folder. The next time you open the app, all the original sample orders and menu items will be restored.
 
-**Q**: What's the rectangular box below where I put in the commands?<br>
+**Q**: What's the **rectangular box** below where I put in the commands?<br>
 **A**: That's the status window! It tells you if the commands you type in are typed correctly, and if it is executed
 properly. It also gives suggestions and hints if you input commands incorrectly.<br>
 If the status information given is still unclear, feel free to refer to the command information above.
 
-**Q**: The order list is blank! Is my data all gone?<br>
-**A**: This may not necessarily be the case. Check by using the `list` command with **no parameters**. This should reset
+**Q**: The order list is **blank**! Is my data all **gone**?<br>
+**A**: This may **not necessarily be the case**. Check by using the `list` command with **no parameters**. This should reset
 the order list to its default view, which includes every single order that has been added. If this still fails to
-resolve the problem, see the next question.
+resolve the problem, see the last question.
 
-**Q**: Help! My data **all** been deleted!<br>
-**A**: Unfortunately, **yes**. There is no way to recover the data unless a **backup copy** was made of the
+**Q**: The menu is **blank** too! Is that all **gone**?<br>
+**A**: For the menu, sadly you are **right** that it's gone. Refer to the next question on what to do in this case.
+
+**Q**: Help! **All** of my data has been deleted!<br>
+**A**: Unfortunately, there is no way to recover the data unless a **backup copy** was made of the
 `homechef.json` and `menu.json` files.<br>
 If the copies exist, copy them over to the `data` folder located in the folder that contains the jar file you
 downloaded.
