@@ -289,7 +289,7 @@ Format: `unpaid INDEX`
 
 ### Generating a receipt: `receipt`
 
-Generates a plain-text receipt file for the specified order.
+Generates a plain-text receipt file for the specified order and displays the receipt content in the app output.
 
 Format: `receipt INDEX`
 
@@ -302,8 +302,8 @@ You can also use the shortcut command `rec`.
 
 Examples:
 
-* `receipt 1` Prints a receipt for the order located at `INDEX` 1 of the shown list.
-* `rec 2` Prints a receipt for the order located at `INDEX` 2 of the shown list.
+* `receipt 1` Displays and saves a receipt for the order located at `INDEX` 1 of the shown list.
+* `rec 2` Displays and saves a receipt for the order located at `INDEX` 2 of the shown list.
 * For the example order as shown:<br>
   ![example order](images/receiptExampleOrder.png)<br>
   The generated receipt will look like this:<br>

@@ -1,7 +1,7 @@
 package seedu.homechef.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.homechef.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.homechef.testutil.TypicalIndexes.INDEX_FIRST_ORDER;
@@ -42,11 +42,14 @@ public class ReceiptCommandTest {
         ReceiptCommand receiptCommand = new ReceiptCommand(INDEX_FIRST_ORDER);
 
         Path expectedReceiptPath = ReceiptUtil.buildReceiptPath(homeChefFilePath, orderToReceipt);
+        String expectedFeedback = String.format(ReceiptCommand.MESSAGE_SUCCESS, expectedReceiptPath.toAbsolutePath())
+                + System.lineSeparator()
+                + System.lineSeparator()
+                + ReceiptUtil.formatReceipt(orderToReceipt);
 
         CommandResult result = receiptCommand.execute(model);
 
-        assertEquals(String.format(ReceiptCommand.MESSAGE_SUCCESS, expectedReceiptPath.toAbsolutePath()),
-                result.getFeedbackToUser());
+        assertEquals(expectedFeedback, result.getFeedbackToUser());
         assertTrue(Files.exists(expectedReceiptPath));
         assertReceiptContains(expectedReceiptPath,
                 "HOMECHEF",
@@ -71,11 +74,10 @@ public class ReceiptCommandTest {
         ReceiptCommand receiptFirstCommand = new ReceiptCommand(INDEX_FIRST_ORDER);
         ReceiptCommand receiptSecondCommand = new ReceiptCommand(INDEX_SECOND_ORDER);
 
-        assertTrue(receiptFirstCommand.equals(receiptFirstCommand));
-        assertTrue(receiptFirstCommand.equals(new ReceiptCommand(INDEX_FIRST_ORDER)));
-        assertFalse(receiptFirstCommand.equals(1));
-        assertFalse(receiptFirstCommand.equals(null));
-        assertFalse(receiptFirstCommand.equals(receiptSecondCommand));
+        assertEquals(new ReceiptCommand(INDEX_FIRST_ORDER), receiptFirstCommand);
+        assertNotEquals(1, receiptFirstCommand);
+        assertNotEquals(null, receiptFirstCommand);
+        assertNotEquals(receiptFirstCommand, receiptSecondCommand);
     }
 
     @Test

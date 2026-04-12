@@ -54,7 +54,10 @@ public class ReceiptUtil {
         return sanitized.isEmpty() ? "order" : sanitized;
     }
 
-    private static String formatReceipt(Order order) {
+    /**
+     * Returns the formatted receipt content for the given order.
+     */
+    public static String formatReceipt(Order order) {
         String tags = order.getTags().stream()
                 .map(Object::toString)
                 .sorted(Comparator.naturalOrder())
