@@ -37,6 +37,14 @@ public class FoodTest {
         assertTrue(Food.isValidFood("5 cookies")); // alphanumeric characters
         assertTrue(Food.isValidFood("Cookies")); // with capital letters
         assertTrue(Food.isValidFood("Cookies from Heaven")); // long names
+        assertTrue(Food.isValidFood("Fish & Chips")); // ampersand allowed
+        assertTrue(Food.isValidFood("Chef's Special")); // apostrophe allowed
+        assertTrue(Food.isValidFood("Chef\u2019s Special")); // typographic apostrophe allowed
+        assertTrue(Food.isValidFood("Fish/Chips")); // slash allowed
+        assertTrue(Food.isValidFood("Nasi @ Home")); // at sign allowed
+        assertTrue(Food.isValidFood("Salt, Pepper Chicken")); // comma allowed
+        assertTrue(Food.isValidFood("No. 1 Curry + Rice")); // period and plus allowed
+        assertTrue(Food.isValidFood("Ramen 日本")); // unicode characters allowed
         assertTrue(Food.isValidFood("Cookies (7pcs) - [Blueberry]")); // (), [] and - are allowed
     }
 
@@ -65,6 +73,21 @@ public class FoodTest {
         Food food1 = new Food("Valid Food");
         Food food2 = new Food("Valid Food");
         assertEquals(food1.hashCode(), food2.hashCode());
+    }
+
+    @Test
+    public void hashCode_caseInsensitiveEquality_haveEqualHashCode() {
+        Food food1 = new Food("valid food");
+        Food food2 = new Food("VALID FOOD");
+        assertTrue(food1.equals(food2));
+        assertEquals(food1.hashCode(), food2.hashCode());
+    }
+
+    @Test
+    public void nameContains_caseInsensitiveAndUnicodeNormalized_success() {
+        Food food = new Food("Cafe\u0301 Latte"); // decomposed accent form
+        assertTrue(food.nameContains("CAF\u00c9")); // composed accent form
+        assertFalse(food.nameContains("Mocha"));
     }
 
 }

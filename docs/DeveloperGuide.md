@@ -74,9 +74,9 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `OrderListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `OrderListPanel`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -620,7 +620,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: Modify an existing order or menu item such that any of their mandatory fields contain a `blank string`, a pair of inverted commas with whitespace in between: `" "`. Start up HomeChef-Helper.<br>
       Expected: Similar to previous.
 
-   1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, inserting non-English characters like Chinese or Japanese into fields in the `.json` file, modify an existing order or menu item such that any of their fields contain a non-alphanumeric character that is not accepted (e.g. `!`, `#`, ... ).<br>
+   1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, modifying an existing order or menu item such that any of their fields contain a character that is not accepted by the model validators (e.g. `#` in customer names, `#` in food names, malformed emails, etc.).<br>
       Expected: Similar to previous.
 
 1. Dealing with missing data files
@@ -660,3 +660,4 @@ testers are expected to do more *exploratory* testing.
 3. Filtering of the menu according to food name, price and availability.
 4. Other ways to sort the order list, such as by date descending order (where the furthest date is positioned first), name alphabetical order, name reverse alphabetical order, etc.
 5. Add support for characters of different languages as not all chefs are English-speaking.
+6. Add a confirmation step for `clear` or an `undo` command to undo the previous command, to prevent accidental deletion of data.

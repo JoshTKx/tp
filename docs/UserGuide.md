@@ -112,9 +112,9 @@ With a simple typing interface and a clear order list and food menu, this app is
 * Parameters can be in any order.<br>
   e.g. if the command specifies `f/FOOD p/PHONE`, `p/PHONE f/FOOD` is also acceptable.
 
-* Besides the previously mentioned parameters, parameters **only** accept alphabets and numbers as characters, and a few other special characters.<br>
-  These special characters are: `(`, `)`, `[`, `]`, `-`, ` ` (a blank space).<br>
-  However, the blank space **cannot** be used as the very first character of any parameter.
+* Character rules differ by field. For example, `c/NAME` and `f/FOOD` accept letters/digits (including international
+  characters) and selected punctuation; details are listed under each command.
+* For `c/NAME` and `f/FOOD`, the first character must be a letter or digit.
 
 * Extra parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -161,6 +161,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
   * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
 * `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date (e.g. `31-02-2026` is rejected).
 * If you add an order with a past `DATE`, HomeChef still adds it but shows a warning that the order is overdue.
+* `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
 * `QUANTITY` specifies how many units of the food item are ordered.
   * If omitted, `QUANTITY` defaults to `1`.
@@ -169,7 +170,8 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 * An order can have any number of dietTags (including 0)
 * Payment info is optional and supports exactly one method at a time.
   * Use `cash/yes` to set cash payment, or `cash/no` to leave the order without payment info.
-  * Use `paynow/PAYNOW_CONTACT` for PayNow. The contact must be non-blank.
+  * Use `paynow/PAYNOW_CONTACT` for PayNow. It accepts any non-blank PayNow identifier
+    (e.g., phone number, UEN, or handle/reference), and is intentionally more flexible than `p/PHONE_NUMBER`.
   * Use `bank/BANK_DETAILS` for bank transfer. The reference must be non-blank.
 </div>
 
@@ -321,8 +323,11 @@ Format:
   * `cash/yes` sets payment info to cash, matching the `add` command.
   * `cash/no` clears payment info.
 * For PayNow and bank payment in `edit`:
-  * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank contact/reference.
+  * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank identifier/reference
+    (e.g., phone number, UEN, or handle). This is intentionally more flexible than `p/PHONE_NUMBER` as in reality PayNow identifiers can take various forms. (See DBS  PayNow [here](https://www.dbs.com.sg/personal/deposits/pay-with-ease/paynow) for examples of PayNow identifiers.)
   * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
+* If `c/NAME` is provided, it follows the same character rules as `add`.
+* If `f/FOOD` is provided, it must still match an existing menu item and follows the same food-name character rules as `add-menu`.
 </div>
 
 Examples:
@@ -388,6 +393,7 @@ Format: `add-menu f/NAME $/PRICE [v/AVAILABILITY]`
 <div markdown="1" class="alert alert-info">
 **:information_source: Notes about the add-menu command:**<br>
 * `NAME` must be unique, meaning no 2 food items in the menu can share the exact same name. This is **not** case-sensitive, so `birthday cake` and `Birthday Cake` are considered duplicates.
+* `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), ampersands (`&`), commas (`,`), periods (`.`), plus signs (`+`), parentheses (`(` and `)`), square brackets (`[` and `]`), at signs (`@`), and hyphens (`-`).
 * `PRICE` is a non-negative number up to 2 decimal places. Having less than 2 decimals is accepted.
   * Giving an input that is **not a number** or a number with **more than 2 decimals** will cause an error message to appear telling you the correct format you should use.
 * Similar functionality to that of `add` for the order list, except the fields have different prefixes.
@@ -401,7 +407,7 @@ Examples:
 * `add-menu f/Bee Hoon $/5` Adds a food item called `Bee Hoon` into the menu with a price of `$5` and is specified as
   `Available`.
 * `add-menu f/Mee Goreng $/6.00 v/yes` Adds a food item called `Mee Goreng` into the menu with a price of `$6.00` and
-  is specified is `Unavailable`.
+  is specified as `Available`.
 
 ### Deleting a food item : `delete-menu`
 
@@ -425,6 +431,7 @@ Format: `edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]`
 **:information_source: Notes about the edit-menu command:**<br>
 * `AVAILABILITY` only accepts `yes` or `no` spelled exactly.
   * Typing anything else will give an error message stating `Availability must be 'yes' or 'no'`.
+* If `f/NAME` is provided, it follows the same character rules as `add-menu`.
 * Editing the `NAME` of a menu item **will not** change the name of existing orders. This is because old orders may have names that differ from the new name of a menu item, for book keeping purposes.
   * e.g. In the past, someone ordered a `Birthday Cake`. 1 year later, you change the name of the `Birthday Cake` to `Event Cake`. The old order should remain in the records with the original name it was sold under to maintain consistency with the receipts.
 * Similarly, editing `PRICE` will not update existing orders either.
@@ -434,7 +441,7 @@ Example:
 
 * `edit-menu 1 f/Raisin Cookies $/2.00` Edits the food in the first position of the displayed menu to have the name
   `Raisin Cookies` and a price of `$2.00`.
-* `edit-menu 2 f/Pain au Chocolat $/3.50 v/false` Edits the food in the second position of the displayed menu to have
+* `edit-menu 2 f/Pain au Chocolat $/3.50 v/no` Edits the food in the second position of the displayed menu to have
   the name `Pain au Chocolat` and a price of `$3.50`.
 
 ## Other commands:
@@ -452,6 +459,11 @@ Format: `help`
 Exits the program.
 
 Format: `exit`
+
+<div markdown="1" class="alert alert-info">
+**:information_source: Notes about the exit command:**<br>
+* Additional text after `exit` is ignored (e.g., `exit 1`, `exit now`) and the app will still close.
+</div>
 
 * You can also exit the program by using your mouse cursor and clicking on the dropdown tab labelled `File` and then
   clicking on `Exit`.<br>
