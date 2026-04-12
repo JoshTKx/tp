@@ -320,7 +320,7 @@ Format:
   * `cash/no` clears payment info.
 * For PayNow and bank payment in `edit`:
   * `paynow/PAYNOW_CONTACT` sets payment info to PayNow and requires a non-blank identifier/reference
-    (e.g., phone number, UEN, or handle). This is intentionally more flexible than `p/PHONE_NUMBER`.
+    (e.g., phone number, UEN, or handle). This is intentionally more flexible than `p/PHONE_NUMBER` as in reality PayNow identifiers can take various forms. (See DBS  PayNow [here](https://www.dbs.com.sg/personal/deposits/pay-with-ease/paynow) for examples of PayNow identifiers.)
   * `bank/BANK_DETAILS` sets payment info to bank transfer and requires a non-blank reference/details.
 </div>
 
