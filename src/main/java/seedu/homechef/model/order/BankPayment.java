@@ -16,9 +16,8 @@ public final class BankPayment implements PaymentInfo {
     public static final String MESSAGE_INVALID_REFERENCE = MESSAGE_CONSTRAINTS;
 
     private static final int MAX_REFERENCE_LENGTH = 50;
-    private static final Pattern ALLOWED_CHARACTERS =
-            Pattern.compile("^[A-Za-z0-9\\s\\-_/().,:+&@#'\\[\\]]+$");
-    private static final Pattern HAS_ALPHANUMERIC = Pattern.compile(".*[A-Za-z0-9].*");
+    private static final Pattern VALID_REFERENCE =
+            Pattern.compile("^(?=.*[A-Za-z0-9])[A-Za-z0-9\\s\\-_/().,:+&@#'\\[\\]]{1,50}$");
     private final String reference;
 
     /**
@@ -37,10 +36,7 @@ public final class BankPayment implements PaymentInfo {
      * Returns true if the supplied bank payment reference is valid.
      */
     public static boolean isValidBankPayment(String test) {
-        return !test.isEmpty()
-                && test.length() <= MAX_REFERENCE_LENGTH
-                && ALLOWED_CHARACTERS.matcher(test).matches()
-                && HAS_ALPHANUMERIC.matcher(test).matches();
+        return VALID_REFERENCE.matcher(test).matches();
     }
 
     @Override
