@@ -202,6 +202,20 @@ public class AddCommandParserTest {
                 Date.MESSAGE_CONSTRAINTS);
     }
 
+    
+    @Test
+    public void parse_customerAndFoodWithApostropheAndSlash_success() throws ParseException {
+        String foodWithPunctuation = "Chef's Fish/Chips & Rice @ Home";
+        String customerWithPunctuation = "李雷 @ Home";
+        AddCommand command = parser.parse(" " + PREFIX_FOOD + foodWithPunctuation
+                + " " + PREFIX_CUSTOMER + customerWithPunctuation
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DATE_DESC_AMY);
+
+        Order parsedOrder = extractOrder(command);
+        assertEquals(new Food(foodWithPunctuation), parsedOrder.getFood());
+        assertEquals(new Customer(customerWithPunctuation), parsedOrder.getCustomer());
+    }
+
     private static Order extractOrder(AddCommand command) {
         try {
             java.lang.reflect.Field field = AddCommand.class.getDeclaredField("toAdd");
