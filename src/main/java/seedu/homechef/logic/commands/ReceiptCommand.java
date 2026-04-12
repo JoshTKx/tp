@@ -60,7 +60,12 @@ public class ReceiptCommand extends Command {
             throw new CommandException(String.format(MESSAGE_FAILURE, ioe.getMessage()), ioe);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, outputPath.toAbsolutePath()));
+        String receiptContent = ReceiptUtil.formatReceipt(orderToReceipt);
+        String feedback = String.format(MESSAGE_SUCCESS, outputPath.toAbsolutePath())
+                + System.lineSeparator()
+                + System.lineSeparator()
+                + receiptContent;
+        return new CommandResult(feedback);
     }
 
     @Override
