@@ -18,6 +18,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.parser.exceptions.ParseException;
 import seedu.homechef.model.common.Food;
 import seedu.homechef.model.common.Price;
@@ -62,9 +63,9 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseIndex_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-                -> ParserUtil.parseIndex(String.valueOf(Integer.MAX_VALUE) + 1));
+    public void parseIndex_outOfRangeInput_returnsMaxIndex() throws Exception {
+        assertEquals(Index.fromOneBased(Integer.MAX_VALUE),
+                ParserUtil.parseIndex(String.valueOf(Integer.MAX_VALUE) + 1));
     }
 
     @Test
