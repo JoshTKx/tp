@@ -620,7 +620,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: Modify an existing order or menu item such that any of their mandatory fields contain a `blank string`, a pair of inverted commas with whitespace in between: `" "`. Start up HomeChef-Helper.<br>
       Expected: Similar to previous.
 
-   1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, inserting non-English characters like Chinese or Japanese into fields in the `.json` file, modify an existing order or menu item such that any of their fields contain a non-alphanumeric character that is not accepted (e.g. `!`, `#`, ... ).<br>
+   1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, modifying an existing order or menu item such that any of their fields contain a character that is not accepted by the model validators (e.g. `#` in customer names, `#` in food names, malformed emails, etc.).<br>
       Expected: Similar to previous.
 
 1. Dealing with missing data files

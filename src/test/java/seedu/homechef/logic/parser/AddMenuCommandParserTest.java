@@ -19,14 +19,18 @@ import seedu.homechef.model.menu.MenuItem;
 public class AddMenuCommandParserTest {
 
     private static final String VALID_NAME = "Chicken Rice";
+    private static final String VALID_NAME_WITH_PUNCTUATION = "Fish & Chips";
+    private static final String VALID_NAME_WITH_AT_SIGN = "Nasi @ Home";
     private static final String VALID_PRICE = "5.50";
     private static final String VALID_AVAILABILITY = "yes";
     private static final String VALID_UNAVAILABLE = "no";
-    private static final String INVALID_NAME = "Chicken Rice&";
+    private static final String INVALID_NAME = "Chicken Rice#";
     private static final String INVALID_PRICE = "05.50";
     private static final String INVALID_AVAILABILITY = "maybe";
 
     private static final String NAME_DESC = " " + PREFIX_FOOD + VALID_NAME;
+    private static final String NAME_WITH_PUNCTUATION_DESC = " " + PREFIX_FOOD + VALID_NAME_WITH_PUNCTUATION;
+    private static final String NAME_WITH_AT_SIGN_DESC = " " + PREFIX_FOOD + VALID_NAME_WITH_AT_SIGN;
     private static final String PRICE_DESC = " " + PREFIX_PRICE + VALID_PRICE;
     private static final String AVAILABILITY_DESC = " " + PREFIX_AVAILABILITY + VALID_AVAILABILITY;
     private static final String UNAVAILABLE_DESC = " " + PREFIX_AVAILABILITY + VALID_UNAVAILABLE;
@@ -56,6 +60,21 @@ public class AddMenuCommandParserTest {
         // EP: valid explicit unavailable state.
         MenuItem expectedMenuItem = new MenuItem(new Food(VALID_NAME), new Price(VALID_PRICE), Availability.NO);
         assertParseSuccess(parser, NAME_DESC + PRICE_DESC + UNAVAILABLE_DESC, new AddMenuCommand(expectedMenuItem));
+    }
+
+    @Test
+    public void parse_nameWithAmpersand_success() {
+        // EP: ampersand is commonly used in dish names and should be accepted.
+        MenuItem expectedMenuItem = new MenuItem(new Food(VALID_NAME_WITH_PUNCTUATION),
+                new Price(VALID_PRICE), Availability.YES);
+        assertParseSuccess(parser, NAME_WITH_PUNCTUATION_DESC + PRICE_DESC, new AddMenuCommand(expectedMenuItem));
+    }
+
+    @Test
+    public void parse_nameWithAtSign_success() {
+        MenuItem expectedMenuItem = new MenuItem(new Food(VALID_NAME_WITH_AT_SIGN),
+                new Price(VALID_PRICE), Availability.YES);
+        assertParseSuccess(parser, NAME_WITH_AT_SIGN_DESC + PRICE_DESC, new AddMenuCommand(expectedMenuItem));
     }
 
     @Test

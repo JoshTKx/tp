@@ -20,9 +20,11 @@ import seedu.homechef.model.menu.Availability;
 public class EditMenuCommandParserTest {
 
     private static final String VALID_NAME = "Chicken Rice";
+    private static final String VALID_NAME_WITH_AMPERSAND = "Fish & Chips";
+    private static final String VALID_NAME_WITH_AT_SIGN = "Nasi @ Home";
     private static final String VALID_PRICE = "5.50";
     private static final String VALID_AVAILABILITY = "no";
-    private static final String INVALID_NAME = "Chicken Rice&";
+    private static final String INVALID_NAME = "Chicken Rice#";
     private static final String INVALID_PRICE = "05.50";
     private static final String INVALID_AVAILABILITY = "maybe";
 
@@ -42,6 +44,22 @@ public class EditMenuCommandParserTest {
         EditMenuDescriptor descriptor = new EditMenuDescriptor();
         descriptor.setName(new Food(VALID_NAME));
         assertParseSuccess(parser, INDEX_FIRST + NAME_DESC, new EditMenuCommand(INDEX_FIRST_ORDER, descriptor));
+    }
+
+    @Test
+    public void parse_validNameWithAmpersand_success() {
+        EditMenuDescriptor descriptor = new EditMenuDescriptor();
+        descriptor.setName(new Food(VALID_NAME_WITH_AMPERSAND));
+        assertParseSuccess(parser, INDEX_FIRST + " " + PREFIX_FOOD + VALID_NAME_WITH_AMPERSAND,
+                new EditMenuCommand(INDEX_FIRST_ORDER, descriptor));
+    }
+
+    @Test
+    public void parse_validNameWithAtSign_success() {
+        EditMenuDescriptor descriptor = new EditMenuDescriptor();
+        descriptor.setName(new Food(VALID_NAME_WITH_AT_SIGN));
+        assertParseSuccess(parser, INDEX_FIRST + " " + PREFIX_FOOD + VALID_NAME_WITH_AT_SIGN,
+                new EditMenuCommand(INDEX_FIRST_ORDER, descriptor));
     }
 
     @Test
