@@ -250,7 +250,7 @@ class JsonAdaptedOrder {
             return new PayNowPayment(details.trim());
         case METHOD_BANK:
             if (details == null || details.isBlank()) {
-                throw new IllegalArgumentException(BankPayment.MESSAGE_INVALID_REFERENCE);
+                throw new IllegalArgumentException(BankPayment.MESSAGE_CONSTRAINTS);
             }
             return new BankPayment(details.trim());
         default:

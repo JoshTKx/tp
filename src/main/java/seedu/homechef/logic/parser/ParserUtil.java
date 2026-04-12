@@ -279,7 +279,11 @@ public class ParserUtil {
             if (bankPayment.get().isBlank()) {
                 throw new ParseException(MESSAGE_BANK_PAYMENT_REQUIRED);
             }
-            return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
+            try {
+                return Optional.of(new BankPayment(normalizeWhitespace(bankPayment.get())));
+            } catch (IllegalArgumentException e) {
+                throw new ParseException(MESSAGE_BANK_PAYMENT_REQUIRED);
+            }
         }
 
         if (payNowPayment.get().isBlank()) {
@@ -288,7 +292,7 @@ public class ParserUtil {
         try {
             return Optional.of(new PayNowPayment(normalizeWhitespace(payNowPayment.get())));
         } catch (IllegalArgumentException e) {
-            throw new ParseException(e.getMessage());
+            throw new ParseException(PayNowPayment.MESSAGE_INVALID_REFERENCE);
         }
     }
 

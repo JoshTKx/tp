@@ -1,16 +1,20 @@
 package seedu.homechef.model.order;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.commons.util.AppUtil.checkArgument;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * Represents a bank transfer payment.
  */
 public final class BankPayment implements PaymentInfo {
-    public static final String MESSAGE_INVALID_REFERENCE =
-            "Bank payment requires a non-blank payment reference/details value.";
-
+    public static final String MESSAGE_CONSTRAINTS =
+            "Bank payment requires 1-50 characters, at least one letter or digit, and only supported symbols"
+                    + " (space, -_/().,:+&@#'[]).";
+    private static final Pattern VALID_REFERENCE =
+            Pattern.compile("^(?=.*[A-Za-z0-9])[A-Za-z0-9\\s\\-_/().,:+&@#'\\[\\]]{1,50}$");
     private final String reference;
 
     /**
@@ -20,10 +24,16 @@ public final class BankPayment implements PaymentInfo {
      */
     public BankPayment(String reference) {
         requireNonNull(reference);
-        if (reference.isBlank()) {
-            throw new IllegalArgumentException(MESSAGE_INVALID_REFERENCE);
-        }
-        this.reference = reference;
+        String trimmedReference = reference.trim();
+        checkArgument(isValidBankPayment(trimmedReference), MESSAGE_CONSTRAINTS);
+        this.reference = trimmedReference;
+    }
+
+    /**
+     * Returns true if the supplied bank payment reference is valid.
+     */
+    public static boolean isValidBankPayment(String test) {
+        return VALID_REFERENCE.matcher(test).matches();
     }
 
     @Override
