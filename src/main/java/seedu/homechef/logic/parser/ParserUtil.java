@@ -1,6 +1,7 @@
 package seedu.homechef.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -72,6 +73,27 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Handles a ParseException from parseIndex.
+     * If the exception is an invalid index error, wraps it with the command's usage message.
+     * Otherwise, re-throws the original exception.
+     *
+     * @param pe The ParseException thrown during index parsing.
+     * @param commandUsage The usage message of the command.
+     * @return A new ParseException with usage message if invalid index.
+     * @throws ParseException Always thrown (either wrapped or original).
+     */
+    public static ParseException handleIndexParseException(ParseException pe, String commandUsage)
+            throws ParseException {
+
+        if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, commandUsage), pe);
+        }
+
+        throw pe;
     }
 
     /**
@@ -348,4 +370,3 @@ public class ParserUtil {
         }
     }
 }
-
