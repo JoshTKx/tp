@@ -62,8 +62,8 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseIndex_outOfRangeInput_returnsMaxIndex() throws Exception {
-        assertEquals(Index.fromOneBased(Integer.MAX_VALUE),
+    public void parseIndex_outOfRangeInput_throwsParseException() {
+        assertThrows(ParseException.class, () ->
                 ParserUtil.parseIndex(String.valueOf(Integer.MAX_VALUE) + 1));
     }
 
