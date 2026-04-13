@@ -1,6 +1,7 @@
 package seedu.homechef.logic.parser;
 
 import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.commands.DeleteCommand;
@@ -21,9 +22,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new DeleteCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            }
+            throw pe;
         }
     }
-
 }

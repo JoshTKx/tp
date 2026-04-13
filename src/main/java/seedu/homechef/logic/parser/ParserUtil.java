@@ -31,6 +31,8 @@ import seedu.homechef.model.order.Quantity;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INDEX_TOO_LARGE =
+            "Index is too large. Please enter a smaller positive number.";
     public static final String MESSAGE_INVALID_AVAILABILITY =
             "Availability must be one of: yes, no.";
     public static final String MESSAGE_MULTIPLE_PAYMENT_PREFIXES =
@@ -65,7 +67,7 @@ public class ParserUtil {
         String trimmedIndex = normalizeWhitespace(oneBasedIndex);
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             if (trimmedIndex.matches("[1-9][0-9]*")) {
-                return Index.fromOneBased(Integer.MAX_VALUE);
+                throw new ParseException(MESSAGE_INDEX_TOO_LARGE);
             }
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
