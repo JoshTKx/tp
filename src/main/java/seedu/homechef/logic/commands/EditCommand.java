@@ -14,6 +14,8 @@ import static seedu.homechef.logic.parser.CliSyntax.PREFIX_QUANTITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.homechef.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -100,8 +102,8 @@ public class EditCommand extends Command {
         Order orderToEdit = lastShownList.get(index.getZeroBased());
         Order editedOrder = createEditedOrder(orderToEdit, descriptor);
 
-        if (descriptor.getFood().isPresent() || descriptor.getQuantity().isPresent()) {
-            String targetFoodName = descriptor.getFood().orElse(orderToEdit.getFood()).toString();
+        if (descriptor.getFood().isPresent()) {
+            String targetFoodName = descriptor.getFood().get().toString();
             MenuItem matchingItem = resolveAvailableMenuItem(model.getMenuBook(), targetFoodName);
             String canonicalName = matchingItem.getFood().toString();
             Quantity newQuantity = editedOrder.getQuantity();
@@ -111,6 +113,19 @@ public class EditCommand extends Command {
                     editedOrder.getDate(), editedOrder.getCompletionStatus(),
                     editedOrder.getPaymentStatus(), editedOrder.getTags(),
                     newQuantity, totalPrice, editedOrder.getPaymentInfo());
+        } else if (descriptor.getQuantity().isPresent()) {
+            int oldQty = Integer.parseInt(orderToEdit.getQuantity().toString());
+            BigDecimal oldTotal = new BigDecimal(orderToEdit.getPrice().toString());
+            BigDecimal unitPrice = oldTotal.divide(BigDecimal.valueOf(oldQty), 2, RoundingMode.HALF_UP);
+            Quantity newQuantity = editedOrder.getQuantity();
+            int newQty = Integer.parseInt(newQuantity.toString());
+            Price newTotal = new Price(unitPrice.multiply(BigDecimal.valueOf(newQty))
+                    .setScale(2, RoundingMode.HALF_UP).toPlainString());
+            editedOrder = new Order(editedOrder.getFood(), editedOrder.getCustomer(),
+                    editedOrder.getPhone(), editedOrder.getEmail(), editedOrder.getAddress(),
+                    editedOrder.getDate(), editedOrder.getCompletionStatus(),
+                    editedOrder.getPaymentStatus(), editedOrder.getTags(),
+                    newQuantity, newTotal, editedOrder.getPaymentInfo());
         }
 
         if (!orderToEdit.isSameOrder(editedOrder) && model.hasOrder(editedOrder)) {
