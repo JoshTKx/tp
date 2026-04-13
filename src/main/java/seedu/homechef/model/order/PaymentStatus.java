@@ -13,7 +13,7 @@ public enum PaymentStatus {
     PARTIAL("Partial"),
     UNPAID("Unpaid");
 
-    public static final String MESSAGE_CONSTRAINTS = "Payment status must be 'Paid', 'Partial', or 'Unpaid'";
+    public static final String MESSAGE_CONSTRAINTS = "Payment status must be 'Paid', 'Partial', or 'Unpaid'.";
 
     public final String displayValue;
 
