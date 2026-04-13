@@ -10,10 +10,9 @@ import java.util.Arrays;
  */
 public enum PaymentStatus {
     PAID("Paid"),
-    PARTIAL("Partial"),
     UNPAID("Unpaid");
 
-    public static final String MESSAGE_CONSTRAINTS = "Payment status must be 'Paid', 'Partial', or 'Unpaid'.";
+    public static final String MESSAGE_CONSTRAINTS = "Payment status must be 'Paid' or 'Unpaid'";
 
     public final String displayValue;
 
@@ -57,15 +56,6 @@ public enum PaymentStatus {
      */
     public boolean isPaid() {
         return this == PAID;
-    }
-
-    /**
-     * Returns true if this payment status represents a partially paid order.
-     *
-     * @return True if this payment status represents a partially paid order.
-     */
-    public boolean isPartial() {
-        return this == PARTIAL;
     }
 
     /**
