@@ -154,10 +154,9 @@ public class EditCommand extends Command {
     private Order applyFoodChange(Order base, String foodName, ReadOnlyMenuBook menuBook)
             throws CommandException {
         MenuItem matchingItem = resolveAvailableMenuItem(menuBook, foodName);
-        Food canonicalFood = new Food(matchingItem.getFood().toString());
         Quantity quantity = base.getQuantity();
         Price totalPrice = matchingItem.getPrice().multiply(quantity);
-        return new Order(canonicalFood, base.getCustomer(), base.getPhone(), base.getEmail(),
+        return new Order(matchingItem.getFood(), base.getCustomer(), base.getPhone(), base.getEmail(),
                 base.getAddress(), base.getDate(), base.getCompletionStatus(),
                 base.getPaymentStatus(), base.getTags(), quantity, totalPrice, base.getPaymentInfo());
     }
