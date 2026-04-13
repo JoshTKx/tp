@@ -51,6 +51,10 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
+The **`User`** is represented as a red person symbol, who only interacts with the app through inputs to the **`UI`**.
+
+The **`File`** is represented as a green document symbol, which is created by and written to by the **`Storage`**.
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
@@ -100,6 +104,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
+For the `receipt` command flow, see [`ReceiptSequenceDiagram.puml`](diagrams/ReceiptSequenceDiagram.puml) in `docs/diagrams`.
+
 How the `Logic` component works:
 
 1. When `Logic` is called upon to execute a command, it is passed to an `HomeChefParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
@@ -119,7 +125,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="750" />
 
 
 The `Model` component,
@@ -131,7 +137,7 @@ The `Model` component,
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `DietTag` list in the `HomeChef`, which `Order` references. This allows `HomeChef` to only require one `DietTag` object per unique tag, instead of each `Order` needing its own `DietTag` objects.<br>
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+<img src="images/BetterModelClassDiagram.png" width="750" />
 
 </div>
 
@@ -160,7 +166,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Add and Edit commands: Interactions between Order List and Menu
 
 The app has both an order list and a menu. When adding or editing an order, the app will thus refer to the current menu for information regarding the order.
-1. The app checks if the input food name in the order matches that of a food in the current menu.
+1. The app checks if the input food name in the order matches that of a food item in the current menu.
 2. The app automatically calculates the total price of an order using the `quantity` field in the given order and the `price` field of matching food item in the menu.
 
 #### Menu item resolution
@@ -188,6 +194,22 @@ The app automatically formats the date field of the orders, colouring the text r
    1. The text is red if it obtains `"Overdue"`.
    2. The text is orange if it obtains `"Urgent"`.
    3. The text is white if it obtains `"Normal"`.
+
+### Receipt generation flow
+
+The `receipt` command generates a plain-text receipt file for a selected order.
+
+1. `HomeChefParser` routes `receipt INDEX` (or `rec INDEX`) to `ReceiptCommandParser`.
+2. `ReceiptCommandParser` parses `INDEX` and creates a `ReceiptCommand`.
+3. `ReceiptCommand` validates:
+   1. `INDEX` is within the currently displayed order list.
+   2. The order payment status is `Paid`.
+4. On success, `ReceiptUtil`:
+   1. Builds an output path under `[data directory]/receipts`.
+   2. Writes formatted receipt content to the output file.
+5. The command returns a `CommandResult` containing the generated receipt path.
+
+The full interaction sequence is documented in [`ReceiptSequenceDiagram.puml`](diagrams/ReceiptSequenceDiagram.puml).
 
 --------------------------------------------------------------------------------------------------------------------
 
