@@ -8,11 +8,11 @@ business owners!**<br>
 From new cooks with no experience managing their orders, to expert home food business owners with extensive knowledge,
 the app helps to **consolidate the order and food information in an easy-to-read format**, helping you get things done
 faster!<br>
-With a simple typing interface and a clear order list and food menu, this app is here to help you **manage orders quick
-** if you can **type fast**.
+With a simple typing interface and a clear order list and food menu, this app is here to help you 
+**manage orders quick** if you can **type fast**.
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -160,7 +160,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 > Red indicates that the `Order` is late, it was due **_before_** today's date.<br>
 > ![overdue date](images/overdueDate.png)
 
-<div markdown="1" class="alert alert-primary">:bulb:
+<div markdown="1" class="alert alert-info">:information_source:
 **Notes about the add command:**<br>
 * `FOOD` must match an **existing food's name** in the current menu, but it is case-insensitive.
   * You can use the **menu item's index** (the number shown in the menu panel) instead of typing the full name.<br>
@@ -169,14 +169,15 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
     e.g. inputting `Birthday` will create an order with `Birthday Cake` if `Birthday Cake` exists in the menu, but not any other food with `Birthday`.
   * If any food names share the input word, an error message will appear showing the matching items and asking you to use the exact menu item name.<br>
     e.g. inputting `Cake` will give this error if both `Birthday Cake` and `Cupcakes` exist in the menu.
-  * Giving an input that is not in the menu will show an error message indicating the food was not found and prompting you to use `add-menu` to add it first.
-  * If a menu item's name is a pure number (e.g. `3`), typing `f/3` resolves by index, not by name.
+  * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
+  * If a menu item's name is a pure number (e.g. `3`), typing `f/3` adds the food by its index in the menu, instead of searching by name.
+    e.g. inputting `3` when the first menu item is named `Cookie v3` and the third menu item is `Cake`, will add the order as a `Cake` instead.
 * `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date (e.g. `31-02-2026` is rejected).
 * If you add an order with a past `DATE`, HomeChef still adds it but shows a warning that the order is overdue.
 * `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
 * `ADDRESS` accepts any character, but cannot be blank.
 * `EMAIL` should be of the format local-part@domain.tld and adhere to the following constraints:
-  1. The local-part should only contain alphanumeric characters and these special characters: !#$%&'*+/=?^_`{|}~._%\-
+  1. The local-part should only contain alphanumeric characters (alphabets and numbers) and these special characters: !#$%&'*+/=?^_`{|}~._%\-
   2. This is followed by a '@' and then a domain name.
   3. The domain name must contain only alphanumeric characters, dots, or hyphens.
   4. The email must end with a top-level domain (TLD) of at least 2 alphabetic characters (e.g. .com, .org, .io).
@@ -213,7 +214,8 @@ This can be useful for finding orders specific to a certain customer, a certain 
 
 Format: `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION STATUS] [ps/PAYMENT STATUS]`
 
-<div markdown="1" class="alert alert-primary">:bulb: **Notes about the list command:**<br>
+<div markdown="1" class="alert alert-info">:information_source:
+**Notes about the list command:**<br>
 * Lists all orders when no parameters are given.
 * Filters are case-insensitive for `c/`, `f/`, `p/`, `cs/` and `ps/` parameters. For example, `list cs/pending` and `list cs/Pending` will give the same results.
 * `DATE` must be in the format `dd-MM-yyyy`. (e.g. `18-10-2026` for 18th October 2026)
@@ -254,7 +256,8 @@ This helps to easily tell at a glance when an order is completed.
 
 Format: `complete INDEX`
 
-<div markdown="1" class="alert alert-primary">:bulb: **Notes about the complete command:**<br>
+<div markdown="1" class="alert alert-info">:information_source:
+**Notes about the complete command:**<br>
 * Orders are meant to be editable after completion, because if a mistake was made, you can fix it before printing it to receipt without having to change the status back.
 * As mentioned before, completion status is meant to be a marker for you to know that you have completed an order, so marking an order as complete will **not** make the information fixed. You still can edit a command after it is complete.
 </div>
@@ -298,7 +301,8 @@ Format: `receipt INDEX`
 * A receipt file is created in a `receipts` folder beside the HomeChef data file.
     * More specifically, the created receipt file can be found in `[JAR file location]/data/receipts`.
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+<div markdown="span" class="alert alert-primary">:bulb:
+**Tip:**
 You can also use the shortcut command `rec`.
 </div>
 
@@ -321,7 +325,8 @@ Examples:
 Edits an existing order in the order list.
 This helps with updating orders when information changes, without having to delete and re-add the order to the list.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-warning">:exclamation:
+**Caution:**
 * Completion status and payment status cannot be modified using the `edit` command and **must** be modified using the above commands.
 </div>
 
@@ -329,7 +334,7 @@ Format:
 `edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]...
 [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`
 
-<div markdown="1" class="alert alert-primary">:bulb:
+<div markdown="1" class="alert alert-info">:information_source:
 **Notes about the edit command:**<br>
 * At least one of the optional fields must be provided.
   * If no fields are provided, a message will appear telling you to provide a field.
@@ -379,7 +384,8 @@ Examples:
 
 ### Clearing all entries : `clear`
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-warning">:exclamation:
+**Caution:**
 This action **cannot be reversed** so only do this if you are sure you want to delete **every** order in the list. If not, use the delete command instead.
 </div>
 
@@ -413,10 +419,10 @@ Adds a food item of the given name, price and availability to the menu.
 
 Format: `add-menu f/NAME $/PRICE [v/AVAILABILITY]`
 
-<div markdown="1" class="alert alert-info">
-**:information_source: Notes about the add-menu command:**<br>
+<div markdown="1" class="alert alert-info">:information_source:
+**Notes about the add-menu command:**<br>
 * `NAME` must be unique, meaning no 2 food items in the menu can share the exact same name. This is **not** case-sensitive, so `birthday cake` and `Birthday Cake` are considered duplicates.
-* `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), ampersands (`&`), commas (`,`), periods (`.`), plus signs (`+`), parentheses (`(` and `)`), square brackets (`[` and `]`), at signs (`@`), and hyphens (`-`).
+* `NAME` accepts letters/digits (including international characters), spaces, apostrophes `'` and `’`, slashes `/`, ampersands `&`, commas `,`, periods `.`, plus signs `+`, parentheses `(` and `)`, square brackets `[` and `]`, at signs `@`, and hyphens `-`.
 * `PRICE` is a non-negative number up to 2 decimal places. Having less than 2 decimals is accepted.
   * `0`, `0.0`, and `0.00` are valid (useful for free/complimentary items).
   * Giving an input that is **not a number** or a number with **more than 2 decimals** will cause an error message to appear telling you the correct format you should use.
@@ -440,8 +446,8 @@ Deletes the food item identified by the index number used in the displayed menu 
 
 Format: `delete-menu INDEX`
 
-<div markdown="1" class="alert alert-info">
-**:information_source: Notes about the delete-menu command:**<br>
+<div markdown="1" class="alert alert-info">:information_source:
+**Notes about the delete-menu command:**<br>
 * You can delete a menu item regardless of whether existing orders still reference that food.
 * Deleting a menu item only affects the menu. Existing orders are preserved for bookkeeping.
 </div>
@@ -488,8 +494,8 @@ Exits the program.
 
 Format: `exit`
 
-<div markdown="1" class="alert alert-info">
-**:information_source: Notes about the exit command:**<br>
+<div markdown="1" class="alert alert-info">:information_source:
+**Notes about the exit command:**<br>
 * Additional text after `exit` is ignored (e.g., `exit 1`, `exit now`) and the app will still close.
 </div>
 
@@ -511,7 +517,8 @@ HomeChef order list data is saved automatically as a JSON file `[JAR file locati
 is stored in the same location, under file name `menu.json`. Advanced users are welcome
 to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-warning">:exclamation:
+**Caution:**
 If your changes to the data file make its format invalid, HomeChef will **discard all data** and start with empty data at the next run. The corrupted file will be overwritten with clean data only after a data-modifying command (e.g. `add`, `delete`, `edit`) is executed. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
