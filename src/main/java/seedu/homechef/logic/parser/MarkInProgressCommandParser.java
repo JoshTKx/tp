@@ -21,8 +21,7 @@ public class MarkInProgressCommandParser implements Parser<MarkInProgressCommand
             Index index = ParserUtil.parseIndex(args);
             return new MarkInProgressCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkInProgressCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, MarkInProgressCommand.MESSAGE_USAGE);
         }
     }
 

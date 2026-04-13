@@ -22,8 +22,7 @@ public class DeleteMenuCommandParser implements Parser<DeleteMenuCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new DeleteMenuCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMenuCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, DeleteMenuCommand.MESSAGE_USAGE);
         }
     }
 }

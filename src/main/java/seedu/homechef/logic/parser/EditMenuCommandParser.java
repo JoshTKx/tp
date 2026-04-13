@@ -28,8 +28,7 @@ public class EditMenuCommandParser implements Parser<EditMenuCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EditMenuCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, EditMenuCommand.MESSAGE_USAGE);
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FOOD, PREFIX_PRICE, PREFIX_AVAILABILITY);

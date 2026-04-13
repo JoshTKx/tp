@@ -20,8 +20,7 @@ public class PaidCommandParser implements Parser<PaidCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new PaidCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PaidCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, PaidCommand.MESSAGE_USAGE);
         }
     }
 

@@ -21,8 +21,7 @@ public class MarkCompleteCommandParser implements Parser<MarkCompleteCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new MarkCompleteCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCompleteCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, MarkCompleteCommand.MESSAGE_USAGE);
         }
     }
 

@@ -21,8 +21,7 @@ public class UnpaidCommandParser implements Parser<UnpaidCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new UnpaidCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnpaidCommand.MESSAGE_USAGE), pe);
+            throw ParserUtil.handleIndexParseException(pe, UnpaidCommand.MESSAGE_USAGE);
         }
     }
 }
