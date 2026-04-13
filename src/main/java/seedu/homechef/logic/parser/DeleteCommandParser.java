@@ -1,8 +1,5 @@
 package seedu.homechef.logic.parser;
 
-import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.homechef.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-
 import seedu.homechef.commons.core.index.Index;
 import seedu.homechef.logic.commands.DeleteCommand;
 import seedu.homechef.logic.parser.exceptions.ParseException;

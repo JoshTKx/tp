@@ -1,6 +1,5 @@
 package seedu.homechef.logic.parser;
 
-import static seedu.homechef.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_FOOD;
 import static seedu.homechef.logic.parser.CliSyntax.PREFIX_PRICE;
