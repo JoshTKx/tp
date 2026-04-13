@@ -56,7 +56,7 @@ public class UnpaidCommand extends Command {
         }
 
         Order orderToMarkUnpaid = lastShownList.get(targetIndex.getZeroBased());
-        if (orderToMarkUnpaid.getPaymentStatus() == PaymentStatus.UNPAID) {
+        if (orderToMarkUnpaid.getPaymentStatus().isUnpaid()) {
             throw new CommandException(MESSAGE_ALREADY_UNPAID);
         }
         Order unpaidOrder = createUnpaidOrder(orderToMarkUnpaid);

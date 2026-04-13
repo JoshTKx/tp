@@ -1,7 +1,6 @@
 package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.homechef.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +26,7 @@ import seedu.homechef.model.order.Phone;
 import seedu.homechef.model.order.Quantity;
 
 /**
- * Marks an order identified using it's displayed index from the HomeChef as In Progress.
+ * Marks an order identified using its displayed index from the HomeChef as In Progress.
  */
 public class MarkInProgressCommand extends Command {
 
@@ -60,19 +59,19 @@ public class MarkInProgressCommand extends Command {
         if (orderToMarkInProgress.getCompletionStatus() == CompletionStatus.IN_PROGRESS) {
             throw new CommandException(MESSAGE_ALREADY_IN_PROGRESS);
         }
-        Order incompleteOrder = createIncompleteOrder(orderToMarkInProgress);
+        Order incompleteOrder = createInProgressOrder(orderToMarkInProgress);
 
         model.setOrder(orderToMarkInProgress, incompleteOrder);
-        model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
+        model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
         return new CommandResult(String.format(
                 MESSAGE_IN_PROGRESS_ORDER_SUCCESS, Messages.format(incompleteOrder)));
     }
 
     /**
-     * Creates and returns a {@code Order} with the details of {@code orderToMarkIncomplete}
+     * Creates and returns a {@code Order} with the details of {@code orderToMarkInProgress}
      * marking {@code CompletionStatus} in progress.
      */
-    private static Order createIncompleteOrder(Order orderToMarkInProgress) {
+    private static Order createInProgressOrder(Order orderToMarkInProgress) {
         assert orderToMarkInProgress != null;
 
         Food food = orderToMarkInProgress.getFood();

@@ -55,7 +55,7 @@ public class PartialCommand extends Command {
         }
 
         Order orderToMarkPartial = lastShownList.get(targetIndex.getZeroBased());
-        if (orderToMarkPartial.getPaymentStatus() == PaymentStatus.PARTIAL) {
+        if (orderToMarkPartial.getPaymentStatus().isPartial()) {
             throw new CommandException(MESSAGE_ALREADY_PARTIAL);
         }
         Order partialOrder = createPartialOrder(orderToMarkPartial);
