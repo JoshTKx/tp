@@ -51,6 +51,10 @@ The bulk of the app's work is done by the following four components:
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
+The **`User`** is represented as a red person symbol, who only interacts with the app through inputs to the **`UI`**.
+
+The **`File`** is represented as a green document symbol, which is created by and written to by the **`Storage`**.
+
 **How the architecture components interact with each other**
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
@@ -160,7 +164,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Add and Edit commands: Interactions between Order List and Menu
 
 The app has both an order list and a menu. When adding or editing an order, the app will thus refer to the current menu for information regarding the order.
-1. The app checks if the input food name in the order matches that of a food in the current menu.
+1. The app checks if the input food name in the order matches that of a food item in the current menu.
 2. The app automatically calculates the total price of an order using the `quantity` field in the given order and the `price` field of matching food item in the menu.
 
 #### Menu item resolution
