@@ -12,10 +12,13 @@ import seedu.homechef.model.order.Order;
  */
 public class Messages {
 
-    public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
+    public static final String MESSAGE_UNKNOWN_COMMAND =
+            "Unknown command. Refer to the User Guide for the full list of valid commands.";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
-    public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid";
-    public static final String MESSAGE_INVALID_MENU_ITEM_DISPLAYED_INDEX = "The menu item index provided is invalid";
+    public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX =
+            "The order index is out of range. Use a number between 1 and the total number of orders shown.";
+    public static final String MESSAGE_INVALID_MENU_ITEM_DISPLAYED_INDEX =
+            "The menu item index is out of range. Use a number between 1 and the total number of menu items shown.";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";

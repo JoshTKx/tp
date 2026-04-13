@@ -30,13 +30,14 @@ import seedu.homechef.model.order.Quantity;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX =
+            "Index must be a positive integer (e.g. 1, 2, 3).";
     public static final String MESSAGE_INVALID_AVAILABILITY =
             "Availability must be 'yes' or 'no'.";
     public static final String MESSAGE_MULTIPLE_PAYMENT_PREFIXES =
             "Only one payment prefix may be provided: bank/, paynow/, or cash/.";
     public static final String MESSAGE_CASH_PAYMENT_REQUIRED =
-            "cash/ requires yes or no.";
+            "cash/ must be 'yes' (cash accepted) or 'no' (cash not accepted).";
     public static final String MESSAGE_BANK_PAYMENT_REQUIRED =
             "bank/ requires a non-blank bank reference/details value.";
     public static final String MESSAGE_PAYNOW_PAYMENT_REQUIRED =
