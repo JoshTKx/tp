@@ -1,6 +1,8 @@
 package seedu.homechef.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.homechef.logic.Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX;
+import static seedu.homechef.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +54,7 @@ public class PaidCommand extends Command {
         List<Order> lastShownList = model.getFilteredOrderList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_INVALID_ORDER_DISPLAYED_INDEX);
         }
 
         Order orderToMarkPaid = lastShownList.get(targetIndex.getZeroBased());
@@ -62,7 +64,7 @@ public class PaidCommand extends Command {
         Order paidOrder = createPaidOrder(orderToMarkPaid);
 
         model.setOrder(orderToMarkPaid, paidOrder);
-        model.updateFilteredOrderList(Model.PREDICATE_SHOW_ALL_ORDERS);
+        model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
 
         return new CommandResult(generateSuccessMessage(paidOrder));
     }
