@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -25,7 +26,7 @@ public class HelpWindow extends UiPart<Stage> {
     private Button copyButton;
 
     @FXML
-    private Label helpMessage;
+    private Hyperlink helpMessage;
 
     /**
      * Creates a new HelpWindow.
@@ -98,5 +99,13 @@ public class HelpWindow extends UiPart<Stage> {
         final ClipboardContent url = new ClipboardContent();
         url.putString(USERGUIDE_URL);
         clipboard.setContent(url);
+    }
+    @FXML
+    private void openUserGuide() {
+        try {
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(USERGUIDE_URL));
+        } catch (Exception e) {
+            logger.warning("Failed to open user guide: " + e.getMessage());
+        }
     }
 }
