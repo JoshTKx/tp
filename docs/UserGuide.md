@@ -103,7 +103,7 @@ input** over mouse clicks.
 You're ready to start using HomeChef now! Head to the [Features](#features) section for more details on how to use each command and make the most out of HomeChef. Happy cooking and selling! 🍳🍰🍕
 
 --------------------------------------------------------------------------------------------------------------------
-
+<div style="page-break-after: always;"></div>
 # **Features**
 
 <div markdown="1" class="alert alert-info">
@@ -150,10 +150,12 @@ You're ready to start using HomeChef now! Head to the [Features](#features) sect
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 </div>
 
---------------------------------------------------------------------------------------------------------------------
-
 If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+--------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Order Management**
 
@@ -173,7 +175,8 @@ Orders also have their dates coloured according to their urgency, so you can eas
 
 **Format:**
 ```
-add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]
+add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]...
+ [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]
 ```
 
 > White indicates that the `Order` is not late, it is due **_more than 3 days_** from today's date.
@@ -419,7 +422,8 @@ Completion status and payment status cannot be modified using the `edit` command
 
 **Format:**
 ```
-edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]
+edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] 
+ [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]
 ```
 
 <div markdown="1" class="alert alert-info">:information_source:
@@ -486,6 +490,8 @@ This action **cannot be reversed** so only do this if you are sure you want to d
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Menu Management**
 
@@ -642,6 +648,8 @@ Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 # **FAQ**
 
 **Q**: How do I **transfer my data** to another Computer?
@@ -676,6 +684,8 @@ downloaded.
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 # **Command summary**
 
 | Action               | Format, Examples                                                                                                                                                                                                                                                      |
@@ -698,6 +708,8 @@ downloaded.
 | **Exit**             | `exit`                                                                                                                                                                                                                                                                |
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 # **Parameter summary**
 
