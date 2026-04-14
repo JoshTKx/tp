@@ -165,14 +165,14 @@ The following are the commands that interact with this order list.
 
 To begin adding an order to the order list, use the `add` command followed by the order's details.
 
+By default, orders have their completion status set to `Pending` and payment status set to `Unpaid`, so you can update these details later when the order is in progress or completed, and when the customer has paid.
+
+Orders also have their dates coloured according to their urgency, so you can easily tell at a glance which orders are due soon or overdue.
+
 **Format:**
 ```
 add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]
 ```
-
-* Orders have their completion status set to `Pending` by default.
-* Orders also have their payment status set to `Unpaid` by default.
-* Orders have their dates coloured according to the urgency of the Order.
 
 > White indicates that the `Order` is not late, it is due **_more than 3 days_** from today's date.
 >
@@ -288,7 +288,7 @@ inprogress INDEX
 
 <div markdown="span" class="alert alert-warning">:exclamation: 
 **Caution:**
-* On an order that is already `In progress`, the command will show an error message instead of updating the order.
+On an order that is already `In progress`, the command will show an error message instead of updating the order.
 </div>
 
 ### Marking an order as complete: `complete`
@@ -311,7 +311,7 @@ complete INDEX
 
 <div markdown="span" class="alert alert-warning">:exclamation: 
 **Caution:**
-* On an order that is already `Completed`, the command will show an error message instead of updating the order.
+On an order that is already `Completed`, the command will show an error message instead of updating the order.
 </div>
 
 ### Marking an order as pending: `pending`
@@ -328,7 +328,7 @@ pending INDEX
 
 <div markdown="span" class="alert alert-warning">:exclamation: 
 **Caution:**
-* On an order that is already `Pending`, the command will show an error message instead of updating the order.
+On an order that is already `Pending`, the command will show an error message instead of updating the order.
 </div>
 
 
@@ -363,7 +363,7 @@ unpaid INDEX
 
 <div markdown="span" class="alert alert-warning">:exclamation: 
 **Caution:**
-* On an order that is already `Unpaid`, the command will show an error message instead of updating the order.
+On an order that is already `Unpaid`, the command will show an error message instead of updating the order.
 </div>
 
 ### Generating a receipt: `receipt`
@@ -387,7 +387,7 @@ You can also use the shortcut command `rec`
 
 <div markdown="span" class="alert alert-warning">:exclamation: 
 **Caution:**
-* Receipts can only be generated for orders with payment status **Paid**.
+Receipts can only be generated for orders with payment status **Paid**.
   Use `paid INDEX` to mark the order as paid first.
 </div>
 
@@ -396,8 +396,11 @@ You can also use the shortcut command `rec`
 * `receipt 1` Displays and saves a receipt for the order located at `INDEX` 1 of the shown list.
 * `rec 2` Displays and saves a receipt for the order located at `INDEX` 2 of the shown list.
 * For the example order as shown:
+
   ![example order](images/receiptExampleOrder.png)
+
   The generated receipt will look like this:
+
   ![receipt](images/sampleReceipt.png)
 
 ### Editing an order : `edit`
@@ -408,7 +411,7 @@ This helps with updating orders when information changes, without having to dele
 
 <div markdown="span" class="alert alert-warning">:exclamation:
 **Caution:**
-* Completion status and payment status cannot be modified using the `edit` command and **must** be modified using the above commands.
+Completion status and payment status cannot be modified using the `edit` command and **must** be modified using the above commands.
 </div>
 
 **Format:**
@@ -465,11 +468,6 @@ delete INDEX
 
 ### Clearing all entries : `clear`
 
-<div markdown="span" class="alert alert-warning">:exclamation:
-**Caution:**
-* This action **cannot be reversed** so only do this if you are sure you want to delete **every** order in the list. If not, use the delete command instead.
-</div>
-
 To clear all orders from the order list, use the `clear` command to delete all orders at once. 
 
 This is useful when you want to clear out old orders after a long period of time, without having to delete each order one by one.
@@ -478,6 +476,11 @@ This is useful when you want to clear out old orders after a long period of time
 ```
 clear
 ```
+
+<div markdown="span" class="alert alert-warning">:exclamation:
+**Caution:**
+This action **cannot be reversed** so only do this if you are sure you want to delete **every** order in the list. If not, use the delete command instead.
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -618,7 +621,7 @@ HomeChef Helper data is saved in the hard disk automatically after any command t
 to save manually.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the HomeChef Helper folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
+It is highly recommended to backup the homechef.json and menu.json files by copying them to a separate folder outside of the HomeChef Helper folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
 </div>
 
 ### Editing the data file
@@ -629,8 +632,9 @@ to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation:
 **Caution:**
-* If your changes to the data file make its format invalid, HomeChef will **discard all data** and start with empty data at the next run. The corrupted file will be overwritten with clean data only after a data-modifying command (e.g. `add`, `delete`, `edit`) is executed. Hence, it is recommended to take a backup of the file before editing it.
-* Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file make its format invalid, HomeChef will **discard all data** and start with empty data at the next run. The corrupted file will be overwritten with clean data only after a data-modifying command (e.g. `add`, `delete`, `edit`) is executed. Hence, it is recommended to take a backup of the file before editing it.
+
+Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
