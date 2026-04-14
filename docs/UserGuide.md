@@ -17,7 +17,7 @@ input** over mouse clicks.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick Start
+## **Quick Start**
 
 1. **Ensure you have Java `17` or above installed on your computer.**
 
@@ -104,7 +104,7 @@ You're ready to start using HomeChef now! Head to the [Features](#features) sect
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Features
+# **Features**
 
 <div markdown="1" class="alert alert-info">
 
@@ -149,6 +149,8 @@ You're ready to start using HomeChef now! Head to the [Features](#features) sect
 * Extra parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 </div>
+
+--------------------------------------------------------------------------------------------------------------------
 
 If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -484,7 +486,7 @@ This action **cannot be reversed** so only do this if you are sure you want to d
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Menu Management
+## **Menu Management**
 
 The menu is the list on the right, indicating the food items you have for sale.
 
@@ -585,7 +587,7 @@ edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Other commands:
+## **Other commands:**
 
 ### Viewing help : `help`
 
@@ -639,7 +641,7 @@ Furthermore, certain edits can cause the HomeChef to behave in unexpected ways (
 
 --------------------------------------------------------------------------------------------------------------------
 
-# FAQ
+# **FAQ**
 
 **Q**: How do I **transfer my data** to another Computer?
 **A**: Download the app in the other computer and set it up as mentioned in the Quick Guide section above.
@@ -673,7 +675,7 @@ downloaded.
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Command summary
+# **Command summary**
 
 | Action               | Format, Examples                                                                                                                                                                                                                                                      |
 | -------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -696,7 +698,7 @@ downloaded.
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Parameter summary
+# **Parameter summary**
 
 | Parameter | Prefix | Rules | Examples |
 | --------- | ------ | ----- | -------- |
