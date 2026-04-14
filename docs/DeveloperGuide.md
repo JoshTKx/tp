@@ -28,6 +28,8 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 ## **Design**
 
 <div markdown="span" class="alert alert-primary">
@@ -89,6 +91,8 @@ implementation of a component), as illustrated in the (partial) class diagram be
 
 The sections below give more details of each component.
 
+<div style="page-break-after: always;"></div>
+
 ### UI component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/Ui.java)
@@ -109,6 +113,8 @@ The `UI` component,
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Order` object residing in the `Model`.
+
+<div style="page-break-after: always;"></div>
 
 ### Logic component
 
@@ -152,6 +158,8 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser`
   interface so that they can be treated similarly where possible e.g, during testing.
 
+<div style="page-break-after: always;"></div>
+
 ### Model component
 
 **API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/model/Model.java)
@@ -176,6 +184,8 @@ The `Model` component,
 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/storage/Storage.java)
@@ -196,6 +206,8 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.homechef.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Implementation**
 
@@ -267,6 +279,8 @@ The `receipt` command generates a plain-text receipt file for a selected order.
 
 --------------------------------------------------------------------------------------------------------------------
 
+<div style="page-break-after: always;"></div>
+
 ## **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
@@ -276,6 +290,8 @@ The `receipt` command generates a plain-text receipt file for a selected order.
 * [DevOps guide](DevOps.md)
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Requirements**
 
@@ -297,6 +313,8 @@ It tracks repeat orders, feedback, payment, and delivery status so sellers do no
 chats, improving reliability and customer satisfaction.
 
 It highlights potential scheduling issues to help sellers manage deliveries.
+
+<div style="page-break-after: always;"></div>
 
 ### User stories
 
@@ -329,6 +347,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 The user stories above capture the current scope of the application and can be expanded in future iterations as new
 features are added.
+
+<div style="page-break-after: always;"></div>
 
 ### Use cases
 
@@ -582,6 +602,8 @@ otherwise)
 
 The use cases above describe the main workflows currently supported by the system.
 
+<div style="page-break-after: always;"></div>
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -603,6 +625,8 @@ The use cases above describe the main workflows currently supported by the syste
 The requirements listed here reflect the current expectations for the application and are intended to guide future
 development and testing.
 
+<div style="page-break-after: always;"></div>
+
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, macOS.
@@ -617,6 +641,8 @@ development and testing.
 * **Menu Item**: An entry in the menu that represents a food item that a Customer can purchase.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -785,6 +811,8 @@ testers are expected to do more *exploratory* testing.
        `delete` will only affect the existing files and not the imported external files.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix - Future Features**
 
