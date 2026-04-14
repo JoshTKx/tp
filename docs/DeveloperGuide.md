@@ -9,7 +9,7 @@ This guide is written for developers and contributors who want to understand, ex
 It assumes familiarity with Java 17, Gradle, JavaFX, and basic object-oriented programming concepts.
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -32,8 +32,8 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the [
-_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create
+:bulb: **Tip:** The `.puml` files used to create diagrams are in this document `docs/diagrams` folder. Refer to the 
+[_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create
 and edit diagrams.
 </div>
 
@@ -47,9 +47,8 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [
-`Main`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/Main.java) and [
-`MainApp`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/MainApp.java)) is in
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/Main.java) and 
+[`MainApp`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/MainApp.java)) is in
 charge of the app launch and shut down.
 
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
@@ -92,8 +91,7 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [
-`Ui.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
@@ -102,10 +100,8 @@ these, including the `MainWindow`, inherit from the abstract `UiPart` class whic
 classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that
-are in the `src/main/resources/view` folder. For example, the layout of the [
-`MainWindow`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/MainWindow.java)
-is specified in [
-`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
+are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/ui/MainWindow.java)
+is specified in [`MainWindow.fxml`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -116,8 +112,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [
-`Logic.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -131,8 +126,7 @@ call as an example.
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
-For the `receipt` command flow, see [`ReceiptSequenceDiagram.puml`](diagrams/ReceiptSequenceDiagram.puml) in
-`docs/diagrams`.
+For the `receipt` command flow, see the [receipt generation flow](#receipt-generation-flow).
 
 How the `Logic` component works:
 
@@ -160,8 +154,7 @@ How the parsing works:
 
 ### Model component
 
-**API** : [
-`Model.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="750" />
 
@@ -185,8 +178,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [
-`Storage.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S2-CS2103T-T13-4/tp/blob/master/src/main/java/seedu/homechef/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -271,7 +263,7 @@ The `receipt` command generates a plain-text receipt file for a selected order.
     2. Writes formatted receipt content to the output file.
 5. The command returns a `CommandResult` containing the generated receipt path.
 
-The full interaction sequence is documented in [`ReceiptSequenceDiagram.puml`](diagrams/ReceiptSequenceDiagram.puml).
+<img src="images/ReceiptSequenceDiagram.png" width="600" />
 
 --------------------------------------------------------------------------------------------------------------------
 

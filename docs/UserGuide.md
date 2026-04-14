@@ -15,7 +15,7 @@ input** over mouse clicks.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick Start
+## **Quick Start**
 
 1. Ensure you have Java `17` or above installed on your computer.<br>
    A tutorial on how to download Java `17` can be
@@ -75,7 +75,7 @@ input** over mouse clicks.
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Features
+# **Features**
 
 <div markdown="1" class="alert alert-info">
 
@@ -137,7 +137,7 @@ input** over mouse clicks.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Order List commands:
+## **Order List commands:**
 
 The order list is the list on the left, showing all the orders made by customers for certain food items.
 
@@ -404,7 +404,7 @@ Format: `clear`
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Menu commands:
+## **Menu commands:**
 
 The menu is the list on the right, indicating the food items you have for sale.
 
@@ -493,7 +493,7 @@ Example:
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Other commands:
+## **Other commands:**
 
 ### Viewing help : `help`
 
@@ -541,7 +541,7 @@ to update data directly by editing that data file.
 
 --------------------------------------------------------------------------------------------------------------------
 
-# FAQ
+# **FAQ**
 
 **Q**: How do I **transfer my data** to another Computer?<br>
 **A**: Download the app in the other computer and set it up as mentioned in the Quick Guide section above.<br>
