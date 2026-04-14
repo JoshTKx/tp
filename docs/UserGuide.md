@@ -579,7 +579,7 @@ edit-menu INDEX [f/NAME] [$/PRICE] [v/AVAILABILITY]
   * Typing anything else will give an error message stating `Availability must be 'yes' or 'no'.`
 * If `f/NAME` is provided, it follows the same character rules as `add-menu`.
 * If `$/PRICE` is provided, it follows the same number rules as `add-menu` (including allowing `0` / `0.00`).
-* Editing the `NAME` of a menu item **will not** change the name of existing orders. This is because old orders may have names that differ from the new name of a menu item, for book keeping purposes.
+* Editing the `NAME` of a menu item **will not** change the name of existing orders. This is because old orders may have names that differ from the new name of a menu item, for bookkeeping purposes.
   * e.g. In the past, someone ordered a `Birthday Cake`. 1 year later, you change the name of the `Birthday Cake` to `Event Cake`. The old order should remain in the records with the original name it was sold under to maintain consistency with the receipts.
 * Similarly, editing `PRICE` and `AVAILABILITY` will **not** update existing orders either.
 </div>
