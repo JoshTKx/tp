@@ -188,24 +188,25 @@ add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank
 <div markdown="1" class="alert alert-info">:information_source:
 **Notes:**
 * `FOOD` must match an **existing food's name** in the current menu, but it is case-insensitive.
-  * You can use the **menu item's index** (the number shown in the menu panel) instead of typing the full name.
+  * You can use the **menu item's index** (the number shown in the menu panel) instead of typing the full name.<br>
     e.g. `f/1` resolves to the first item in the menu. Index lookup takes priority over name matching.
-  * HomeChef will try to match the given food name to the closest existing food in the menu.
+  * HomeChef will try to match the given food name to the closest existing food in the menu.<br>
     e.g. inputting `Birthday` will create an order with `Birthday Cake` if `Birthday Cake` exists in the menu, but not any other food with `Birthday`.
-  * If any food names share the input word, an error message will appear showing the matching items and asking you to use the exact menu item name.
+  * If any food names share the input word, an error message will appear showing the matching items and asking you to use the exact menu item name.<br>
     e.g. inputting `Cake` will give this error if both `Birthday Cake` and `Cupcakes` exist in the menu.
   * Giving an input that is not in the menu will show an error message telling you to `Use 'add-menu' to add it to the menu first.`
-  * If a menu item's name is a pure number (e.g. `3`), typing `f/3` adds the food by its index in the menu, instead of searching by name.
+  * If a menu item's name is a pure number (e.g. `3`), typing `f/3` adds the food by its index in the menu, instead of searching by name.<br>
     e.g. inputting `3` when the first menu item is named `Cookie v3` and the third menu item is `Cake`, will add the order as a `Cake` instead.
-* `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date (e.g. `31-02-2026` is rejected).
+* `DATE` must be in **DD-MM-YYYY** format and be a valid calendar date<br>
+   e.g. `31-02-2026` is rejected.
 * If you add an order with a past `DATE`, HomeChef still adds it but shows a warning that the order is overdue.
 * `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
 * `ADDRESS` accepts any character, but cannot be blank.
 * `EMAIL` should be of the format local-part@domain.tld and adhere to the following constraints:
-  1. The local-part should only contain alphanumeric characters (alphabets and numbers) and these special characters: `!`, `#`, `$`, `%`, `&`, `'`, `*`, `+`, `/`, `=`, `?`, `^`, `_`, `\``, `{`, `|`, `}`, `~`, `.`, `_`, `%`, `\`, `-`
-  2. This is followed by a '@' and then a domain name.
-  3. The domain name must contain only alphanumeric characters, dots, or hyphens.
-  4. The email must end with a top-level domain (TLD) of at least 2 alphabetic characters (e.g. .com, .org, .io).
+  1. The local-part should only contain alphanumeric characters (alphabets and numbers) and these special characters: `!`, `#`, `$`, `%`, `&`, `'`, `*`, `+`, `/`, `=`, `?`, `^`, `_`, `\`, `{`, `|`, `}`, `~`, `.`, `_`, `%`, `\`, `-`
+  2. The domain name must contain only alphanumeric characters, dots, or hyphens.
+  3. The email must end with a top-level domain (TLD) of at least 2 alphabetic characters<br>
+     e.g. .com, .org, .io.
 * The order's price is automatically taken from the matching menu item. Use `add-menu` or `edit-menu` to update a food's price.
 * `QUANTITY` specifies how many units of the food item are ordered.
   * If omitted, `QUANTITY` defaults to `1`.
@@ -215,8 +216,8 @@ add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank
   * `t/TAG` is the only repeatable prefix for `add`.
 * Payment info is optional and supports exactly one method at a time.
   * Use `cash/yes` to set cash payment, or `cash/no` to leave the order without payment info.
-  * Use `paynow/PAYNOW_CONTACT` for PayNow. It accepts any non-blank PayNow identifier
-    (e.g., phone number, UEN, or handle/reference), and is intentionally more flexible than `p/PHONE_NUMBER`.
+  * Use `paynow/PAYNOW_CONTACT` for PayNow. It accepts any non-blank PayNow identifier<br>
+    e.g. it accepts phone number, UEN, or handle/reference, and is intentionally more flexible than `p/PHONE_NUMBER`.
   * Use `bank/BANK_DETAILS` for bank transfer. It must be 1-50 characters, include at least one letter or digit,
     and can only use these symbols: spaces, `-`, `_`, `/`, `(`, `)`, `.`, `,`, `:`, `+`, `&`, `@`, `#`, `'`, `[`, `]`.
 </div>
