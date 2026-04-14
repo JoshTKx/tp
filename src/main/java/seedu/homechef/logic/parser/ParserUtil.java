@@ -250,23 +250,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String price} into a menu {@code Price}.
-     * String will be normalized by trimming and replacing whitespace with a single space.
-     *
-     * @param price Menu price string to parse
-     * @return A menu Price object representing the parsed menu price.
-     * @throws ParseException if the given {@code price} is invalid.
-     */
-    public static Price parseMenuPrice(String price) throws ParseException {
-        requireNonNull(price);
-        String trimmedPrice = normalizeWhitespace(price);
-        if (!Price.isValidPrice(trimmedPrice)) {
-            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
-        }
-        return new Price(trimmedPrice);
-    }
-
-    /**
      * Parses a {@code String value} into a {@code Quantity}.
      * String will be normalized by trimming and replacing whitespace with a single space.
      *

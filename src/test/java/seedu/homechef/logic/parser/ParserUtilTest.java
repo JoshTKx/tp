@@ -199,9 +199,9 @@ public class ParserUtilTest {
                 ParserUtil.parseFood(WHITESPACE + "No. 1 Curry + Rice" + WHITESPACE));
         assertEquals(new Food("Nasi @ Home"), ParserUtil.parseFood(WHITESPACE + "Nasi @ Home" + WHITESPACE));
         assertEquals(new Food("Ramen 日本"), ParserUtil.parseFood(WHITESPACE + "Ramen 日本" + WHITESPACE));
-        assertEquals("0.00", ParserUtil.parseMenuPrice("0").toString());
-        assertEquals("5.50", ParserUtil.parseMenuPrice("5.5").toString());
-        assertEquals("12.00", ParserUtil.parseMenuPrice("12").toString());
+        assertEquals("0.00", ParserUtil.parsePrice("0").toString());
+        assertEquals("5.50", ParserUtil.parsePrice("5.5").toString());
+        assertEquals("12.00", ParserUtil.parsePrice("12").toString());
     }
 
     @Test

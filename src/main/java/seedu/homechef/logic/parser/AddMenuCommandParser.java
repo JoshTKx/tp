@@ -37,7 +37,7 @@ public class AddMenuCommandParser implements Parser<AddMenuCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FOOD, PREFIX_PRICE, PREFIX_AVAILABILITY);
 
         Food name = ParserUtil.parseFood(argMultimap.getValue(PREFIX_FOOD).get());
-        Price price = ParserUtil.parseMenuPrice(argMultimap.getValue(PREFIX_PRICE).get());
+        Price price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
         Availability availability = Availability.YES;
         if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
             availability = ParserUtil.parseAvailability(argMultimap.getValue(PREFIX_AVAILABILITY).get());

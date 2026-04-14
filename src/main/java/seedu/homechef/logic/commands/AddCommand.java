@@ -25,13 +25,13 @@ import seedu.homechef.model.order.Order;
 import seedu.homechef.model.order.Quantity;
 
 /**
- * Adds a order to the HomeChef.
+ * Adds an order to the HomeChef.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a order to HomeChef. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an order to HomeChef. "
             + "Parameters: "
             + PREFIX_FOOD + "FOOD "
             + PREFIX_CUSTOMER + "CUSTOMER "

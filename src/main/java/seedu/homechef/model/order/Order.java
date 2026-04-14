@@ -148,8 +148,10 @@ public class Order {
     }
 
     /**
-     * Returns true if both orders have the same name, food and date.
-     * This defines a weaker notion of equality between two orders.
+     * Returns true if both orders have the same food, customer, phone, email, address,
+     * date, tags, price, quantity, and payment info.
+     * This defines a weaker notion of equality than {@link #equals}, which also compares
+     * completion status and payment status.
      */
     public boolean isSameOrder(Order otherOrder) {
         if (otherOrder == this) {
