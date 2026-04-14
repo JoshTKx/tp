@@ -155,7 +155,7 @@ You're ready to start using HomeChef now! Head to the [Features](#features) sect
 If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
 as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-## Order Management
+## **Order Management**
 
 The order list is the list on the left, showing all the orders made by customers for certain food items.
 
