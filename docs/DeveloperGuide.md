@@ -263,7 +263,7 @@ The `receipt` command generates a plain-text receipt file for a selected order.
     2. Writes formatted receipt content to the output file.
 5. The command returns a `CommandResult` containing the generated receipt path.
 
-<img src="images/ReceiptSequenceDiagram.png" width="600" />
+<img src="images/ReceiptSequenceDiagram.png" width="750" />
 
 --------------------------------------------------------------------------------------------------------------------
 
