@@ -38,7 +38,7 @@ public class EditMenuCommandParser implements Parser<EditMenuCommand> {
             editMenuDescriptor.setName(ParserUtil.parseFood(argMultimap.getValue(PREFIX_FOOD).get()));
         }
         if (argMultimap.getValue(PREFIX_PRICE).isPresent()) {
-            editMenuDescriptor.setPrice(ParserUtil.parseMenuPrice(argMultimap.getValue(PREFIX_PRICE).get()));
+            editMenuDescriptor.setPrice(ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get()));
         }
         if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
             editMenuDescriptor.setAvailability(
