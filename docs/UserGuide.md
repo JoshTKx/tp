@@ -3,22 +3,21 @@ layout: page
 title: User Guide
 ---
 
-HomeChef-Helper (HomeChef) is a simple, intuitive desktop app for managing orders and payments for any **self-made food
-business owners!**<br>
-From new cooks with no experience managing their orders, to expert home food business owners with extensive knowledge,
-the app helps to **consolidate the order and food information in an easy-to-read format**, helping you get things done
-faster!<br>
-With a simple typing interface and a clear order list and food menu, this app is here to help you 
-**manage orders quick** if you can **type fast**.
+HomeChef Helper (HomeChef) is a simple desktop app for home-based food business owners who want an easier way to
+**manage orders and payments**.<br>
+Whether you are new to order tracking or already run a busy home food business, HomeChef keeps your order and menu
+information in one **easy-to-read place**.<br>
+With a simple typing interface and clear order and menu panels, HomeChef is especially helpful if you **prefer keyboard
+input** over mouse clicks.
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Looking to get started?<br> Here's a quick guide:
+## Quick Start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed on your computer.<br>
    A tutorial on how to download Java `17` can be
    found [here](https://se-education.org/guides/tutorials/javaInstallation.html).<br>
    **Mac users:** Ensure you have the precise JDK version
@@ -33,22 +32,23 @@ With a simple typing interface and a clear order list and food menu, this app is
    If that does not work, try the following:
 
    > 1. Open a command terminal. <br>(Command Prompt or Powershell on Windows, Terminal on Mac)<br>
-   > 1. Use the `cd` command to navigate into the folder you put the jar file in.<br> For example:<br>
+   > 1. Use the `cd` command to navigate into the folder you put the jar file in.<br> For example, type in:<br>
         `cd Desktop/Folder1/FolderContainingHomeChef`<br>
    > 1. Type the `java -jar homechef.jar` command to run the application.<br>
 
    If successful, a screen similar to the one below should appear in a few seconds. The app contains some sample data
    for you to get an idea of how it functions.<br>
 
+   The main window shows the order list on the left, the menu on the right, and the command box at the bottom.<br>
+
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will
    open the help window.<br>
    Some example commands you can try:
-    * `list` : Lists all orders. Good for resetting the display to show a full view of all orders you have.
+    * `list` : Lists all orders. Use this when you want to see the full order list again.
 
-    * `list f/cake` : Lists all orders with "cake" in the food's name. Good for finding orders of a similar type, or
-      sharing the same customer.
+    * `list f/cake` : Lists all orders with "cake" in the food's name. Handy for finding similar orders.
 
     * `add f/Birthday Cake c/John Doe p/1234 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` :<br>
       Adds an order named `Birthday Cake` with customer name `John Doe` to HomeChef. Price is taken from the menu
@@ -58,11 +58,11 @@ With a simple typing interface and a clear order list and food menu, this app is
       Note that the ID number may differ if there are other orders in the list.<br>
       The date may also be of a different colour (red or orange) if the current date is after 30-03-2026.
 
-    * `complete 1` : Marks the 1st order shown in the current list as completed. Helps to show what orders you have done
-      at a glance!
+    * `complete 1` : Marks the 1st order shown in the current list as completed. Helpful when you want to spot finished
+      orders at a glance.
 
-    * `delete 3` : Deletes the 3rd order shown in the current list. Perfect for removing long completed orders that you
-      won't refer to anymore.
+    * `delete 3` : Deletes the 3rd order shown in the current list. Handy for clearing out old orders you no longer
+      need.
 
     * `add-menu f/Potato Wedges $/2.20` : Adds a food item called `Potato Wedges` with a price of `$2.20` into the menu
       on the right.<br>
@@ -71,7 +71,7 @@ With a simple typing interface and a clear order list and food menu, this app is
 
     * `exit` : Exits the app. See you next time!
 
-1. Do refer to the [Features](#features) below for details of each command.
+1. See the [Features](#features) section below for more details on each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -116,14 +116,16 @@ With a simple typing interface and a clear order list and food menu, this app is
 * Prefixes without `...` are single-valued and must not be repeated in the same command.<br>
   e.g. `q/2 q/3` is invalid.
 
-* Parameters can be in any order.<br>
+* For prefixed parameters, inputs can be in any order.<br>
   e.g. if the command specifies `f/FOOD p/PHONE`, `p/PHONE f/FOOD` is also acceptable.
+  For commands that require an `INDEX` (e.g. `edit`, `delete`, `paid`), put `INDEX` immediately after the command word.
 
 * Character rules differ by field. For example, `c/NAME` and `f/FOOD` accept letters/digits (including international
   characters) and selected punctuation; details are listed under each command.
 * For `c/NAME` and `f/FOOD`, the first character must be a letter or digit.
 
-* `COMPLETION STATUS` is meant to be a marker for you to know that you have completed an order, not a "finalised state" which confirms that the order information is fixed. Thus, it does not affect the ability to modify any of the orders.
+* `COMPLETION_STATUS` is meant to be a marker for you to know that you have completed an order, not a "finalised state"
+  which confirms that the order information is fixed. Thus, it does not affect the ability to modify any of the orders.
 
 * Extra parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -198,11 +200,18 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 
 Examples:
 
-The following examples assume that a menu item of the given food name already exists in the menu. Refer to the [menu commands](#menu-commands) for more information in adding these food names to the menu.
+The following examples assume that a menu item of the given food name already exists in the menu. Refer to
+the [menu commands](#menu-commands) for more information in adding these food names to the menu.
 
-* `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` Adds the order of the given information to the order list.
-* `add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts` Adds the order of the given information to the order list.
-* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 cash/yes` Adds the order of the given information to the order list.
+* `add f/Red Bean Bun c/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` Adds the
+  order of the given information to the order list.
+*
+
+`add f/Hawaiian Pizza c/Betsy Crowe t/Halal e/betsycrowe@example.com a/Newgate Prison p/1234567 d/12-12-2026 t/No peanuts`
+Adds the order of the given information to the order list.
+
+* `add f/Bananas c/Monkey p/80801414 t/An actual monkey e/ooaa@ananab.com a/Monkey Village d/18-03-2026 cash/yes` Adds
+  the order of the given information to the order list.
 * `add f/Nasi Lemak q/3 c/John p/91234567 e/john@example.com a/123 Street d/01-12-2024` Adds an order of `3` units of
   `Nasi Lemak`. The total price shown will be the menu price multiplied by `3`.
 
@@ -212,7 +221,7 @@ Shows a list of all orders in the order list when no parameters are given,
 Otherwise, shows a filtered list of orders that match the keywords given as parameters.
 This can be useful for finding orders specific to a certain customer, a certain address or even of a certain food name.
 
-Format: `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION STATUS] [ps/PAYMENT STATUS]`
+Format: `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`
 
 <div markdown="1" class="alert alert-info">:information_source:
 **Notes about the list command:**<br>
@@ -259,7 +268,7 @@ Format: `complete INDEX`
 <div markdown="1" class="alert alert-info">:information_source:
 **Notes about the complete command:**<br>
 * Orders are meant to be editable after completion, because if a mistake was made, you can fix it before printing it to receipt without having to change the status back.
-* As mentioned before, completion status is meant to be a marker for you to know that you have completed an order, so marking an order as complete will **not** make the information fixed. You still can edit a command after it is complete.
+ * As mentioned before, completion status is meant to be a marker for you to know that you have completed an order, so marking an order as complete will **not** make the information fixed. You still can edit an order after it is complete.
 </div>
 
 ### Marking an order as pending: `pending`
@@ -300,6 +309,8 @@ Format: `receipt INDEX`
 
 * A receipt file is created in a `receipts` folder beside the HomeChef data file.
     * More specifically, the created receipt file can be found in `[JAR file location]/data/receipts`.
+* If a receipt file with the same name already exists, HomeChef creates a new file with a numeric suffix
+  (e.g., `_1`, `_2`) instead of overwriting the existing file.
 
 <div markdown="span" class="alert alert-primary">:bulb:
 **Tip:**
@@ -405,11 +416,13 @@ The following are the commands that interact with this menu.
 **:information_source: Notes about the menu:**<br>
 
 * **Any modifications to the menu will not affect existing orders.**
-  * For example: There is an order with a food name `Birthday Cake`. Deleting or editing `Birthday Cake` in the **menu** will not affect this existing order.<br>
-    But **future orders** will not be able to add the food called `Birthday Cake` as it now does not exist in the menu.
-  * This is so that you can freely change the menu without affecting past orders. After all, if someone ordered bread
-    but one year later you switched to cooking noodles, that old order should still be retained for recording
-    purposes!
+    * For example: There is an order with a food name `Birthday Cake`. Deleting or editing `Birthday Cake` in the **menu
+      ** will not affect this existing order.<br>
+      But **future orders** will not be able to add the food called `Birthday Cake` as it now does not exist in the
+      menu.
+    * This is so that you can freely change the menu without affecting past orders. After all, if someone ordered bread
+      but one year later you switched to cooking noodles, that old order should still be retained for recording
+      purposes!
 
 </div>
 
@@ -504,11 +517,12 @@ Format: `exit`
 
 ### Saving the data
 
-HomeChef data is saved in the hard disk automatically after any command that changes the data. There is no need to save
+HomeChef Helper data is saved in the hard disk automatically after any command that changes the data. There is no need
+to save
 manually.<br>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the Homechef folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
+It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the HomeChef Helper folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
 </div>
 
 ### Editing the data file
@@ -533,7 +547,8 @@ Overwrite the empty data file it creates with the file that contains the data of
 `homechef.json` and `menu.json` files).
 
 **Q**: How do I **get back** the **sample data** that the app came with when I first booted it up?<br>
-**A**: Open the folder that contains `homechef.jar`. Simply **delete** the `homechef.json` and `menu.json` files located in
+**A**: Open the folder that contains `homechef.jar`. Simply **delete** the `homechef.json` and `menu.json` files located
+in
 the `data` folder. The next time you open the app, all the original sample orders and menu items will be restored.
 
 **Q**: What's the **rectangular box** below where I put in the commands?<br>
@@ -542,7 +557,8 @@ properly. It also gives suggestions and hints if you input commands incorrectly.
 If the status information given is still unclear, feel free to refer to the command information above.
 
 **Q**: The order list is **blank**! Is my data all **gone**?<br>
-**A**: This may **not necessarily be the case**. Check by using the `list` command with **no parameters**. This should reset
+**A**: This may **not necessarily be the case**. Check by using the `list` command with **no parameters**. This should
+reset
 the order list to its default view, which includes every single order that has been added. If this still fails to
 resolve the problem, see the last question.
 
@@ -559,14 +575,15 @@ downloaded.
 
 | Action               | Format, Examples                                                                                                                                                                                                                                                      |
 | -------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**              | `add f/FOOD c/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 cash/yes` |
+| **Add**              | `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]` <br> e.g., `add f/Chicken Rice c/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd d/30-03-2026 cash/yes` |
 | **List**             | `list [d/DATE] [c/CUSTOMER] [f/FOOD] [p/PHONE] [cs/COMPLETION_STATUS] [ps/PAYMENT_STATUS]`<br> e.g., `list d/18-10-2026 cs/completed ps/Paid`                                                                                                                         |
 | **Mark In Progress** | `inprogress INDEX` <br> e.g., `inprogress 2`                                                                                                                                                                                                                          |
 | **Mark Complete**    | `complete INDEX` <br> e.g., `complete 4`                                                                                                                                                                                                                              |
 | **Mark Pending**     | `pending INDEX` <br> e.g., `pending 3`                                                                                                                                                                                                                                |
-| **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                      | 
+| **Mark Paid**        | `paid INDEX` <br> e.g., `paid 1`                                                                                                                                                                                                                                      |
 | **Mark Unpaid**      | `unpaid INDEX` <br> e.g., `unpaid 1`                                                                                                                                                                                                                                  |
-| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no`                                  |
+| **Receipt**          | `receipt INDEX` (alias: `rec INDEX`) <br> e.g., `receipt 1`, `rec 2`                                                                                                                                                                                                 |
+| **Edit**             | `edit INDEX [f/FOOD] [c/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE] [q/QUANTITY] [t/TAG]... [bank/BANK_DETAILS] [paynow/PAYNOW_CONTACT] [cash/YES_OR_NO]`<br> e.g.,`edit 2 c/James Lee e/jameslee@example.com q/2 cash/no`                                  |
 | **Delete**           | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                   |
 | **Clear**            | `clear`                                                                                                                                                                                                                                                               |
 | **Add Menu**         | `add-menu f/NAME $/PRICE [v/AVAILABILITY]` <br> e.g., `add-menu f/Bee Hoon $/5.00 v/yes`                                                                                                                                                                              |

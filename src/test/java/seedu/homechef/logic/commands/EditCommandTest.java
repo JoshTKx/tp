@@ -18,6 +18,7 @@ import static seedu.homechef.testutil.TypicalIndexes.INDEX_SECOND_ORDER;
 import static seedu.homechef.testutil.TypicalOrders.getTypicalHomeChef;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -285,7 +286,7 @@ public class EditCommandTest {
                 orderWithPayNow.getPhone(), orderWithPayNow.getEmail(), orderWithPayNow.getAddress(),
                 orderWithPayNow.getDate(), orderWithPayNow.getCompletionStatus(), orderWithPayNow.getPaymentStatus(),
                 orderWithPayNow.getTags(), orderWithPayNow.getQuantity(), orderWithPayNow.getPrice(),
-                java.util.Optional.empty());
+                Optional.empty());
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ORDER_SUCCESS, Messages.format(expectedOrder));
         Model expectedModel = new ModelManager(
                 new HomeChef(model.getHomeChef()), TypicalMenuItems.getTypicalMenuBook(), new UserPrefs());
