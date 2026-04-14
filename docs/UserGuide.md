@@ -181,7 +181,7 @@ Format: `add f/FOOD c/NAME p/PHONE e/EMAIL a/ADDRESS d/DATE [q/QUANTITY] [t/TAG]
 * `NAME` accepts letters/digits (including international characters), spaces, apostrophes (`'` and `’`), slashes (`/`), at signs (`@`), periods (`.`), and hyphens (`-`).
 * `ADDRESS` accepts any character, but cannot be blank.
 * `EMAIL` should be of the format local-part@domain.tld and adhere to the following constraints:
-  1. The local-part should only contain alphanumeric characters (alphabets and numbers) and these special characters: `!#$%&'*+/=?^_`{|}~._%\-`
+  1. The local-part should only contain alphanumeric characters (alphabets and numbers) and these special characters: `!`, `#`, `$`, `%`, `&`, `'`, `*`, `+`, `/`, `=`, `?`, `^`, `_`, `\``, `{`, `|`, `}`, `~`, `.`, `_`, `%`, `\`, `-`
   2. This is followed by a '@' and then a domain name.
   3. The domain name must contain only alphanumeric characters, dots, or hyphens.
   4. The email must end with a top-level domain (TLD) of at least 2 alphabetic characters (e.g. .com, .org, .io).
