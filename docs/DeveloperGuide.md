@@ -259,6 +259,8 @@ The `receipt` command generates a plain-text receipt file for a selected order.
     2. The order payment status is `Paid`.
 4. On success, `ReceiptUtil`:
     1. Builds an output path under `[data directory]/receipts`.
+      * If a same-named receipt already exists, it appends a numeric suffix (`_1`, `_2`, ...)
+        to avoid overwriting existing receipts.
     2. Writes formatted receipt content to the output file.
 5. The command returns a `CommandResult` containing the generated receipt path.
 
@@ -733,8 +735,9 @@ testers are expected to do more *exploratory* testing.
        Expected: Similar to previous.
 
     1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, deleting
-       the top-level `orders` field from `homechef.json` or `menuItems` field from `menu.json`, modifying an existing
-       order or menu item such that any of their fields contain a character that is not accepted by the model
+       the top-level `orders` field from `homechef.json` or `menuItems` field from `menu.json`, inserting `null`
+       elements into arrays (e.g. `"tags": [null]`), modifying an existing order or menu item such that any of their
+       fields contain a character that is not accepted by the model
        validators (e.g. `#` in customer names, `#` in food names, malformed emails, etc.).<br>
        Expected: Similar to previous.
 

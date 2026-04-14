@@ -38,5 +38,10 @@ public class JsonMenuBookStorageTest {
     public void readMenuBook_missingMenuItemsList_throwsDataLoadingException() {
         assertThrows(DataLoadingException.class, () -> readMenuBook("missingMenuItemsListMenuBook.json"));
     }
+
+    @Test
+    public void readMenuBook_nullMenuItemElement_throwsDataLoadingException() {
+        assertThrows(DataLoadingException.class, () -> readMenuBook("nullMenuItemElementMenuBook.json"));
+    }
 }
 

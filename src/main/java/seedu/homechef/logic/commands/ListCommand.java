@@ -3,11 +3,13 @@ package seedu.homechef.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.homechef.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import seedu.homechef.commons.util.ToStringBuilder;
+import seedu.homechef.logic.Messages;
 import seedu.homechef.model.Model;
 import seedu.homechef.model.order.CompletionStatus;
 import seedu.homechef.model.order.Date;
@@ -76,21 +78,21 @@ public class ListCommand extends Command {
         }
 
         if (descriptor.getCustomerQuery().isPresent()) {
-            String query = descriptor.getCustomerQuery().get().toLowerCase();
+            String query = descriptor.getCustomerQuery().get().toLowerCase(Locale.ROOT);
             predicate = predicate.and(order ->
-                    order.getCustomer().toString().toLowerCase().contains(query));
+                    order.getCustomer().toString().toLowerCase(Locale.ROOT).contains(query));
         }
 
         if (descriptor.getFoodQuery().isPresent()) {
-            String query = descriptor.getFoodQuery().get().toLowerCase();
+            String query = descriptor.getFoodQuery().get().toLowerCase(Locale.ROOT);
             predicate = predicate.and(order ->
-                    order.getFood().toString().toLowerCase().contains(query));
+                    order.getFood().toString().toLowerCase(Locale.ROOT).contains(query));
         }
 
         if (descriptor.getPhoneQuery().isPresent()) {
-            String query = descriptor.getPhoneQuery().get().toLowerCase();
+            String query = descriptor.getPhoneQuery().get().toLowerCase(Locale.ROOT);
             predicate = predicate.and(order ->
-                    order.getPhone().toString().toLowerCase().contains(query));
+                    order.getPhone().toString().toLowerCase(Locale.ROOT).contains(query));
         }
 
         if (descriptor.getCompletionStatus().isPresent()) {
@@ -104,6 +106,9 @@ public class ListCommand extends Command {
         }
 
         model.updateFilteredOrderList(predicate);
+        if (!descriptor.equals(new ListFilterDescriptor())) {
+            return new CommandResult(Messages.getOrdersListedOverviewMessage(model.getFilteredOrderList().size()));
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

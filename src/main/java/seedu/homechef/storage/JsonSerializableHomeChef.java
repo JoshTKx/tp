@@ -21,6 +21,7 @@ class JsonSerializableHomeChef {
 
     public static final String MESSAGE_DUPLICATE_ORDER = "Orders list contains duplicate order(s).";
     public static final String MESSAGE_MISSING_ORDERS_LIST = "Missing required field: orders";
+    public static final String MESSAGE_INVALID_ORDER_ELEMENT = "Orders list contains invalid order entries.";
 
     private final List<JsonAdaptedOrder> orders = new ArrayList<>();
     private final boolean isOrdersFieldMissing;
@@ -57,6 +58,9 @@ class JsonSerializableHomeChef {
         }
         HomeChef homeChef = new HomeChef();
         for (JsonAdaptedOrder jsonAdaptedOrder : orders) {
+            if (jsonAdaptedOrder == null) {
+                throw new IllegalValueException(MESSAGE_INVALID_ORDER_ELEMENT);
+            }
             Order order = jsonAdaptedOrder.toModelType();
             if (homeChef.hasOrder(order)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);

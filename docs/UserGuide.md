@@ -301,6 +301,8 @@ Format: `receipt INDEX`
 
 * A receipt file is created in a `receipts` folder beside the HomeChef data file.
     * More specifically, the created receipt file can be found in `[JAR file location]/data/receipts`.
+* If a receipt file with the same name already exists, HomeChef creates a new file with a numeric suffix
+  (e.g., `_1`, `_2`) instead of overwriting the existing file.
 
 <div markdown="span" class="alert alert-primary">:bulb:
 **Tip:**

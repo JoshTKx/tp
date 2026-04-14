@@ -22,6 +22,8 @@ class JsonSerializableMenuBook {
     public static final String MESSAGE_DUPLICATE_MENU_ITEM =
             "Menu items list contains duplicate menu item(s).";
     public static final String MESSAGE_MISSING_MENU_ITEMS_LIST = "Missing required field: menuItems";
+    public static final String MESSAGE_INVALID_MENU_ITEM_ELEMENT =
+            "Menu items list contains invalid menu item entries.";
 
     private final List<JsonAdaptedMenuItem> menuItems = new ArrayList<>();
     private final boolean isMenuItemsFieldMissing;
@@ -58,6 +60,9 @@ class JsonSerializableMenuBook {
         }
         MenuBook menuBook = new MenuBook();
         for (JsonAdaptedMenuItem jsonAdaptedMenuItem : menuItems) {
+            if (jsonAdaptedMenuItem == null) {
+                throw new IllegalValueException(MESSAGE_INVALID_MENU_ITEM_ELEMENT);
+            }
             MenuItem menuItem = jsonAdaptedMenuItem.toModelType();
             if (menuBook.hasMenuItem(menuItem)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_MENU_ITEM);
