@@ -11,7 +11,7 @@ With a simple typing interface and clear order and menu panels, HomeChef is espe
 input** over mouse clicks.
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -134,6 +134,8 @@ input** over mouse clicks.
   as space characters surrounding line-breaks may be omitted when copied over to the application.
 
 </div>
+
+--------------------------------------------------------------------------------------------------------------------
 
 ## Order List commands:
 
@@ -404,6 +406,8 @@ Clears all entries from the order list.
 
 Format: `clear`
 
+--------------------------------------------------------------------------------------------------------------------
+
 ## Menu commands:
 
 The menu is the list on the right, indicating the food items you have for sale.
@@ -491,6 +495,8 @@ Example:
   the name `Pain au Chocolat` and a price of `$3.50`.
 * `edit-menu 3 $/0.00` Edits the food in the third position of the displayed menu to have a zero price.
 
+--------------------------------------------------------------------------------------------------------------------
+
 ## Other commands:
 
 ### Viewing help : `help`
@@ -570,6 +576,8 @@ resolve the problem, see the last question.
 `homechef.json` and `menu.json` files.<br>
 If the copies exist, copy them over to the `data` folder located in the folder that contains the jar file you
 downloaded.
+
+--------------------------------------------------------------------------------------------------------------------
 
 # Command summary
 
