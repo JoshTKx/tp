@@ -3,6 +3,11 @@ layout: page
 title: Developer Guide
 ---
 
+HomeChef-Helper is a CLI-first desktop application for home-based food business owners to manage orders, menu items,
+payments, and receipts.
+This guide is written for developers and contributors who want to understand, extend, or maintain the project.
+It assumes familiarity with Java 17, Gradle, JavaFX, and basic object-oriented programming concepts.
+
 * Table of Contents
   {:toc}
 
@@ -238,11 +243,11 @@ white when normal.
 4. `OrderCard` uses the `model` `Date`'s method `getUrgency` to obtain a String representation of the order's date's
    urgency.
 5. Upon calling `getUrgency`, the `Date` field compares the current date with its own date and the specified
-   `URGENCY_PERIOD`. `URGENCY_PERIOD` is a constant of 3 days for the current iteration of HomeChef-Helper.
+   `URGENT_PERIOD_DAYS`. `URGENT_PERIOD_DAYS` is a constant of 3 days for the current iteration of HomeChef-Helper.
     1. If its own date is before the current date, it returns `"Overdue"`.
-    2. If its own date is after the current date, but within the `URGENCY_PERIOD` of days past the current date, it
+    2. If its own date is after the current date, but within the `URGENT_PERIOD_DAYS` of days past the current date, it
        returns `"Urgent"`.
-    3. If its own date is after the `URGENCY_PERIOD` of days past the current date, it returns `"Normal"`.
+    3. If its own date is after the `URGENT_PERIOD_DAYS` of days past the current date, it returns `"Normal"`.
 6. The `OrderCard` then colours the display text of the `Date` depending on the String it obtains.
     1. The text is red if it obtains `"Overdue"`.
     2. The text is orange if it obtains `"Urgent"`.
@@ -259,8 +264,10 @@ The `receipt` command generates a plain-text receipt file for a selected order.
     2. The order payment status is `Paid`.
 4. On success, `ReceiptUtil`:
     1. Builds an output path under `[data directory]/receipts`.
-      * If a same-named receipt already exists, it appends a numeric suffix (`_1`, `_2`, ...)
-        to avoid overwriting existing receipts.
+
+    * If a same-named receipt already exists, it appends a numeric suffix (`_1`, `_2`, ...)
+      to avoid overwriting existing receipts.
+
     2. Writes formatted receipt content to the output file.
 5. The command returns a `CommandResult` containing the generated receipt path.
 
@@ -328,7 +335,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | user               | export data to a spreadsheet                         | back up data or use it for other purposes                                     |
 | `*`      | user               | set limits on orders for a selected day              | avoid accepting too many orders and becoming burnt out                        |
 
-*{More to be added}*
+The user stories above capture the current scope of the application and can be expanded in future iterations as new
+features are added.
 
 ### Use cases
 
@@ -580,7 +588,7 @@ otherwise)
 
       Use case resumes at step 1.
 
-*{More to be added}*
+The use cases above describe the main workflows currently supported by the system.
 
 ### Non-Functional Requirements
 
@@ -600,7 +608,8 @@ otherwise)
 9. The application should be usable by a new user with no prior training, allowing them to complete core tasks within 10
    minutes of first launch using only the built-in help command.
 
-*{More to be added}*
+The requirements listed here reflect the current expectations for the application and are intended to guide future
+development and testing.
 
 ### Glossary
 
