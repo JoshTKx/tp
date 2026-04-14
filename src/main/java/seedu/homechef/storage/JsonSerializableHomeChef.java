@@ -20,21 +20,15 @@ import seedu.homechef.model.order.Order;
 class JsonSerializableHomeChef {
 
     public static final String MESSAGE_DUPLICATE_ORDER = "Orders list contains duplicate order(s).";
-    public static final String MESSAGE_MISSING_ORDERS_LIST = "Missing required field: orders";
-    public static final String MESSAGE_INVALID_ORDER_ELEMENT = "Orders list contains invalid order entries.";
 
     private final List<JsonAdaptedOrder> orders = new ArrayList<>();
-    private final boolean isOrdersFieldMissing;
 
     /**
      * Constructs a {@code JsonSerializableHomeChef} with the given orders.
      */
     @JsonCreator
     public JsonSerializableHomeChef(@JsonProperty("orders") List<JsonAdaptedOrder> orders) {
-        this.isOrdersFieldMissing = (orders == null);
-        if (orders != null) {
-            this.orders.addAll(orders);
-        }
+        this.orders.addAll(orders);
     }
 
     /**
@@ -43,7 +37,6 @@ class JsonSerializableHomeChef {
      * @param source future changes to this will not affect the created {@code JsonSerializableHomeChef}.
      */
     public JsonSerializableHomeChef(ReadOnlyHomeChef source) {
-        isOrdersFieldMissing = false;
         orders.addAll(source.getOrderList().stream().map(JsonAdaptedOrder::new).collect(Collectors.toList()));
     }
 
@@ -53,14 +46,8 @@ class JsonSerializableHomeChef {
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public HomeChef toModelType() throws IllegalValueException {
-        if (isOrdersFieldMissing) {
-            throw new IllegalValueException(MESSAGE_MISSING_ORDERS_LIST);
-        }
         HomeChef homeChef = new HomeChef();
         for (JsonAdaptedOrder jsonAdaptedOrder : orders) {
-            if (jsonAdaptedOrder == null) {
-                throw new IllegalValueException(MESSAGE_INVALID_ORDER_ELEMENT);
-            }
             Order order = jsonAdaptedOrder.toModelType();
             if (homeChef.hasOrder(order)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);
