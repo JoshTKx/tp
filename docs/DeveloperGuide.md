@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 
-HomeChef-Helper is a CLI-first desktop application for home-based food business owners to manage orders, menu items,
+HomeChef Helper is a CLI-first desktop application for home-based food business owners to manage orders, menu items,
 payments, and receipts.
 This guide is written for developers and contributors who want to understand, extend, or maintain the project.
 It assumes familiarity with Java 17, Gradle, JavaFX, and basic object-oriented programming concepts.
@@ -243,7 +243,7 @@ white when normal.
 4. `OrderCard` uses the `model` `Date`'s method `getUrgency` to obtain a String representation of the order's date's
    urgency.
 5. Upon calling `getUrgency`, the `Date` field compares the current date with its own date and the specified
-   `URGENT_PERIOD_DAYS`. `URGENT_PERIOD_DAYS` is a constant of 3 days for the current iteration of HomeChef-Helper.
+   `URGENT_PERIOD_DAYS`. `URGENT_PERIOD_DAYS` is a constant of 3 days for the current iteration of HomeChef Helper.
     1. If its own date is before the current date, it returns `"Overdue"`.
     2. If its own date is after the current date, but within the `URGENT_PERIOD_DAYS` of days past the current date, it
        returns `"Urgent"`.
@@ -733,14 +733,14 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: Open the respective `homechef.json` file or `menu.json` file and modify an existing order or menu item
        such that any of their mandatory fields contain an `empty string`, meaning a pair of inverted commas with no
-       characters in between as such: `""`. Start up HomeChef-Helper.<br>
-       Expected: The respective order list or menu will appear blank in the UI when HomeChef-Helper is started up again,
+       characters in between as such: `""`. Start up HomeChef Helper.<br>
+       Expected: The respective order list or menu will appear blank in the UI when HomeChef Helper is started up again,
        with a warning message shown in the result display. The corrupted `.json` files are not overwritten on `exit` or
        window close — they remain on disk in their corrupted state. The files will be overwritten with clean (empty)
        data only after a data-modifying command (e.g. `add`, `delete`, `edit`) is executed.
 
     1. Test case: Modify an existing order or menu item such that any of their mandatory fields contain a
-       `blank string`, a pair of inverted commas with whitespace in between: `" "`. Start up HomeChef-Helper.<br>
+       `blank string`, a pair of inverted commas with whitespace in between: `" "`. Start up HomeChef Helper.<br>
        Expected: Similar to previous.
 
     1. Other corruptions to try: Deleting an entire mandatory field of an entry in one of the `.json` files, deleting
@@ -754,14 +754,14 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: Have an existing `homechef.json` file or `menu.json` file in the `data` folder.
 
-    1. Test case: Open the `data` folder and delete the files inside. Start up HomeChef-Helper.<br>
-       Expected: The initial sample order list and menu will appear in the UI when HomeChef-Helper is started up again.
+    1. Test case: Open the `data` folder and delete the files inside. Start up HomeChef Helper.<br>
+       Expected: The initial sample order list and menu will appear in the UI when HomeChef Helper is started up again.
        The `homechef.json` and `menu.json` files will not be re-created by `exit` or window close — they will be created
        in the `data` folder (with the sample entries) only after a data-modifying command (e.g. `add`, `delete`, `edit`)
        is executed.
 
     1. Test case: Open the `data` folder, cut and paste the contained files elsewhere in the computer. Start up
-       HomeChef-Helper.<br>
+       HomeChef Helper.<br>
        Expected: Similar to previous.
 
     1. Other missing file cases to try: Moving the files to the parent folder of the `data` folder, moving the files to
@@ -772,12 +772,12 @@ testers are expected to do more *exploratory* testing.
 1. Restoring/transferring data files
 
     1. Prerequisites: Have a valid uncorrupted `homechef.json` file or `menu.json` file containing at least 1 entry.
-       This file should be located outside of the directory the HomeChef-Helper files are located in. We shall refer to
+       This file should be located outside of the directory the HomeChef Helper files are located in. We shall refer to
        these files as the external files.
 
     1. Test case: With existing entries in the current save file(s), copy and paste the external files into the `data`
        folder, replacing the existing `homechef.json` or `menu.json` files. The replaced files should be named the same
-       exactly. Start up HomeChef-Helper.<br>
+       exactly. Start up HomeChef Helper.<br>
        Expected: The respective order list or menu will show the orders and/or menu items of external files. No errors
        should occur, even if the orders' food name and the menu items are mismatched.
 
@@ -787,12 +787,10 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: With existing entries in the current save file(s), copy and paste the external files into the `data`
        folder. The external files should be named the same differently from the already existing `homechef.json` and
-       `menu.json` files. Start up HomeChef-Helper.<br>
+       `menu.json` files. Start up HomeChef Helper.<br>
        Expected: The respective order list or menu will show the orders and/or menu items of the existing files, not the
        external files. No errors should occur, and modifying the order list and menu through commands like `add` and
        `delete` will only affect the existing files and not the imported external files.
-
-1. _{ more test cases …​ }_
 
 --------------------------------------------------------------------------------------------------------------------
 

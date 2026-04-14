@@ -3,13 +3,12 @@ layout: page
 title: User Guide
 ---
 
-HomeChef-Helper (HomeChef) is a simple, intuitive desktop app for managing orders and payments for any **self-made food
-business owners!**<br>
-From new cooks with no experience managing their orders, to expert home food business owners with extensive knowledge,
-the app helps to **consolidate the order and food information in an easy-to-read format**, helping you get things done
-faster!<br>
-With a simple typing interface and a clear order list and food menu, this app is here to help you
-**manage orders quick** if you can **type fast**.
+HomeChef Helper (HomeChef) is a simple desktop app for home-based food business owners who want an easier way to
+**manage orders and payments**.<br>
+Whether you are new to order tracking or already run a busy home food business, HomeChef keeps your order and menu
+information in one **easy-to-read place**.<br>
+With a simple typing interface and clear order and menu panels, HomeChef is especially helpful if you **prefer keyboard
+input** over mouse clicks.
 
 * Table of Contents
   {:toc}
@@ -33,7 +32,7 @@ With a simple typing interface and a clear order list and food menu, this app is
    If that does not work, try the following:
 
    > 1. Open a command terminal. <br>(Command Prompt or Powershell on Windows, Terminal on Mac)<br>
-   > 1. Use the `cd` command to navigate into the folder you put the jar file in.<br> For example:<br>
+   > 1. Use the `cd` command to navigate into the folder you put the jar file in.<br> For example, type in:<br>
         `cd Desktop/Folder1/FolderContainingHomeChef`<br>
    > 1. Type the `java -jar homechef.jar` command to run the application.<br>
 
@@ -47,9 +46,9 @@ With a simple typing interface and a clear order list and food menu, this app is
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will
    open the help window.<br>
    Some example commands you can try:
-    * `list` : Lists all orders. Good for resetting the display to show a full view of all orders you have.
+    * `list` : Lists all orders. Use this when you want to see the full order list again.
 
-    * `list f/cake` : Lists all orders with "cake" in the food's name. Useful for finding orders of a similar type.
+    * `list f/cake` : Lists all orders with "cake" in the food's name. Handy for finding similar orders.
 
     * `add f/Birthday Cake c/John Doe p/1234 e/johnd@example.com a/John street, block 123, #01-01 d/30-03-2026` :<br>
       Adds an order named `Birthday Cake` with customer name `John Doe` to HomeChef. Price is taken from the menu
@@ -59,11 +58,11 @@ With a simple typing interface and a clear order list and food menu, this app is
       Note that the ID number may differ if there are other orders in the list.<br>
       The date may also be of a different colour (red or orange) if the current date is after 30-03-2026.
 
-    * `complete 1` : Marks the 1st order shown in the current list as completed. Helps to show what orders you have done
-      at a glance!
+    * `complete 1` : Marks the 1st order shown in the current list as completed. Helpful when you want to spot finished
+      orders at a glance.
 
-    * `delete 3` : Deletes the 3rd order shown in the current list. Perfect for removing long completed orders that you
-      won't refer to anymore.
+    * `delete 3` : Deletes the 3rd order shown in the current list. Handy for clearing out old orders you no longer
+      need.
 
     * `add-menu f/Potato Wedges $/2.20` : Adds a food item called `Potato Wedges` with a price of `$2.20` into the menu
       on the right.<br>
@@ -72,7 +71,7 @@ With a simple typing interface and a clear order list and food menu, this app is
 
     * `exit` : Exits the app. See you next time!
 
-1. Do refer to the [Features](#features) below for details of each command.
+1. See the [Features](#features) section below for more details on each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -518,11 +517,12 @@ Format: `exit`
 
 ### Saving the data
 
-HomeChef data is saved in the hard disk automatically after any command that changes the data. There is no need to save
+HomeChef Helper data is saved in the hard disk automatically after any command that changes the data. There is no need
+to save
 manually.<br>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the Homechef folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
+It is, however, recommended that a backup of the homechef.json and menu.json files are made by copying them to a separate folder outside of the HomeChef Helper folder. This will allow you to copy the files back to the `data` folder when needed, such as when a `clear` command is accidentally executed.
 </div>
 
 ### Editing the data file
