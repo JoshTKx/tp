@@ -19,6 +19,7 @@ public class Messages {
             "The order index is out of range. Use a number between 1 and the total number of orders shown.";
     public static final String MESSAGE_INVALID_MENU_ITEM_DISPLAYED_INDEX =
             "The menu item index is out of range. Use a number between 1 and the total number of menu items shown.";
+    public static final String MESSAGE_ORDERS_LISTED_OVERVIEW_SINGULAR = "%1$d order listed!";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
@@ -64,6 +65,14 @@ public class Messages {
                 .append("; Tags: ");
         order.getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    /**
+     * Returns a grammatically correct overview message for listed orders.
+     */
+    public static String getOrdersListedOverviewMessage(int count) {
+        String template = (count == 1) ? MESSAGE_ORDERS_LISTED_OVERVIEW_SINGULAR : MESSAGE_ORDERS_LISTED_OVERVIEW;
+        return String.format(template, count);
     }
 
 }

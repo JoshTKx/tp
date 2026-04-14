@@ -257,13 +257,13 @@ public class ParserUtil {
      * @return A menu Price object representing the parsed menu price.
      * @throws ParseException if the given {@code price} is invalid.
      */
-    public static seedu.homechef.model.common.Price parseMenuPrice(String price) throws ParseException {
+    public static Price parseMenuPrice(String price) throws ParseException {
         requireNonNull(price);
         String trimmedPrice = normalizeWhitespace(price);
-        if (!seedu.homechef.model.common.Price.isValidPrice(trimmedPrice)) {
-            throw new ParseException(seedu.homechef.model.common.Price.MESSAGE_CONSTRAINTS);
+        if (!Price.isValidPrice(trimmedPrice)) {
+            throw new ParseException(Price.MESSAGE_CONSTRAINTS);
         }
-        return new seedu.homechef.model.common.Price(trimmedPrice);
+        return new Price(trimmedPrice);
     }
 
     /**
